@@ -15,9 +15,9 @@ var data = [
       "id": "2", "url": "/switches/2", "name": "Lamp 3", "script": "sudo /home/pi/rcswitch-pi/sendRev", "command": "B 3", "status": "0"
     }   
   ];
-rpio.open(11, rpio.OUTPUT, rpio.LOW);
+// rpio.open(11, rpio.OUTPUT, rpio.LOW);
 
-rpio.open(15, rpio.OUTPUT, rpio.LOW);
+// rpio.open(15, rpio.OUTPUT, rpio.LOW);
 
 // GET
 exports.switches = function (req, res) {
