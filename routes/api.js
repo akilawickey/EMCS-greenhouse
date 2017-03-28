@@ -2,7 +2,7 @@
 var util = require('util')
 var exec = require('child_process').exec;
 var sleep = require('sleep');
-var rpio = require('rpio');
+// var rpio = require('rpio');
 
 var data = [
     {
@@ -43,30 +43,30 @@ exports.switch = function (req, res) {
     if(id == 0){
 
       console.log("water pump activated");
-        for (var i = 0; i < 5; i++) {
-        /* On for 1 second */
-                rpio.write(15, rpio.HIGH);
-                rpio.sleep(2);
+//         for (var i = 0; i < 5; i++) {
+//         /* On for 1 second */
+//                 rpio.write(15, rpio.HIGH);
+//                 rpio.sleep(2);
 
-                /* Off for half a second (500ms) */
-                rpio.write(15, rpio.LOW);
-                rpio.sleep(2);
-        }
+//                 /* Off for half a second (500ms) */
+//                 rpio.write(15, rpio.LOW);
+//                 rpio.sleep(2);
+//         }
 
     }
      if(id == 1){
 
       console.log("Ventilation fan activated");
 
-         for (var i = 0; i < 5; i++) {
-        /* On for 1 second */
-                rpio.write(11, rpio.HIGH);
-                rpio.sleep(2);
+//          for (var i = 0; i < 5; i++) {
+//         /* On for 1 second */
+//                 rpio.write(11, rpio.HIGH);
+//                 rpio.sleep(2);
 
-                /* Off for half a second (500ms) */
-                rpio.write(11, rpio.LOW);
-                rpio.sleep(2);
-        }
+//                 /* Off for half a second (500ms) */
+//                 rpio.write(11, rpio.LOW);
+//                 rpio.sleep(2);
+//         }
 
     }
     res.json(data[id]);
