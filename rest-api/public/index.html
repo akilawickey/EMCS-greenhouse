@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd\">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<h1>Real Time</h1>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<link rel="stylesheet" href="style.css">
+
+<script>
+
+ var socket = io();
+ socket.on('chat message', function(msg){
+          var res = msg.toString().split(",");
+                         console.log(res);
+         });  
+
+function pump_on() {
+
+     socket.emit('publish', {topic:"testTopic",payload:"1"});
+
+}
+
+function pump_off() {
+
+     socket.emit('publish', {topic:"testTopic",payload:"0"});
+
+}
+
+ 
+</script>
+</head>
+ 
+<body>
+  <div class='table'>
+    <table>
+      <tr>
+        <td style='vertical-align: middle !important;'>
+          LED:
+        </td>
+        <td>
+          <button onclick="pump_on()">Water pump ON</button>
+        </td>
+        <td>
+          <button onclick="pump_off()">Water pump OFF</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>
