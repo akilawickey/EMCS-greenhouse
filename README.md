@@ -7,6 +7,21 @@ Here we are developing a platform which can be useful for greenhouses. Here we a
 ![Alt text](architecture.png?raw=true "Optional Title")
 
 
-To run 
+Bulding EMCS 
 
-node server.js
+how to build
+
+install dependencies with
+
+npm install
+and run platform with
+
+npm run
+
+Support
+
+If you have any questions, we are in [![Join the chat at https://gitter.im/EMCS-project/Lobby](https://badges.gitter.im/EMCS-project/Lobby.svg)](https://gitter.im/EMCS-project/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+License
+
+Distributed under the MIT License, the same as Node.js.
