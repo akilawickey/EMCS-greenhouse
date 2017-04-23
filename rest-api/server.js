@@ -22,7 +22,7 @@ var client = mqtt.connect('mqtt://localhost');
  
      http.listen((process.env.PORT || 1212), function(){
       // console.log(process.env.PORT);
-      console.log('--------------------Server Started---------------------------');
+      console.log('--------------------IOT Greenhouse Server Started---------------------------');
     });
     
 
