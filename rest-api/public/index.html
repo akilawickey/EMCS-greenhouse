@@ -26,11 +26,6 @@
     <!-- Custom Fonts -->
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-
-    <!--- Toggle -- >
-    <link rel="stylesheet" href="css/toggle.css">
-
-
         <!-- jQuery -->
 
     <!-- Bootstrap Core JavaScript -->
@@ -63,7 +58,7 @@
      socket.on('chat message', function(msg){
               var res = msg.toString().split(",");
                              console.log(res);
-             });  
+             });
     function pump_on() {
          socket.emit('publish', {topic:"testTopic",payload:"1"});
     }
@@ -88,12 +83,12 @@
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-            
+
                 <a class="navbar-brand" href="index.html">EMCS Greenhouse</a>
             </div>
             <!-- /.navbar-header -->
 
-            <ul class="nav navbar-top-links navbar-right">  
+            <ul class="nav navbar-top-links navbar-right">
             </ul>
             <!-- /.navbar-top-links -->
 
@@ -104,7 +99,7 @@
                             <div class="input-group custom-search-form">
                                 <input type="text" class="form-control" placeholder="Search...">
                                 <span class="input-group-btn">
-                                
+
                             </span>
                             </div>
                             <!-- /input-group -->
@@ -130,9 +125,9 @@
                         <li>
                             <a href="forms.html">About Us</a>
                         </li>
-                
+
                         <li>
-                         
+
                         </li>
                     </ul>
                 </div>
@@ -156,20 +151,7 @@
                             FAN
                         </div>
                         <div class="panel-body">
-                            <div class="checkbox">
-                            <label>
-                                <input checked data-toggle="toggle" type="checkbox">
-                            </label>
-                            </div>
-                            <button type="button" class="btn btn-success" data-toggle="button" onclick="fan_on()">FAN 1</button><br><br>
-                            <div class="switch">
-                                <input type="checkbox" name="switch" class="switch-checkbox" id="myonoffswitch" checked>
-                                    <label class="switch-label" for="myonoffswitch">
-                                        <span class="switch-inner"></span>
-                                        <span class="switch-switch"></span>
-                                    </label>
-                            </div>
-                            
+                            <button type="button" class="btn btn-success" onclick="fan_on()">FAN 1</button><br><br>
                             <button type="button" class="btn btn-success" onclick="fan_off()">FAN 2</button><br><br>
                             <button type="button" class="btn btn-success">FAN 3</button><br><br>
                             <button type="button" class="btn btn-success">FAN 4</button><br><br>
@@ -198,7 +180,7 @@
                     </div>
                 </div>
                 <!-- /.col-lg-4 -->
-         
+
                 <!-- /.col-lg-4 -->
             </div>
             <!-- /.row -->
@@ -216,7 +198,7 @@
                         </div>
                     </div>
                 </div>
-      
+
                 <!-- /.col-lg-4 -->
             </div>
             <!-- /.row -->
@@ -265,10 +247,10 @@
                 </div>
             </div>
             <!-- /.row -->
-    
+
             <!-- /.row -->
-       
-          
+
+
         </div>
         <!-- /#page-wrapper -->
 
