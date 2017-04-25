@@ -26,6 +26,11 @@
     <!-- Custom Fonts -->
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+
+    <!--- Toggle -- >
+    <link rel="stylesheet" href="css/toggle.css">
+
+
         <!-- jQuery -->
 
     <!-- Bootstrap Core JavaScript -->
@@ -426,7 +431,20 @@
                             FAN
                         </div>
                         <div class="panel-body">
-                            <button type="button" class="btn btn-success" onclick="fan_on()">AFAN 1</button><br><br>
+                            <div class="checkbox">
+                            <label>
+                                <input checked data-toggle="toggle" type="checkbox">
+                            </label>
+                            </div>
+                            <button type="button" class="btn btn-success" data-toggle="button" onclick="fan_on()">FAN 1</button><br><br>
+                            <div class="switch">
+                                <input type="checkbox" name="switch" class="switch-checkbox" id="myonoffswitch" checked>
+                                    <label class="switch-label" for="myonoffswitch">
+                                        <span class="switch-inner"></span>
+                                        <span class="switch-switch"></span>
+                                    </label>
+                            </div>
+                            
                             <button type="button" class="btn btn-success" onclick="fan_off()">FAN 2</button><br><br>
                             <button type="button" class="btn btn-success">FAN 3</button><br><br>
                             <button type="button" class="btn btn-success">FAN 4</button><br><br>
