@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
     <title>EMCS</title>
-
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -145,7 +145,7 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             FAN
@@ -162,7 +162,7 @@
                     </div>
                 </div>
                 <!-- /.col-lg-4 -->
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             WATER PUMP
@@ -180,64 +180,25 @@
                     </div>
                 </div>
                 <!-- /.col-lg-4 -->
-                <div class="col-lg-4">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            Success Panel
-                        </div>
-                        <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
-                        </div>
-                        <div class="panel-footer">
-                            Panel Footer
-                        </div>
-                    </div>
-                </div>
+         
                 <!-- /.col-lg-4 -->
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-12">
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            Info Panel
+                            Actuator Status Of the Greenhouse
                         </div>
                         <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                            <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
                         </div>
                         <div class="panel-footer">
                             Panel Footer
                         </div>
                     </div>
                 </div>
-                <!-- /.col-lg-4 -->
-                <div class="col-lg-4">
-                    <div class="panel panel-warning">
-                        <div class="panel-heading">
-                            Warning Panel
-                        </div>
-                        <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
-                        </div>
-                        <div class="panel-footer">
-                            Panel Footer
-                        </div>
-                    </div>
-                </div>
-                <!-- /.col-lg-4 -->
-                <div class="col-lg-4">
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            Danger Panel
-                        </div>
-                        <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
-                        </div>
-                        <div class="panel-footer">
-                            Panel Footer
-                        </div>
-                    </div>
-                </div>
+      
                 <!-- /.col-lg-4 -->
             </div>
             <!-- /.row -->
@@ -298,6 +259,77 @@
 
 
 </body>
-</body>
+<script type="text/javascript">
+var xValues = ['A', 'B', 'C', 'D', 'E'];
+
+var yValues = ['W', 'X', 'Y', 'Z'];
+
+var zValues = [
+  [0.00, 0.00, 0.75, 0.75, 0.00],
+  [0.00, 0.00, 0.75, 0.75, 0.00],
+  [0.75, 0.75, 0.75, 0.75, 0.75],
+  [0.00, 0.00, 0.00, 0.75, 0.00]
+];
+
+var colorscaleValue = [
+  [0, '#3D9970'],
+  [1, '#461c99']
+];
+
+var data = [{
+  x: xValues,
+  y: yValues,
+  z: zValues,
+  type: 'heatmap',
+  colorscale: colorscaleValue,
+  showscale: false
+}];
+
+var layout = {
+  title: 'Actuator Status',
+  annotations: [],
+  xaxis: {
+    ticks: '',
+    side: 'top'
+  },
+  yaxis: {
+    ticks: '',
+    ticksuffix: ' ',
+    width: 700,
+    height: 700,
+    autosize: false
+  }
+};
+
+for ( var i = 0; i < yValues.length; i++ ) {
+  for ( var j = 0; j < xValues.length; j++ ) {
+    var currentValue = zValues[i][j];
+    if (currentValue != 0.0) {
+      var textColor = 'white';
+    }else{
+      var textColor = 'black';
+    }
+    var result = {
+      xref: 'x1',
+      yref: 'y1',
+      x: xValues[j],
+      y: yValues[i],
+      text: zValues[i][j],
+      font: {
+        family: 'Arial',
+        size: 12,
+        color: 'rgb(50, 171, 96)'
+      },
+      showarrow: false,
+      font: {
+        color: textColor
+      }
+    };
+    layout.annotations.push(result);
+  }
+}
+
+Plotly.newPlot('myDiv', data, layout);
+</script>
 
 </html>
