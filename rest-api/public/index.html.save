@@ -111,7 +111,7 @@
                             <a href="#"> Monitoring System</a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="config.html">Settings</a>
+                                    <a href="flot.html">Settings</a>
                                 </li>
                                 <li>
                                     <a href="morris.html">Update</a>
@@ -312,6 +312,7 @@ for ( var i = 0; i < yValues.length; i++ ) {
     var result = {
       xref: 'x1',
       yref: 'y1',
+
       x: xValues[j],
       y: yValues[i],
       text: zValues[i][j],

@@ -7,7 +7,7 @@ Here we are developing a platform which can be useful for greenhouses. Here we a
 ![Alt text](architecture.png?raw=true "Optional Title")
 
 
-# Building EMCS 
+#Building EMCS 
 
 how to build
 

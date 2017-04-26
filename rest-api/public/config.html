@@ -54,23 +54,14 @@
 </head>
 <script type="text/javascript">
 
-     var socket = io();
-     socket.on('chat message', function(msg){
-              var res = msg.toString().split(",");
-                             console.log(res);
-             });  
-    function pump_on() {
-         socket.emit('publish', {topic:"testTopic",payload:"1"});
-    }
-    function pump_off() {
-         socket.emit('publish', {topic:"testTopic",payload:"0"});
-    }
-    function fan_on() {
-         socket.emit('publish', {topic:"fan",payload:"1"});
-    }
-    function fan_off() {
-         socket.emit('publish', {topic:"fan",payload:"0"});
-    }
+    function api_call() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "http://10.40.18.9:1212/switches", false);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send();
+    var response = JSON.parse(xhttp.responseText);
+    console.log(response);
+}
 
 
 </script>
@@ -111,7 +102,7 @@
                             <a href="#"> Monitoring System</a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="config.html">Settings</a>
+                                    <a href="flot.html">Settings</a>
                                 </li>
                                 <li>
                                     <a href="morris.html">Update</a>
@@ -148,13 +139,10 @@
                 <div class="col-lg-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            FAN
+                            Add or remove actuators
                         </div>
                         <div class="panel-body">
-                            <button type="button" class="btn btn-success" onclick="fan_on()">FAN 1</button><br><br>
-                            <button type="button" class="btn btn-success" onclick="fan_off()">FAN 2</button><br><br>
-                            <button type="button" class="btn btn-success">FAN 3</button><br><br>
-                            <button type="button" class="btn btn-success">FAN 4</button><br><br>
+                            <button type="button" class="btn btn-success" onclick="api_call()">API</button><br><br>
                         </div>
                         <div class="panel-footer">
                             Status
@@ -165,13 +153,10 @@
                 <div class="col-lg-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            WATER PUMP
+                       
                         </div>
                         <div class="panel-body">
-                            <button type="button" class="btn btn-danger" onclick="pump_on()">PUMP 1</button><br><br>
-                            <button type="button" class="btn btn-danger" onclick="pump_off()">PUMP 2</button><br><br>
-                            <button type="button" class="btn btn-danger">PUMP 3</button><br><br>
-                            <button type="button" class="btn btn-danger">PUMP 4</button><br><br>
+                           
 
                         </div>
                         <div class="panel-footer">
@@ -191,7 +176,7 @@
                             Actuator Status Of the Greenhouse
                         </div>
                         <div class="panel-body">
-                            <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+                            
                         </div>
                         <div class="panel-footer">
                             Panel Footer
@@ -259,77 +244,6 @@
 
 
 </body>
-<script type="text/javascript">
-var xValues = ['A', 'B', 'C', 'D', 'E'];
-
-var yValues = ['W', 'X', 'Y', 'Z'];
-
-var zValues = [
-  [0.00, 0.00, 0.75, 0.75, 0.00],
-  [0.00, 0.00, 0.75, 0.75, 0.00],
-  [0.75, 0.75, 0.75, 0.75, 0.75],
-  [0.00, 0.00, 0.00, 0.75, 0.00]
-];
-
-var colorscaleValue = [
-  [0, '#3D9970'],
-  [1, '#461c99']
-];
-
-var data = [{
-  x: xValues,
-  y: yValues,
-  z: zValues,
-  type: 'heatmap',
-  colorscale: colorscaleValue,
-  showscale: false
-}];
-
-var layout = {
-  title: 'Actuator Status',
-  annotations: [],
-  xaxis: {
-    ticks: '',
-    side: 'top'
-  },
-  yaxis: {
-    ticks: '',
-    ticksuffix: ' ',
-    width: 700,
-    height: 700,
-    autosize: false
-  }
-};
-
-for ( var i = 0; i < yValues.length; i++ ) {
-  for ( var j = 0; j < xValues.length; j++ ) {
-    var currentValue = zValues[i][j];
-    if (currentValue != 0.0) {
-      var textColor = 'white';
-    }else{
-      var textColor = 'black';
-    }
-    var result = {
-      xref: 'x1',
-      yref: 'y1',
-      x: xValues[j],
-      y: yValues[i],
-      text: zValues[i][j],
-      font: {
-        family: 'Arial',
-        size: 12,
-        color: 'rgb(50, 171, 96)'
-      },
-      showarrow: false,
-      font: {
-        color: textColor
-      }
-    };
-    layout.annotations.push(result);
-  }
-}
-
-Plotly.newPlot('myDiv', data, layout);
-</script>
 
 </html>
+
