@@ -56,7 +56,7 @@
 
     function api_call() {
     var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "http://10.40.18.9:1212/switches", false);
+    xhttp.open("GET", "http://192.168.8.101:1212/switches", false);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send();
     var response = JSON.parse(xhttp.responseText);

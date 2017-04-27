@@ -10,6 +10,10 @@
     <meta name="author" content="">
 
     <title>EMCS</title>
+
+    <!-- Toggle -->
+    <link rel="stylesheet" href="css/toggle.css">
+
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -53,12 +57,11 @@
 
 </head>
 <script type="text/javascript">
-
      var socket = io();
      socket.on('chat message', function(msg){
               var res = msg.toString().split(",");
                              console.log(res);
-             });
+             });  
     function pump_on() {
          socket.emit('publish', {topic:"testTopic",payload:"1"});
     }
@@ -73,6 +76,14 @@
     }
 
 
+
+    function rule1_apply() {
+         socket.emit('rules', {topic:"fan",payload:"0"});
+    }
+
+
+
+
 </script>
 
 <body>
@@ -83,12 +94,12 @@
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-
+            
                 <a class="navbar-brand" href="index.html">EMCS Greenhouse</a>
             </div>
             <!-- /.navbar-header -->
 
-            <ul class="nav navbar-top-links navbar-right">
+            <ul class="nav navbar-top-links navbar-right">  
             </ul>
             <!-- /.navbar-top-links -->
 
@@ -99,7 +110,7 @@
                             <div class="input-group custom-search-form">
                                 <input type="text" class="form-control" placeholder="Search...">
                                 <span class="input-group-btn">
-
+                                
                             </span>
                             </div>
                             <!-- /input-group -->
@@ -111,7 +122,7 @@
                             <a href="#"> Monitoring System</a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="config.html">Settings</a>
+                                    <a href="flot.html">Settings</a>
                                 </li>
                                 <li>
                                     <a href="morris.html">Update</a>
@@ -125,9 +136,9 @@
                         <li>
                             <a href="forms.html">About Us</a>
                         </li>
-
+                
                         <li>
-
+                         
                         </li>
                     </ul>
                 </div>
@@ -145,16 +156,51 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-2">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             FAN
                         </div>
-                        <div class="panel-body">
-                            <button type="button" class="btn btn-success" onclick="fan_on()">FAN 1</button><br><br>
-                            <button type="button" class="btn btn-success" onclick="fan_off()">FAN 2</button><br><br>
-                            <button type="button" class="btn btn-success">FAN 3</button><br><br>
-                            <button type="button" class="btn btn-success">FAN 4</button><br><br>
+                         <div class="panel-body">
+    
+                            <!-- <button type="button" class="btn btn-success"  onclick="fan_on()">FAN 1</button><br><br> -->
+                            <div class="switch1">
+                            <span>Fan 1</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan_on()" id="switch1">
+                                    <label class="switch-label" for="switch1">
+                                        <span class="switch-inner"></span> 
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                            </div>
+                            
+                            <!-- <button type="button" class="btn btn-success" onclick="fan_off()">FAN 2</button><br><br> -->
+                            <div class="switch2">
+                                <span>Fan 2</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan_off()" id="switch2" >
+                                    <label class="switch-label" for="switch2">
+                                        <span class="switch-inner"></span> 
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                                
+                            </div>
+                            <!-- <button type="button" class="btn btn-success">FAN 3</button><br><br> -->
+                            <div class="switch3">
+                                <span>Fan 3</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" id="switch3" >
+                                    <label class="switch-label" for="switch3">
+                                        <span class="switch-inner"></span> 
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                            </div>
+                            <!-- <button type="button" class="btn btn-success">FAN 4</button><br><br> -->
+                            <div class="switch4">
+                            <span>Fan 4</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" id="switch4" >
+                                    <label class="switch-label" for="switch4">
+                                        <span class="switch-inner"></span> 
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                            </div>
                         </div>
                         <div class="panel-footer">
                             Status
@@ -162,16 +208,51 @@
                     </div>
                 </div>
                 <!-- /.col-lg-4 -->
-                <div class="col-lg-6">
+                <div class="col-lg-2">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             WATER PUMP
                         </div>
                         <div class="panel-body">
-                            <button type="button" class="btn btn-danger" onclick="pump_on()">PUMP 1</button><br><br>
-                            <button type="button" class="btn btn-danger" onclick="pump_off()">PUMP 2</button><br><br>
-                            <button type="button" class="btn btn-danger">PUMP 3</button><br><br>
-                            <button type="button" class="btn btn-danger">PUMP 4</button><br><br>
+                            <!-- button type="button" class="btn btn-danger" onclick="pump_on()">PUMP 1</button><br><br>-->
+                            <div class="switch5">
+                                <span>Pump 1</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="pump_on()" id="switch5" >
+
+                                    <label class="switch-label" for="switch5">
+
+                                        <span class="switch-inner"></span> 
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                               
+                            </div>
+                            <!-- button type="button" class="btn btn-danger" onclick="pump_off()">PUMP 2</button><br><br>-->
+                            <div class="switch6">
+                            <span>Pump 2</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="pump_off()" id="switch6" >
+                                    <label class="switch-label" for="switch6">
+                                        <span class="switch-inner"></span> 
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                            </div>
+                            <!--<button type="button" class="btn btn-danger">PUMP 3</button><br><br>-->
+                            <div class="switch7">
+                            <span>Pump 3</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" id="switch7" >
+                                    <label class="switch-label" for="switch7">
+                                        <span class="switch-inner"></span> 
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                            </div>
+                            <!--button type="button" class="btn btn-danger">PUMP 4</button><br><br>-->
+                            <div class="switch8">
+                            <span>Pump 4</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" id="switch8" >
+                                    <label class="switch-label" for="switch8">
+                                        <span class="switch-inner"></span> 
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                            </div>
 
                         </div>
                         <div class="panel-footer">
@@ -179,8 +260,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-8">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            Actuator Status Of the Greenhouse
+                        </div>
+                        <div class="panel-body">
+                            <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+                        </div>
+                        <div class="panel-footer">
+                            Panel Footer
+                        </div>
+                    </div>
+                </div>
+      
                 <!-- /.col-lg-4 -->
-
+         
                 <!-- /.col-lg-4 -->
             </div>
             <!-- /.row -->
@@ -198,18 +293,25 @@
                         </div>
                     </div>
                 </div>
-
+      
                 <!-- /.col-lg-4 -->
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="panel panel-green">
                         <div class="panel-heading">
                             Green Panel
                         </div>
                         <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                            <div class="switch8">
+                            <span>Pump 4</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="rule1_apply()" id="switch9" checked>
+                                    <label class="switch-label" for="switch9">
+                                        <span class="switch-inner"></span> 
+                                        <span class="switch-switch"></span>
+                                    </label>
+                            </div>
                         </div>
                         <div class="panel-footer">
                             Panel Footer
@@ -217,7 +319,7 @@
                     </div>
                     <!-- /.col-lg-4 -->
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="panel panel-yellow">
                         <div class="panel-heading">
                             Yellow Panel
@@ -231,26 +333,13 @@
                     </div>
                     <!-- /.col-lg-4 -->
                 </div>
-                <div class="col-lg-4">
-                    <div class="panel panel-red">
-                        <div class="panel-heading">
-                            Red Panel
-                        </div>
-                        <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
-                        </div>
-                        <div class="panel-footer">
-                            Panel Footer
-                        </div>
-                    </div>
-                    <!-- /.col-lg-4 -->
-                </div>
+              
             </div>
             <!-- /.row -->
-
+    
             <!-- /.row -->
-
-
+       
+          
         </div>
         <!-- /#page-wrapper -->
 
@@ -261,21 +350,17 @@
 </body>
 <script type="text/javascript">
 var xValues = ['A', 'B', 'C', 'D', 'E'];
-
 var yValues = ['W', 'X', 'Y', 'Z'];
-
 var zValues = [
   [0.00, 0.00, 0.75, 0.75, 0.00],
   [0.00, 0.00, 0.75, 0.75, 0.00],
   [0.75, 0.75, 0.75, 0.75, 0.75],
   [0.00, 0.00, 0.00, 0.75, 0.00]
 ];
-
 var colorscaleValue = [
   [0, '#3D9970'],
   [1, '#461c99']
 ];
-
 var data = [{
   x: xValues,
   y: yValues,
@@ -284,7 +369,6 @@ var data = [{
   colorscale: colorscaleValue,
   showscale: false
 }];
-
 var layout = {
   title: 'Actuator Status',
   annotations: [],
@@ -300,7 +384,6 @@ var layout = {
     autosize: false
   }
 };
-
 for ( var i = 0; i < yValues.length; i++ ) {
   for ( var j = 0; j < xValues.length; j++ ) {
     var currentValue = zValues[i][j];
@@ -328,7 +411,6 @@ for ( var i = 0; i < yValues.length; i++ ) {
     layout.annotations.push(result);
   }
 }
-
 Plotly.newPlot('myDiv', data, layout);
 </script>
 

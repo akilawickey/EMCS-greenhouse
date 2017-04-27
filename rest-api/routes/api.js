@@ -4,7 +4,7 @@ var exec = require('child_process').exec;
 var sleep = require('sleep');
 // var rpio = require('rpio');
 var mqtt = require('mqtt')
-var client  = mqtt.connect('mqtt://localhost  ')
+var client  = mqtt.connect('mqtt://localhost')
 
 var data = [
     {
