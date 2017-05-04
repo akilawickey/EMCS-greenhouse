@@ -11,6 +11,19 @@
 
     <title>EMCS</title>
 
+    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+    <style type="text/css">
+    #chartdiv {
+    width       : 100%;
+    height      : 300px;
+    font-size   : 11px;
+    }       
+    </style>
+
     <!-- Toggle -->
     <link rel="stylesheet" href="css/toggle.css">
 
@@ -82,6 +95,78 @@
     }
 
 
+    // Rule based heat map configurations
+
+    var chart = AmCharts.makeChart("chartdiv", {
+    "theme": "light",
+    "type": "serial",
+    "dataProvider": [{
+        "continent": "North America",
+        "trucks": 170000,
+        "SUVs": 170000,
+        "cars": 90000,
+        "total": 310000
+    }, {
+        "continent": "Asia",
+        "trucks": 90000,
+        "SUVs": 40000,
+        "cars": 110000,
+        "total": 240000
+    }, {
+        "continent": "Europe",
+        "trucks": 30000,
+        "SUVs": 50000,
+        "cars": 110000,
+        "total": 190000
+    }],
+
+
+    "categoryField": "continent",
+
+    "categoryAxis": {
+        "gridAlpha": 0.1,
+        "axisAlpha": 0,
+        "widthField": "total",
+        "gridPosition": "start"
+    },
+
+    "valueAxes": [{
+        "stackType": "100% stacked",
+        "gridAlpha": 0.1,
+        "unit": "%",
+        "axisAlpha": 0
+    }],
+
+    "graphs": [
+        {
+            "title": "Carrot",
+            "labelText": "[[value]]",
+            "valueField": "trucks",
+            "type": "column",
+            "fillAlphas": 1
+        }, {
+            "title": "Chillie",
+            "labelText": "[[value]]",
+            "valueField": "SUVs",
+            "type": "column",
+            "fillAlphas": 1
+        },
+
+        {
+            "title": "Dragon Fruit",
+            "labelText": "[[value]]",
+            "valueField": "cars",
+            "type": "column",
+            "fillAlphas": 1
+        }
+    ],
+
+    "legend": {},
+    "export":
+     {
+     "enabled":true
+     }
+});
 
 
 </script>
@@ -159,7 +244,7 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             Select Rules to apply
@@ -168,7 +253,7 @@
     
                             <!-- <button type="button" class="btn btn-success"  onclick="fan_on()">FAN 1</button><br><br> -->
                             <div class="switch1">
-                            <span>Fan 1</span>
+                            <span>Rule 1 Carrot</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan_on()" id="switch1">
                                     <label class="switch-label" for="switch1">
                                         <span class="switch-inner"></span> 
@@ -178,7 +263,7 @@
                             
                             <!-- <button type="button" class="btn btn-success" onclick="fan_off()">FAN 2</button><br><br> -->
                             <div class="switch2">
-                                <span>Fan 2</span>
+                                <span>Rule 2 Chillie</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan_off()" id="switch2" >
                                     <label class="switch-label" for="switch2">
                                         <span class="switch-inner"></span> 
@@ -188,7 +273,7 @@
                             </div>
                             <!-- <button type="button" class="btn btn-success">FAN 3</button><br><br> -->
                             <div class="switch3">
-                                <span>Fan 3</span>
+                                <span>Rule 3 Dragon Fruit</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" id="switch3" >
                                     <label class="switch-label" for="switch3">
                                         <span class="switch-inner"></span> 
@@ -197,7 +282,7 @@
                             </div>
                             <!-- <button type="button" class="btn btn-success">FAN 4</button><br><br> -->
                             <div class="switch4">
-                            <span>Fan 4</span>
+                            <span>Rule 4</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" id="switch4" >
                                     <label class="switch-label" for="switch4">
                                         <span class="switch-inner"></span> 
@@ -205,15 +290,15 @@
                                     </label>
                             </div>
                             <div class="switch5">
-                            <span>Fan 5</span>
+                            <span>Rule 5</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" id="switch5" >
                                     <label class="switch-label" for="switch5">
                                         <span class="switch-inner"></span> 
                                         <!-- <span class="switch-switch"></span> -->
                                     </label>
                             </div>
-                                                        <div class="switch4">
-                            <span>Fan 6</span>
+                            <div class="switch4">
+                            <span>Rule 6</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" id="switch6" >
                                     <label class="switch-label" for="switch6">
                                         <span class="switch-inner"></span> 
@@ -228,13 +313,14 @@
                 </div>
                 <!-- /.col-lg-4 -->
            
-                <div class="col-lg-6">
+                <div class="col-lg-8">
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            Actuator Status Of the Greenhouse
+                            Rule map Of the Greenhouse
                         </div>
                         <div class="panel-body">
-                            <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+                            <!-- <div id="myDiv">Plotly chart will be drawn inside this DIV</div> -->
+                            <div id="chartdiv"></div>   
                         </div>
                         <div class="panel-footer">
                             Panel Footer
@@ -251,10 +337,10 @@
                 <div class="col-lg-12">
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            Actuator Status Of the Greenhouse
+                            Logs
                         </div>
                         <div class="panel-body">
-                            <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+                            <!-- <div id="myDiv">Plotly chart will be drawn inside this DIV</div> -->
                         </div>
                         <div class="panel-footer">
                             Panel Footer
@@ -265,44 +351,7 @@
                 <!-- /.col-lg-4 -->
             </div>
             <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            Green Panel
-                        </div>
-                        <div class="panel-body">
-                            <div class="switch8">
-                            <span>Pump 4</span>
-                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="rule1_apply()" id="switch9" checked>
-                                    <label class="switch-label" for="switch9">
-                                        <span class="switch-inner"></span> 
-                                        <span class="switch-switch"></span>
-                                    </label>
-                            </div>
-                        </div>
-                        <div class="panel-footer">
-                            Panel Footer
-                        </div>
-                    </div>
-                    <!-- /.col-lg-4 -->
-                </div>
-                <div class="col-lg-6">
-                    <div class="panel panel-yellow">
-                        <div class="panel-heading">
-                            Yellow Panel
-                        </div>
-                        <div class="panel-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
-                        </div>
-                        <div class="panel-footer">
-                            Panel Footer
-                        </div>
-                    </div>
-                    <!-- /.col-lg-4 -->
-                </div>
-              
-            </div>
+           
             <!-- /.row -->
     
             <!-- /.row -->
