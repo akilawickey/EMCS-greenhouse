@@ -6,7 +6,6 @@
   "dependencies": {
     "express": "4.x",
     "exec": "0.0.5",
-    "sleep": "1.1.0",
     "mqtt": "2.6.2",
     "socket.io": "1.7.3",
     "method-override": "2.3.8",
