@@ -312,45 +312,82 @@ function add_row()
                                                 <p class="help-block">Please define the rule name</p>
                                             </div>
                                             <div class="table-responsive">
-                                            <table align='center' cellspacing=2 cellpadding=5 id="data_table" border=1 class="table">
+                                            <table align='center' cellspacing=2 cellpadding=5 id="data_table" border=1 class = "table">
                                                 <tr  class="success">
-                                                <th>Name</th>
-                                                <th>Country</th>
-                                                <th>Age</th>
+                                                <th>Actuator</th>
+                                                <th>Start Time</th>
+                                                <th>End Time</th>
                                                 </tr>
 
                                                 <tr id="row1" class="info">
-                                                <td id="name_row1">Ankit</td>
-                                                <td id="country_row1">India</td>
-                                                <td id="age_row1">20</td>
+                                                <td id="name_row1">
+                                                   <div class="form-group">
+                                                        <select class="form-control">
+                                                            <option>Fan1</option>
+                                                            <option>Water Pump1</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td id="country_row1">
+                                                    <div class="form-group">
+                                                        <select class="form-control">
+                                                            <option>8.00</option>
+                                                            <option>9.00</option>
+                                                            <option>10.00</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td id="age_row1">
+                                                    <div class="form-group">
+                                                        <select class="form-control">
+                                                            <option>8.00</option>
+                                                            <option>9.00</option>
+                                                            <option>10.00</option>
+                                                        </select>
+                                                    </div>
+
+                                                </td>
                                                 <td>
                                                 <input type="button" id="edit_button1" value="Edit" class="edit" onclick="edit_row('1')">
                                                 <input type="button" id="save_button1" value="Save" class="save" onclick="save_row('1')">
                                                 <input type="button" value="Delete" class="delete" onclick="delete_row('1')">
                                                 </td>
                                                 </tr>
+            <tr id="row1" class="info">
+                                                <td id="name_row1">
+                                                   <div class="form-group">
+                                                        <select class="form-control">
+                                                            <option>Fan1</option>
+                                                            <option>Water Pump1</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td id="country_row1">
+                                                    <div class="form-group">
+                                                        <select class="form-control">
+                                                            <option>8.00</option>
+                                                            <option>9.00</option>
+                                                            <option>10.00</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td id="age_row1">
+                                                    <div class="form-group">
+                                                        <select class="form-control">
+                                                            <option>8.00</option>
+                                                            <option>9.00</option>
+                                                            <option>10.00</option>
+                                                        </select>
+                                                    </div>
 
-                                                <tr id="row2" class="warning">
-                                                <td id="name_row2">Shawn</td>
-                                                <td id="country_row2">Canada</td>
-                                                <td id="age_row2">26</td>
+                                                </td>
                                                 <td>
-                                                <input type="button" id="edit_button2" value="Edit" class="edit" onclick="edit_row('2')">
-                                                <input type="button" id="save_button2" value="Save" class="save" onclick="save_row('2')">
-                                                <input type="button" value="Delete" class="delete" onclick="delete_row('2')">
+                                                <input type="button" id="edit_button1" value="Edit" class="edit" onclick="edit_row('1')">
+                                                <input type="button" id="save_button1" value="Save" class="save" onclick="save_row('1')">
+                                                <input type="button" value="Delete" class="delete" onclick="delete_row('1')">
                                                 </td>
                                                 </tr>
-
-                                                <tr id="row3" class="danger">
-                                                <td id="name_row3">Rahul</td>
-                                                <td id="country_row3">India</td>
-                                                <td id="age_row3">19</td>
-                                                <td>
-                                                <input type="button" id="edit_button3" value="Edit" class="edit" onclick="edit_row('3')">
-                                                <input type="button" id="save_button3" value="Save" class="save" onclick="save_row('3')">
-                                                <input type="button" value="Delete" class="delete" onclick="delete_row('3')">
-                                                </td>
-                                                </tr>
+                                          
 
                                                 <tr class="danger">
                                                 <td><input type="text" id="new_name"></td>
