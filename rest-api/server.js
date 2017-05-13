@@ -12,6 +12,39 @@ var mqtt = require('mqtt');
 var path = require('path');
 var sys = require('util');
 var net = require('net');
+var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+    var uristring = 
+      process.env.MONGODB_URI || 
+      'mongodb://127.0.0.1:27017/greenhouse';
+
+      mongoose.connect(uristring, function (err, res) {
+      if (err) { 
+        console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+      } else {
+        console.log ('Succeeded connected to: ' + uristring);
+      }
+    });
+   // This is the schema.  Note the types, validation and trim
+    // statements.  They enforce useful constraints on the data.
+    var userSchema = new mongoose.Schema({
+      // name: {
+      //   first: String,
+      //   last: { type: String, trim: true }
+      // },
+      rule_name : { type: String},
+      actuator_type: { type: String},
+      from: { type: String},
+      to: { type: String}
+
+    });
+
+
+
+    // Compiles the schema into a model, opening (or creating, if
+    // nonexistent) the 'PowerUsers' collection in the MongoDB database
+    var PUser = mongoose.model('data_store', userSchema);
+
 
 
 // // create a socket object that listens on port 5000
@@ -105,6 +138,18 @@ io.sockets.on('connection', function (socket) {
     socket.on('publish', function (data) {
         console.log('Publishing to '+data.topic);
         client.publish(data.topic,data.payload);
+    });
+    socket.on('rule_config_data', function (data) {
+        // console.log(data.rulename,data.actuator,data.from,data.to);
+        // client.publish(data.topic,data.payload);
+             // send to database
+        var newrow = new PUser ({
+            rule_name: data.rulename,
+            actuator_type: data.actuator,
+            from: data.from,
+            to: data.to
+        });
+        newrow.save(function (err) {if (err) console.log ('Error on save!')});
     });
 });
 
