@@ -10,6 +10,7 @@
     "mqtt": "2.6.2",
     "socket.io": "1.7.3",
     "method-override": "2.3.8",
-    "body-parser": "1.17.1"
+    "body-parser": "1.17.1",
+    "mongoose": "~4.9.8"
   }
 }

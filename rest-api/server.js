@@ -14,9 +14,7 @@ var sys = require('util');
 var net = require('net');
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-    var uristring = 
-      process.env.MONGODB_URI || 
-      'mongodb://127.0.0.1:27017/greenhouse';
+    var uristring = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/greenhouse';
 
       mongoose.connect(uristring, function (err, res) {
       if (err) { 
@@ -25,9 +23,20 @@ mongoose.Promise = global.Promise;
         console.log ('Succeeded connected to: ' + uristring);
       }
     });
-   // This is the schema.  Note the types, validation and trim
+    // This is the schema.  Note the types, validation and trim
     // statements.  They enforce useful constraints on the data.
     var userSchema = new mongoose.Schema({
+      // name: {
+      //   first: String,
+      //   last: { type: String, trim: true }
+      // },
+      rule_name : { type: String},
+      actuator_type: { type: String},
+      from: { type: String},
+      to: { type: String}
+
+    });
+    var mqtt_status = new mongoose.Schema({
       // name: {
       //   first: String,
       //   last: { type: String, trim: true }
@@ -44,6 +53,7 @@ mongoose.Promise = global.Promise;
     // Compiles the schema into a model, opening (or creating, if
     // nonexistent) the 'PowerUsers' collection in the MongoDB database
     var PUser = mongoose.model('data_store', userSchema);
+    var PUser2 = mongoose.model('mqtt_store', mqtt_status);
 
 
 
@@ -156,6 +166,5 @@ io.sockets.on('connection', function (socket) {
 // listen to messages coming from the mqtt broker
 client.on('message', function (topic, payload, packet) {
     console.log(topic+'='+payload);
-    io.emit('mqtt',{'topic':String(topic),
-                            'payload':String(payload)});
+    io.emit('mqtt',{'topic':String(topic),'payload':String(payload)});
 });

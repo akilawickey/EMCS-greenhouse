@@ -29,8 +29,7 @@
 
     <!-- Custom Fonts -->
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-        <!-- jQuery -->
+        <!-- jQuery --> 
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
@@ -61,18 +60,35 @@
      socket.on('chat message', function(msg){
               var res = msg.toString().split(",");
                              console.log(res);
-             });  
-    function pump_on() {
-         socket.emit('publish', {topic:"testTopic",payload:"1"});
+    });  
+    function pump1_control() {
+        if (document.querySelectorAll("input[id='switch7']:checked").length >= 1) {
+            socket.emit('publish', {topic:"testTopic",payload:"1"});
+        }else{
+            socket.emit('publish', {topic:"testTopic",payload:"0"});
+        }
     }
-    function pump_off() {
-         socket.emit('publish', {topic:"testTopic",payload:"0"});
+    function pump2_control() {
+        if (document.querySelectorAll("input[id='switch8']:checked").length >= 1) {
+            socket.emit('publish', {topic:"pump2",payload:"1"});
+        }else{
+            socket.emit('publish', {topic:"pump2",payload:"0"});
+        }    }
+    function fan1_control(elem) {
+        if (document.querySelectorAll("input[id='switch1']:checked").length >= 1) {
+            socket.emit('publish', {topic:"fan",payload:"1"});
+        }else{
+            socket.emit('publish', {topic:"fan",payload:"0"});
+        }
+         
     }
-    function fan_on() {
-         socket.emit('publish', {topic:"fan",payload:"1"});
-    }
-    function fan_off() {
+    function fan2_control() {
          socket.emit('publish', {topic:"fan",payload:"0"});
+          if (document.querySelectorAll("input[id='switch2']:checked").length >= 1) {
+            socket.emit('publish', {topic:"fa2",payload:"1"});
+        }else{
+            socket.emit('publish', {topic:"fa2",payload:"0"});
+        }
     }
 
 
@@ -169,7 +185,7 @@
                             <!-- <button type="button" class="btn btn-success"  onclick="fan_on()">FAN 1</button><br><br> -->
                             <div class="switch1">
                             <span>Fan 1</span>
-                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan_on()" id="switch1">
+                                  <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan1_control(this)" id="switch1" >
                                     <label class="switch-label" for="switch1">
                                         <span class="switch-inner"></span> 
                                         <!-- <span class="switch-switch"></span> -->
@@ -179,7 +195,7 @@
                             <!-- <button type="button" class="btn btn-success" onclick="fan_off()">FAN 2</button><br><br> -->
                             <div class="switch2">
                                 <span>Fan 2</span>
-                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan_off()" id="switch2" >
+                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan2_control()" id="switch2" >
                                     <label class="switch-label" for="switch2">
                                         <span class="switch-inner"></span> 
                                         <!-- <span class="switch-switch"></span> -->
@@ -236,7 +252,7 @@
                             <!-- button type="button" class="btn btn-danger" onclick="pump_on()">PUMP 1</button><br><br>-->
                             <div class="switch7">
                                 <span>Pump 1</span>
-                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="pump_on()" id="switch7" >
+                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="pump1_control()" id="switch7" >
 
                                     <label class="switch-label" for="switch7">
 
@@ -248,7 +264,7 @@
                             <!-- button type="button" class="btn btn-danger" onclick="pump_off()">PUMP 2</button><br><br>-->
                             <div class="switch8">
                             <span>Pump 2</span>
-                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="pump_off()" id="switch8" >
+                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="pump2_control()" id="switch8" >
                                     <label class="switch-label" for="switch8">
                                         <span class="switch-inner"></span> 
                                         <!-- <span class="switch-switch"></span> -->
