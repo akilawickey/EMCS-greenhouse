@@ -13,7 +13,8 @@
 
     <!-- Toggle -->
     <link rel="stylesheet" href="css/toggle.css">
-
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -37,8 +38,7 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="js/metisMenu.min.js"></script>
 
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+   
     <!-- Morris Charts JavaScript -->
     <script src="js/raphael.min.js"></script>
     <script src="js/morris.min.js"></script>
@@ -57,7 +57,7 @@
 </head>
 <script type="text/javascript">
      var socket = io();
-     socket.on('chat message', function(msg){
+     socket.on('mqtt', function(msg){
               var res = msg.toString().split(",");
                              console.log(res);
     });  

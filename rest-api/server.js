@@ -13,7 +13,10 @@ var path = require('path');
 var sys = require('util');
 var net = require('net');
 var mongoose = require('mongoose');
+var date = new Date();
+
 mongoose.Promise = global.Promise;
+
     var uristring = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/greenhouse';
 
       mongoose.connect(uristring, function (err, res) {
@@ -26,10 +29,7 @@ mongoose.Promise = global.Promise;
     // This is the schema.  Note the types, validation and trim
     // statements.  They enforce useful constraints on the data.
     var userSchema = new mongoose.Schema({
-      // name: {
-      //   first: String,
-      //   last: { type: String, trim: true }
-      // },
+
       rule_name : { type: String},
       actuator_type: { type: String},
       from: { type: String},
@@ -37,14 +37,33 @@ mongoose.Promise = global.Promise;
 
     });
     var mqtt_status = new mongoose.Schema({
-      // name: {
-      //   first: String,
-      //   last: { type: String, trim: true }
-      // },
-      rule_name : { type: String},
-      actuator_type: { type: String},
-      from: { type: String},
-      to: { type: String}
+
+      mqtt_topic : { type: String},
+      status: { type: String}
+
+    });
+    var t_data = new mongoose.Schema({
+
+      time : { type: String},
+      val: { type: String}
+
+    });
+    var h_data = new mongoose.Schema({
+
+      time : { type: String},
+      val: { type: String}
+
+    });
+    var s_data = new mongoose.Schema({
+
+      time : { type: String},
+      val: { type: String}
+
+    });
+    var l_data = new mongoose.Schema({
+
+      time : { type: String},
+      val: { type: String}
 
     });
 
@@ -54,6 +73,10 @@ mongoose.Promise = global.Promise;
     // nonexistent) the 'PowerUsers' collection in the MongoDB database
     var PUser = mongoose.model('data_store', userSchema);
     var PUser2 = mongoose.model('mqtt_store', mqtt_status);
+    var PUser3 = mongoose.model('temp_data', t_data);
+    var PUser4 = mongoose.model('hum_data', h_data);
+    var PUser5 = mongoose.model('soil_data', s_data);
+    var PUser6  = mongoose.model('light_data', l_data);
 
 
 
@@ -65,7 +88,13 @@ var client = mqtt.connect('mqtt://localhost');
  
      http.listen((process.env.PORT || 1212), function(){
       // console.log(process.env.PORT);
+      console.log('----------------------------------------------------------------------------');
+      console.log('----------------------------------------------------------------------------');
+      console.log('----------------------------------------------------------------------------');
       console.log('--------------------IOT Greenhouse Server Started---------------------------');
+      console.log('----------------------------------------------------------------------------');
+      console.log('----------------------------------------------------------------------------');
+      console.log('----------------------------------------------------------------------------');
     });
     
 
@@ -86,6 +115,39 @@ app.get('/public', function(req, res){
     res.sendFile(__dirname + '/index.html');
 
 });
+app.get('/sensor/:temp/:hmdt/:soil/:light', function(req, res) {
+     var t = req.params.temp;
+     var h = req.params.hmdt;
+     var s = req.params.soil;
+     var l = req.params.light;
+     console.log(t);
+     console.log(h);
+     console.log(s);
+     console.log(l);
+     
+     var anewrow = new PUser3 ({
+            time: date,
+            val: t
+     });
+        anewrow.save(function (err) {if (err) console.log ('Error on save!')});
+     var bnewrow = new PUser4 ({
+            time: date,
+            val: h
+     });
+        bnewrow.save(function (err) {if (err) console.log ('Error on save!')});
+     var cnewrow = new PUser5 ({
+            time: date,
+            val: s
+     });
+        cnewrow.save(function (err) {if (err) console.log ('Error on save!')});
+     var dnewrow = new PUser6 ({
+            time: date,
+            val: l
+     });
+        dnewrow.save(function (err) {if (err) console.log ('Error on save!')});
+
+  });
+
 
 // Configuration  
 
@@ -148,7 +210,21 @@ io.sockets.on('connection', function (socket) {
     socket.on('publish', function (data) {
         console.log('Publishing to '+data.topic);
         client.publish(data.topic,data.payload);
+
+        //  var newrow1 = new PUser2 ({
+        //     mqtt_topic: data.topic,
+        //     status: data.payload,
+         
+        // });
+        // newrow1.save(function (err) {if (err) console.log ('Error on save!')});
+        // io.emit('mqtt',{'topic':String(data.topic),'payload':String(data.payload)});
+    
+        // PUser2.update({'mqtt_topic':'fan'},{$set:{'status':'1'}},{multi:true})
+        PUser2.update({ mqtt_topic: 'fan' }, { $set: { status: '1' }});
+
+
     });
+    
     socket.on('rule_config_data', function (data) {
         // console.log(data.rulename,data.actuator,data.from,data.to);
         // client.publish(data.topic,data.payload);
