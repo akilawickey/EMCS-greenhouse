@@ -26,7 +26,7 @@ mongoose.Promise = global.Promise;
         console.log ('Succeeded connected to: ' + uristring);
       }
     });
-    // This is the schema.  Note the types, validation and trim
+    // This is the schema.  Note the types, validation and trim 
     // statements.  They enforce useful constraints on the data.
     var userSchema = new mongoose.Schema({
 
@@ -38,6 +38,7 @@ mongoose.Promise = global.Promise;
     });
     var mqtt_status = new mongoose.Schema({
 
+      time : { type: String},
       mqtt_topic : { type: String},
       status: { type: String}
 
@@ -95,10 +96,8 @@ var client = mqtt.connect('mqtt://localhost');
       console.log('----------------------------------------------------------------------------');
       console.log('----------------------------------------------------------------------------');
       console.log('----------------------------------------------------------------------------');
-    });
+});
     
-
-
 router.use("/public",function(req,res){
 
       res.sendFile(path + "index.html");
@@ -120,6 +119,8 @@ app.get('/sensor/:temp/:hmdt/:soil/:light', function(req, res) {
      var h = req.params.hmdt;
      var s = req.params.soil;
      var l = req.params.light;
+     // location = res.headers.location;
+     res.send("ok");
      console.log(t);
      console.log(h);
      console.log(s);
@@ -129,21 +130,22 @@ app.get('/sensor/:temp/:hmdt/:soil/:light', function(req, res) {
             time: date,
             val: t
      });
-        anewrow.save(function (err) {if (err) console.log ('Error on save!')});
      var bnewrow = new PUser4 ({
             time: date,
             val: h
      });
-        bnewrow.save(function (err) {if (err) console.log ('Error on save!')});
      var cnewrow = new PUser5 ({
             time: date,
             val: s
      });
-        cnewrow.save(function (err) {if (err) console.log ('Error on save!')});
      var dnewrow = new PUser6 ({
             time: date,
             val: l
      });
+
+        anewrow.save(function (err) {if (err) console.log ('Error on save!')});
+        bnewrow.save(function (err) {if (err) console.log ('Error on save!')});     
+        cnewrow.save(function (err) {if (err) console.log ('Error on save!')});
         dnewrow.save(function (err) {if (err) console.log ('Error on save!')});
 
   });
@@ -208,19 +210,19 @@ io.sockets.on('connection', function (socket) {
     // when socket connection publishes a message, forward that message
     // the the mqtt broker
     socket.on('publish', function (data) {
-        console.log('Publishing to '+data.topic);
+        console.log('Publishing to '+data.topic+' Status ' +data.payload);
         client.publish(data.topic,data.payload);
 
-        //  var newrow1 = new PUser2 ({
-        //     mqtt_topic: data.topic,
-        //     status: data.payload,
+         var newrow1 = new PUser2 ({
+            mqtt_topic: data.topic,
+            status: data.payload,
          
-        // });
-        // newrow1.save(function (err) {if (err) console.log ('Error on save!')});
+        });
+        newrow1.save(function (err) {if (err) console.log ('Error on save!')});
         // io.emit('mqtt',{'topic':String(data.topic),'payload':String(data.payload)});
     
         // PUser2.update({'mqtt_topic':'fan'},{$set:{'status':'1'}},{multi:true})
-        PUser2.update({ mqtt_topic: 'fan' }, { $set: { status: '1' }});
+        // PUser2.update({ mqtt_topic: 'fan' }, { $set: { status: '1' }});
 
 
     });
@@ -230,6 +232,7 @@ io.sockets.on('connection', function (socket) {
         // client.publish(data.topic,data.payload);
              // send to database
         var newrow = new PUser ({
+            time: date,
             rule_name: data.rulename,
             actuator_type: data.actuator,
             from: data.from,

@@ -3,8 +3,8 @@ var util = require('util')
 var exec = require('child_process').exec;
 var sleep = require('sleep');
 // var rpio = require('rpio');
-var mqtt = require('mqtt')
-var client  = mqtt.connect('mqtt://localhost')
+// var mqtt = require('mqtt')
+// var client  = mqtt.connect('mqtt://localhost')
 
 var data = [
     {
@@ -59,10 +59,10 @@ exports.switch = function (req, res) {
      if(id == 1){
 
       console.log("Ventilation fan activated");
-      client.on('connect', function () {
-        client.subscribe('testTopic')
-        client.publish('testTopic', '1')
-      })
+      // client.on('connect', function () {
+      //   client.subscribe('testTopic')
+      //   client.publish('testTopic', '1')
+      // })
 
          for (var i = 0; i < 5; i++) {
         /* On for 1 second */
