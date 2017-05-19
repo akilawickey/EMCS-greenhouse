@@ -220,7 +220,7 @@ function add_row()
     
  var table=document.getElementById("data_table");
  var table_len=(table.rows.length)-1;
- var row = table.insertRow(table_len).outerHTML="<tr id='row"+table_len+"'><td id='name_row"+table_len+"'>"+new_name+"</td><td id='country_row"+table_len+"'>"+new_country+"</td><td id='age_row"+table_len+"'>"+new_age+"</td><td><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'> <input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td></tr>";
+ var row = table.insertRow(table_len).outerHTML="<tr id='row"+table_len+"'><td id='name_row"+table_len+"'>"+new_name+"</td><td id='country_row"+table_len+"'>"+new_country+"</td><td id='age_row"+table_len+"'>"+new_age+"</td><td><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'> <input type='button' class='btn btn-primary' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td></tr>";
 
 
 
@@ -358,9 +358,9 @@ function add_row()
 
                                                 </td>
                                                 <td>
-                                                <input type="button" id="edit_button1" value="Edit" class="edit" onclick="edit_row('1')">
-                                                <input type="button" id="save_button1" value="Save" class="save" onclick="save_row('1')">
-                                                <input type="button" value="Delete" class="delete" onclick="delete_row('1')">
+                                                <input type="button" class="btn btn-primary" id="edit_button1" value="Edit" class="edit" onclick="edit_row('1')">
+                                                <input type="button" class="btn btn-primary" id="save_button1" value="Save" class="save" onclick="save_row('1')">
+                                                <input type="button" class="btn btn-primary" value="Delete" class="delete" onclick="delete_row('1')">
                                                 </td>
                                                 </tr>
                                                                  <tr id="row1" class="info">
@@ -392,9 +392,9 @@ function add_row()
 
                                                 </td>
                                                 <td>
-                                                <input type="button" id="edit_button1" value="Edit" class="edit" onclick="edit_row('1')">
-                                                <input type="button" id="save_button1" value="Save" class="save" onclick="save_row('1')">
-                                                <input type="button" value="Delete" class="delete" onclick="delete_row('1')">
+                                                <input type="button" class="btn btn-primary" id="edit_button1" value="Edit" class="edit" onclick="edit_row('1')">
+                                                <input type="button" class="btn btn-primary" id="save_button1" value="Save" class="save" onclick="save_row('1')">
+                                                <input type="button" class="btn btn-primary" value="Delete" class="delete" onclick="delete_row('1')">
                                                 </td>
                                                 </tr>
                                                                  <tr id="row1" class="info">
@@ -426,9 +426,9 @@ function add_row()
 
                                                 </td>
                                                 <td>
-                                                <input type="button" id="edit_button1" value="Edit" class="edit" onclick="edit_row('1')">
-                                                <input type="button" id="save_button1" value="Save" class="save" onclick="save_row('1')">
-                                                <input type="button" value="Delete" class="delete" onclick="delete_row('1')">
+                                                <input type="button" class="btn btn-primary" id="edit_button1" value="Edit" class="edit" onclick="edit_row('1')">
+                                                <input type="button" class="btn btn-primary" id="save_button1" value="Save" class="save" onclick="save_row('1')">
+                                                <input type="button" class="btn btn-primary" value="Delete" class="delete" onclick="delete_row('1')">
                                                 </td>
                                                 </tr>
      
@@ -438,7 +438,7 @@ function add_row()
                                                 <td><input type="hidden" id="new_name"></td>
                                                 <td><input type="hidden" id="new_country"></td>
                                                 <td><input type="hidden" id="new_age"></td>
-                                                <td><input type="button" class="add" onclick="add_row();" value="Add Row"></td>
+                                                <td><input type="button" class="btn btn-primary" onclick="add_row();" value="Add Row"></td>
                                                 </tr>
 
                                                 </table>
