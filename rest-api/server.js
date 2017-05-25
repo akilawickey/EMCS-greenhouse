@@ -14,6 +14,7 @@ var sys = require('util');
 var net = require('net');
 var mongoose = require('mongoose');
 var date = new Date();
+var schedule = require('node-schedule');
 
 mongoose.Promise = global.Promise;
 
@@ -87,7 +88,7 @@ var io = require('socket.io')(http);
 // create an mqtt client object and connect to the mqtt broker
 var client = mqtt.connect('mqtt://localhost');
  
-     http.listen((process.env.PORT || 1212), function(){
+     http.listen((process.env.PORT || 80), function(){
       // console.log(process.env.PORT);
       console.log('----------------------------------------------------------------------------');
       console.log('----------------------------------------------------------------------------');
@@ -114,41 +115,41 @@ app.get('/public', function(req, res){
     res.sendFile(__dirname + '/index.html');
 
 });
-app.get('/sensor/:temp/:hmdt/:soil/:light', function(req, res) {
-     var t = req.params.temp;
-     var h = req.params.hmdt;
-     var s = req.params.soil;
-     var l = req.params.light;
-     // location = res.headers.location;
-     res.send("ok");
-     console.log(t);
-     console.log(h);
-     console.log(s);
-     console.log(l);
+// app.get('/sensor/:temp/:hmdt/:soil/:light', function(req, res) {
+//      var t = req.params.temp;
+//      var h = req.params.hmdt;
+//      var s = req.params.soil;
+//      var l = req.params.light;
+//      // location = res.headers.location;
+//      res.send("ok");
+//      console.log(t);
+//      console.log(h);
+//      console.log(s);
+//      console.log(l);
      
-     var anewrow = new PUser3 ({
-            time: date,
-            val: t
-     });
-     var bnewrow = new PUser4 ({
-            time: date,
-            val: h
-     });
-     var cnewrow = new PUser5 ({
-            time: date,
-            val: s
-     });
-     var dnewrow = new PUser6 ({
-            time: date,
-            val: l
-     });
+//      var anewrow = new PUser3 ({
+//             time: date,
+//             val: t
+//      });
+//      var bnewrow = new PUser4 ({
+//             time: date,
+//             val: h
+//      });
+//      var cnewrow = new PUser5 ({
+//             time: date,
+//             val: s
+//      });
+//      var dnewrow = new PUser6 ({
+//             time: date,
+//             val: l
+//      });
 
-        anewrow.save(function (err) {if (err) console.log ('Error on save!')});
-        bnewrow.save(function (err) {if (err) console.log ('Error on save!')});     
-        cnewrow.save(function (err) {if (err) console.log ('Error on save!')});
-        dnewrow.save(function (err) {if (err) console.log ('Error on save!')});
+//         anewrow.save(function (err) {if (err) console.log ('Error on save!')});
+//         bnewrow.save(function (err) {if (err) console.log ('Error on save!')});     
+//         cnewrow.save(function (err) {if (err) console.log ('Error on save!')});
+//         dnewrow.save(function (err) {if (err) console.log ('Error on save!')});
 
-  });
+//   });
 
 
 // Configuration  
@@ -243,7 +244,29 @@ io.sockets.on('connection', function (socket) {
 });
 
 // listen to messages coming from the mqtt broker
-client.on('message', function (topic, payload, packet) {
-    console.log(topic+'='+payload);
-    io.emit('mqtt',{'topic':String(topic),'payload':String(payload)});
+
+
+  // setInterval(function () {
+
+
+  //   client.subscribe('temp');
+  //   client.subscribe('hum');
+  //   client.subscribe('light');
+  //   client.subscribe('soil');
+  //   client.on('message', function (topic, payload, packet) {
+  //    console.log(topic+'='+payload);
+  //    io.emit('mqtt',{'topic':String(topic),'payload':String(payload)});
+  //   });
+
+  //   // setTimeout(1000);
+
+  // }, 2000);
+
+
+var j = schedule.scheduleJob('1 * * * * ', function(){
+  console.log('The answer to life, the universe, and everything!');
 });
+ 
+// client.on('message', function(topic, message) {
+//   console.log(message);
+// });
