@@ -31,6 +31,11 @@
 
     <!-- Custom Fonts -->
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
         <!-- jQuery --> 
 
     <!-- Bootstrap Core JavaScript -->
@@ -57,10 +62,23 @@
 
 </head>
 <script type="text/javascript">
+     var part_one,part_two,graph_temp,graph_hum,graph_soil,graph_light;
      var socket = io();
      socket.on('mqtt', function(msg){
-              var res = msg.toString().split(",");
-                             console.log(res);
+              var res = msg.split(" ");
+              // console.log(res[0]);
+              part_one = res[0];
+              part_two = res[1];
+              if(part_one == "temp"){
+                graph_temp = part_two;
+                // console.log(graph_temp);
+              }else if(part_one == "hum"){
+                graph_hum = part_two;
+              }else if(part_one == "soil"){
+                graph_soil = part_two;
+              }else if(part_one == "light"){
+                graph_light = part_two;   
+              }
     });  
     function pump1_control() {
         if (document.querySelectorAll("input[id='switch7']:checked").length >= 1) {
@@ -113,6 +131,7 @@
             <div class="navbar-header">
             
                 <a class="navbar-brand" href="index.html">EMCS Greenhouse</a>
+          
             </div>
             <!-- /.navbar-header -->
 
@@ -171,9 +190,12 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Controlling System</h1>
+
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+
+
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-2">
@@ -185,6 +207,7 @@
     
                             <!-- <button type="button" class="btn btn-success"  onclick="fan_on()">FAN 1</button><br><br> -->
                             <div class="switch1">
+
                             <span>Fan 1</span>
                                   <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan1_control(this)" id="switch1" >
                                     <label class="switch-label" for="switch1">
@@ -314,10 +337,16 @@
                 <div class="col-lg-8">
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            Actuator Status Of the Greenhouse
+                            Greenhouse Status
                         </div>
                         <div class="panel-body">
-                            <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+                            <!-- <div id="myDiv">Plotly chart will be drawn inside this DIV</div> -->
+                            <div style="width: 600px; height: 400px; margin: 0 auto">
+                                <div id="container-speed" style="width: 300px; height: 200px; float: left"></div>
+                                <div id="container-rpm" style="width: 300px; height: 200px; float: left"></div>
+                                <div id="container-speed1" style="width: 300px; height: 200px; float: left"></div>
+                                <div id="container-rpm1" style="width: 300px; height: 200px; float: left"></div>
+                            </div>
                         </div>
                         <div class="panel-footer">
                             Panel Footer
@@ -348,7 +377,7 @@
                 <!-- /.col-lg-4 -->
             </div>
             <!-- /.row -->
-            <div class="row">
+<!--             <div class="row">
                 <div class="col-lg-6">
                     <div class="panel panel-green">
                         <div class="panel-heading">
@@ -367,9 +396,9 @@
                         <div class="panel-footer">
                             Panel Footer
                         </div>
-                    </div>
+                    </div> -->
                     <!-- /.col-lg-4 -->
-                </div>
+ <!--                </div>
                 <div class="col-lg-6">
                     <div class="panel panel-yellow">
                         <div class="panel-heading">
@@ -381,11 +410,11 @@
                         <div class="panel-footer">
                             Panel Footer
                         </div>
-                    </div>
+                    </div> -->
                     <!-- /.col-lg-4 -->
-                </div>
+         <!--        </div>
               
-            </div>
+            </div> -->
             <!-- /.row -->
     
             <!-- /.row -->
@@ -400,13 +429,13 @@
 
 </body>
 <script type="text/javascript">
-var xValues = ['A', 'B', 'C', 'D', 'E'];
+var xValues = ['A', 'B', 'C'];
 var yValues = ['W', 'X', 'Y', 'Z'];
 var zValues = [
-  [0, 1, 0, 1, 0],
-  [0, 1, 0, 1, 0],
-  [0, 1, 1, 1, 0],
-  [1, 1, 0, 1, 0]
+  [0, 1, 0, 1],
+  [0, 1, 0, 1],
+  [0, 1, 1, 1],
+  [1, 1, 0, 1]
 ];
 var colorscaleValue = [
   [0, '#3D9970'],
@@ -463,6 +492,225 @@ for ( var i = 0; i < yValues.length; i++ ) {
   }
 }
 Plotly.newPlot('myDiv', data, layout);
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+ var gaugeOptions = {
+
+    chart: {
+        type: 'solidgauge'
+    },
+
+    title: null,
+
+    pane: {
+        center: ['50%', '85%'],
+        size: '140%',
+        startAngle: -90,
+        endAngle: 90,
+        background: {
+            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+            innerRadius: '60%',
+            outerRadius: '100%',
+            shape: 'arc'
+        }
+    },
+
+    tooltip: {
+        enabled: false
+    },
+
+    // the value axis
+    yAxis: {
+        stops: [
+            [0.1, '#55BF3B'], // green
+            [0.5, '#DDDF0D'], // yellow
+            [0.9, '#DF5353'] // red
+        ],
+        lineWidth: 0,
+        minorTickInterval: null,
+        tickAmount: 2,
+        title: {
+            y: -70
+        },
+        labels: {
+            y: 16
+        }
+    },
+
+    plotOptions: {
+        solidgauge: {
+            dataLabels: {
+                y: 5,
+                borderWidth: 0,
+                useHTML: true
+            }
+        }
+    }
+};
+
+// The speed gauge
+var chartSpeed = Highcharts.chart('container-speed', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 90,
+        title: {
+            text: 'Temperature'
+        }
+    },
+
+    credits: {
+        enabled: false
+    },
+
+    series: [{
+        name: 'Speed',
+        data: [80],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">C</span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' C'
+        }
+    }]
+
+}));
+
+// The RPM gauge
+var chartRpm = Highcharts.chart('container-rpm', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 120,
+        title: {
+            text: 'Humidity'
+        }
+    },
+
+    series: [{
+        name: 'RPM',
+        data: [1],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">%</span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' %'
+        }
+    }]
+
+}));
+
+var chartSpeed1 = Highcharts.chart('container-speed1', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 1500,
+        title: {
+            text: 'Soil Moisture'
+        }
+    },
+
+    series: [{
+        name: 'RPM',
+        data: [1],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span><br/>' +
+                   '<span style="font-size:12px;color:silver"></span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' %'
+        }
+    }]
+
+}));
+
+var chartRpm1 = Highcharts.chart('container-rpm1', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 70000,
+        title: {
+            text: 'Light intensity'
+        }
+    },
+
+    series: [{
+        name: 'RPM',
+        data: [1],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">lux</span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' %'
+        }
+    }]
+
+}));
+
+// Bring life to the dials
+// setInterval(function () {
+//     // Speed
+//     var point,
+//         newVal,
+//         inc;
+
+//     // if (chartSpeed) {
+//     //     point = chartSpeed.series[0].points[0];
+//     //     inc = Math.round((Math.random() - 0.5) * 100);
+//     //     newVal = point.y + inc;
+
+//     //     if (newVal < 0 || newVal > 200) {
+//     //         newVal = point.y - inc;
+//     //     }
+
+//     //     point.update(newVal);
+//     // }
+
+//     // RPM
+//     if (chartRpm) {
+//         point = chartRpm.series[0].points[0];
+//         inc = Math.random() - 0.5;
+//         newVal = point.y + inc;
+
+//         if (newVal < 0 || newVal > 5) {
+//             newVal = point.y - inc;
+//         }
+
+//         point.update(newVal);
+//     }
+// }, 2000);
+
+ setInterval(function () {
+        // Speed
+        var point,
+            newVal,
+            inc;
+                                          console.log(graph_hum);
+
+        // RPM
+        if (chartSpeed) {
+            point = chartSpeed.series[0].points[0];
+            point.update(Math.round(graph_temp));
+        }
+        if (chartRpm) {
+            point = chartRpm.series[0].points[0];
+            point.update(Math.round(graph_hum));
+        }
+        if (chartSpeed1) {
+            point = chartSpeed1.series[0].points[0];
+            point.update(Math.round(graph_soil));
+        }
+        if (chartRpm1) {
+            point = chartRpm1.series[0].points[0];
+            point.update(Math.round(graph_light));
+        }
+    }, 1000);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 </script>
 
 </html>

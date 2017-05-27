@@ -99,6 +99,10 @@ var client = mqtt.connect('mqtt://localhost');
       console.log('----------------------------------------------------------------------------');
 });
     
+
+
+
+
 router.use("/public",function(req,res){
 
       res.sendFile(path + "index.html");
@@ -246,26 +250,93 @@ io.sockets.on('connection', function (socket) {
 // listen to messages coming from the mqtt broker
 
 
-  // setInterval(function () {
+client.on('connect', function () {
+
+    client.subscribe('temp');
+    client.subscribe('hum');
+    client.subscribe('light');
+    client.subscribe('soil');
 
 
-  //   client.subscribe('temp');
-  //   client.subscribe('hum');
-  //   client.subscribe('light');
-  //   client.subscribe('soil');
-  //   client.on('message', function (topic, payload, packet) {
-  //    console.log(topic+'='+payload);
-  //    io.emit('mqtt',{'topic':String(topic),'payload':String(payload)});
-  //   });
+})
+ 
 
-  //   // setTimeout(1000);
+    // client.on('message', function (topic, payload, packet) {
+       
 
-  // }, 2000);
+    //     setInterval(function() {
+    //         // client.publish(topic, Date.now().toString());
+    //         if(topic = 'temp'){
+    //         console.log(topic+'='+payload);
+    //         }
+    //     }, 10000);
 
+    // });
 
-var j = schedule.scheduleJob('1 * * * * ', function(){
-  console.log('The answer to life, the universe, and everything!');
+client.on('message', function (topic, message) {
+  // message is Buffer 
+  // console.log(topic.toString())
+  // console.log(message.toString())
+  var t,h,s,l;
+
+  if(topic.toString() == 'temp'){
+       // console.log(topic.toString() + ' ' +  message.toString());
+       t = message.toString();
+       var anewrow = new PUser3 ({
+            time: date,
+            val: t
+        });
+       io.emit('mqtt','temp ' + t);
+       anewrow.save(function (err) {if (err) console.log ('Error on save!')});
+
+  }
+  if(topic.toString() == 'hum'){
+      // console.log(topic.toString() + ' ' +  message.toString());
+      h = message.toString();
+        var bnewrow = new PUser4 ({
+            time: date,
+            val: h
+        });
+        io.emit('mqtt','hum ' + h);
+        bnewrow.save(function (err) {if (err) console.log ('Error on save!')});     
+
+  }
+
+  if(topic.toString() == 'soil'){
+      // console.log(topic.toString() + ' ' +  message.toString());
+      s = message.toString();
+        var cnewrow = new PUser5 ({
+            time: date,
+            val: s
+        });
+        io.emit('mqtt','soil ' + s);
+        cnewrow.save(function (err) {if (err) console.log ('Error on save!')});
+  }
+
+  if(topic.toString() == 'light'){
+      // console.log(topic.toString() + ' ' +  message.toString());
+      l = message.toString();
+     var dnewrow = new PUser6 ({
+            time: date,
+            val: l
+
+     });
+        io.emit('mqtt','light ' + l);
+        dnewrow.save(function (err) {if (err) console.log ('Error on save!')});
+  }
+  // client.end()
+       
 });
+
+  
+
+    // setTimeout(1000);
+
+
+
+// var j = schedule.scheduleJob('1 * * * * ', function(){
+//   console.log('The answer to life, the universe, and everything!');
+// });
  
 // client.on('message', function(topic, message) {
 //   console.log(message);
