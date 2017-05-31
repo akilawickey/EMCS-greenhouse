@@ -13,7 +13,7 @@ var path = require('path');
 var sys = require('util');
 var net = require('net');
 var mongoose = require('mongoose');
-var date = new Date();
+var date;
 var schedule = require('node-schedule');
 
 mongoose.Promise = global.Promise;
@@ -31,6 +31,7 @@ mongoose.Promise = global.Promise;
     // statements.  They enforce useful constraints on the data.
     var userSchema = new mongoose.Schema({
 
+      date : { type: String},
       rule_name : { type: String},
       actuator_type: { type: String},
       from: { type: String},
@@ -278,7 +279,9 @@ client.on('message', function (topic, message) {
   // console.log(topic.toString())
   // console.log(message.toString())
   var t,h,s,l;
-
+  date = new Date();
+  date.setHours(date.getHours() + 5);
+  date.setMinutes(date.getMinutes() + 30);
   if(topic.toString() == 'temp'){
        // console.log(topic.toString() + ' ' +  message.toString());
        t = message.toString();
@@ -329,7 +332,7 @@ client.on('message', function (topic, message) {
 });
 
   
-
+// console.log(date);
     // setTimeout(1000);
 
 
