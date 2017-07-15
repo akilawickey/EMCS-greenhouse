@@ -66,7 +66,7 @@
      var socket = io();
      socket.on('mqtt', function(msg){
               var res = msg.split(" ");
-              // console.log(res[0]);
+              console.log(res);
               part_one = res[0];
               part_two = res[1];
               if(part_one == "temp"){
@@ -80,6 +80,8 @@
                 graph_light = part_two;   
               }
     });  
+
+
     function pump1_control() {
         if (document.querySelectorAll("input[id='switch7']:checked").length >= 1) {
             socket.emit('publish', {topic:"testTopic",payload:"1"});
@@ -565,7 +567,7 @@ var chartSpeed = Highcharts.chart('container-speed', Highcharts.merge(gaugeOptio
 
     series: [{
         name: 'Speed',
-        data: [80],
+        data: [1],
         dataLabels: {
             format: '<div style="text-align:center"><span style="font-size:25px;color:' +
                 ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
@@ -689,7 +691,7 @@ var chartRpm1 = Highcharts.chart('container-rpm1', Highcharts.merge(gaugeOptions
         var point,
             newVal,
             inc;
-                                          console.log(graph_hum);
+                                          // console.log(graph_hum);
 
         // RPM
         if (chartSpeed) {

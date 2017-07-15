@@ -16,6 +16,16 @@ var mongoose = require('mongoose');
 var date;
 var schedule = require('node-schedule');
 
+var t_p,h_p,s_p,l_p;
+var t = '';
+var h = '';
+var s = '';
+var l = '';
+var count = 0;
+
+var hum_ = [];
+
+
 mongoose.Promise = global.Promise;
 
     var uristring = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/greenhouse';
@@ -200,10 +210,7 @@ app.put('/switches/:id', api.editSwitch);
 app.put('/switches', api.editAllSwitches);
 app.delete('/switches/:id', api.deleteSwitch);
 
-// setInterval(function () {
-// io.emit('chat message', 'hello'); 
 
-// }, 1000);
 
 
 io.sockets.on('connection', function (socket) {
@@ -265,67 +272,83 @@ client.on('connect', function () {
     // client.on('message', function (topic, payload, packet) {
        
 
-    //     setInterval(function() {
-    //         // client.publish(topic, Date.now().toString());
-    //         if(topic = 'temp'){
-    //         console.log(topic+'='+payload);
-    //         }
-    //     }, 10000);
-
-    // });
+  
 
 client.on('message', function (topic, message) {
   // message is Buffer 
   // console.log(topic.toString())
   // console.log(message.toString())
-  var t,h,s,l;
+
+  // count++;
+  // console.log("data count "+ count);
   date = new Date();
   date.setHours(date.getHours() + 5);
   date.setMinutes(date.getMinutes() + 30);
+
+         // console.log(message)
+
   if(topic.toString() == 'temp'){
-       // console.log(topic.toString() + ' ' +  message.toString());
+       console.log(topic.toString() + ' ' +  message.toString());
        t = message.toString();
        var anewrow = new PUser3 ({
             time: date,
             val: t
         });
-       io.emit('mqtt','temp ' + t);
-       anewrow.save(function (err) {if (err) console.log ('Error on save!')});
-
+       // console.log(t + '\n');
+       // console.log(t_p);
+       if(t_p != t){
+         io.emit('mqtt','temp ' + t);
+         anewrow.save(function (err) {if (err) console.log ('Error on save!')});
+         // console.log("Temperature changed");
+       }
+       t_p = t;
   }
   if(topic.toString() == 'hum'){
-      // console.log(topic.toString() + ' ' +  message.toString());
+      console.log(topic.toString() + ' ' +  message.toString());
       h = message.toString();
         var bnewrow = new PUser4 ({
             time: date,
             val: h
         });
+
+        if(h_p != h){
         io.emit('mqtt','hum ' + h);
         bnewrow.save(function (err) {if (err) console.log ('Error on save!')});     
-
+        }
+        h_p = h;
   }
 
   if(topic.toString() == 'soil'){
-      // console.log(topic.toString() + ' ' +  message.toString());
+      console.log(topic.toString() + ' ' +  message.toString());
       s = message.toString();
         var cnewrow = new PUser5 ({
             time: date,
             val: s
         });
+
+        if(s_p != s){
         io.emit('mqtt','soil ' + s);
         cnewrow.save(function (err) {if (err) console.log ('Error on save!')});
+        }
+        s_p = s;
   }
 
   if(topic.toString() == 'light'){
-      // console.log(topic.toString() + ' ' +  message.toString());
+      console.log(topic.toString() + ' ' +  message.toString());
       l = message.toString();
+             // console.log(l);
+
      var dnewrow = new PUser6 ({
             time: date,
             val: l
 
      });
+
+        if(l_p != l){
         io.emit('mqtt','light ' + l);
         dnewrow.save(function (err) {if (err) console.log ('Error on save!')});
+        }
+        l_p = l;
   }
   // client.end()
        
@@ -344,3 +367,32 @@ client.on('message', function (topic, message) {
 // client.on('message', function(topic, message) {
 //   console.log(message);
 // });
+
+setInterval(function () {
+
+
+        PUser3.find({},'val', function(err, data){
+
+            state_temp_time = data.toString().split(',');
+            // console.log(data);
+            for(var i = 0;i<=data.length-1;i++){
+              hum_[i] = state_temp_time[2*i+1].substring(7,12);
+              if( hum_[i] == "nan' "){
+
+                 hum_[i] = "0.0";
+              }
+              
+              // console.log(hum_[i]);
+
+            }
+              // console.log(hum_.length);
+              io.emit('mqtt_data',hum_);
+
+        });
+
+}, 1000);
+
+// setInterval(function () {
+// io.emit('mqtt', 'hello'); 
+
+// }, 1000);

@@ -14,6 +14,13 @@
     <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
     <script src="https://www.amcharts.com/lib/3/serial.js"></script>
     <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+
+
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
     <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
     <style type="text/css">
@@ -60,8 +67,8 @@
     <script src="js/morris.min.js"></script>
     <script src="js/morris-data.js"></script>
 
-    <!-- Custom Theme JavaScript -->
-    <script src="js/sb-admin-2.js"></script>
+
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -72,11 +79,43 @@
 
 </head>
 <script type="text/javascript">
+     var main_plot;
+     var temp_data = [];
+     var test = [2,4,5,6,2,7,8,9,9,0,0,6,4,4,5,6,2]
+
      var socket = io();
      socket.on('chat message', function(msg){
               var res = msg.toString().split(",");
-                             console.log(res);
+                console.log(res);
              });  
+     socket.on('mqtt_data', function(msg){
+              // var res = msg.split(" ");
+          
+              var res = msg.toString().split(",");
+
+                  temp_data = res;
+
+
+            for(var i = 0;i<=res.length-1;i++){
+              temp_data[i] = parseInt(res[i]);
+            }
+
+             
+                console.log(temp_data);
+                console.log(test);
+
+             });  
+
+    // function reload(){
+    //              console.log(temp_data);
+
+       
+    //              // main_plot.series[1].setData(temp_data);
+    //      temp_data = [];
+
+
+    // }
+    // setInterval(reload, 10000);
     function pump_on() {
          socket.emit('publish', {topic:"testTopic",payload:"1"});
     }
@@ -313,7 +352,11 @@ function config_page()
                         </div>
                         <div class="panel-body">
                             <!-- <div id="myDiv">Plotly chart will be drawn inside this DIV</div> -->
-                            <div id="chartdiv"></div>   
+                            <!-- <div id="chartdiv"></div>    -->
+                            
+                        <!-- <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div> -->
+                            <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
                         </div>
                         <div class="panel-footer">
                             Panel Footer
@@ -362,6 +405,44 @@ function config_page()
 
 
 </body>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script type="text/javascript">
+
+ var main_plot = Highcharts.chart('container', {
+    chart: {
+        type: 'line'
+    },
+    title: {
+        text: 'Monthly Average Temperature'
+    },
+    subtitle: {
+        text: 'Source: WorldClimate.com'
+    },
+    yAxis: {
+        title: {
+            text: 'Temperature (°C)'
+        }
+    },
+    plotOptions: {
+        line: {
+            dataLabels: {
+                enabled: true
+            },
+            enableMouseTracking: false
+        }
+    },
+    series: [{
+        name: 'Tokyo',
+        data : temp_data
+    }, {
+        name: 'London',
+        data: test
+    }]
+});
+
+</script>
+
 <script type="text/javascript">
 var xValues = ['A', 'B', 'C', 'D', 'E'];
 var yValues = ['W', 'X', 'Y', 'Z'];
@@ -426,6 +507,9 @@ for ( var i = 0; i < yValues.length; i++ ) {
   }
 }
 Plotly.newPlot('myDiv', data, layout);
+
+
+
 </script>
 
 </html>
