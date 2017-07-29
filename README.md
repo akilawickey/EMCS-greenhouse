@@ -7,7 +7,7 @@ Here we are developing a platform which can be useful for greenhouses. Here we a
 ![Alt text](architecture.png?raw=true "Optional Title")
 
 
-#Building EMCS 
+# Building EMCS 
 
 how to build
 
@@ -19,10 +19,10 @@ and run platform with
 
 npm run
 
-£Support
+# Support
 
 If you have any questions, we are in [![Join the chat at https://gitter.im/EMCS-project/Lobby](https://badges.gitter.im/EMCS-project/Lobby.svg)](https://gitter.im/EMCS-project/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-License
+# License
 
 Distributed under the MIT License, the same as Node.js.
