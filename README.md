@@ -19,7 +19,7 @@ and run platform with
 
 npm run
 
-# Neural Netowrks based approach
+# Neural Network based approach
 
 The neural network model is trained to the dataset gained from our prototype greenhouse and as the initial step, only temperature controlling was considered for the neural network. This was trained to show the working actuators according to a given temperature.Here are performance results from matlab
 
