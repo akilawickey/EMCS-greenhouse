@@ -19,6 +19,12 @@ and run platform with
 
 npm run
 
+# Neural Netowrks based approach
+
+The neural network model is trained to the dataset gained from our prototype greenhouse and as the initial step, only temperature controlling was considered for the neural network. This was trained to show the working actuators according to a given temperature.Here are performance results from matlab
+
+![Alt text](out.png?raw=true "Optional Title")
+
 # Support
 
 If you have any questions, we are in [![Join the chat at https://gitter.im/EMCS-project/Lobby](https://badges.gitter.im/EMCS-project/Lobby.svg)](https://gitter.im/EMCS-project/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
