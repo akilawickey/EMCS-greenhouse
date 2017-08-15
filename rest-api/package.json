@@ -4,8 +4,13 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "express": "3.x",
+    "express": "4.x",
     "exec": "0.0.5",
-    "sleep": "1.1.0"
+    "sleep": "1.1.0",
+    "mqtt": "2.6.2",
+    "socket.io": "1.7.3",
+    "method-override": "2.3.8",
+    "body-parser": "1.17.1",
+    "mongoose": "~4.9.8"
   }
 }

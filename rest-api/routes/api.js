@@ -3,6 +3,8 @@ var util = require('util')
 var exec = require('child_process').exec;
 var sleep = require('sleep');
 // var rpio = require('rpio');
+// var mqtt = require('mqtt')
+// var client  = mqtt.connect('mqtt://localhost')
 
 var data = [
     {
@@ -43,30 +45,34 @@ exports.switch = function (req, res) {
     if(id == 0){
 
       console.log("water pump activated");
-//         for (var i = 0; i < 5; i++) {
-//         /* On for 1 second */
+        for (var i = 0; i < 5; i++) {
+        /* On for 1 second */
 //                 rpio.write(15, rpio.HIGH);
 //                 rpio.sleep(2);
 
-//                 /* Off for half a second (500ms) */
+                /* Off for half a second (500ms) */
 //                 rpio.write(15, rpio.LOW);
 //                 rpio.sleep(2);
-//         }
+        }
 
     }
      if(id == 1){
 
       console.log("Ventilation fan activated");
+      // client.on('connect', function () {
+      //   client.subscribe('testTopic')
+      //   client.publish('testTopic', '1')
+      // })
 
-//          for (var i = 0; i < 5; i++) {
-//         /* On for 1 second */
+         for (var i = 0; i < 5; i++) {
+        /* On for 1 second */
 //                 rpio.write(11, rpio.HIGH);
 //                 rpio.sleep(2);
 
 //                 /* Off for half a second (500ms) */
 //                 rpio.write(11, rpio.LOW);
 //                 rpio.sleep(2);
-//         }
+        }
 
     }
     res.json(data[id]);
