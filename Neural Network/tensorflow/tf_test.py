@@ -86,7 +86,7 @@ def main():
 
     # Layer's sizes
     x_size = train_X.shape[1]   # Number of input nodes: 4 features and 1 bias
-    h_size = 1                # Number of hidden nodes
+    h_size = 5             # Number of hidden nodes
     y_size = train_y.shape[1]   # Number of outcomes (3 iris flowers)
 
     # Symbols
@@ -103,27 +103,31 @@ def main():
 
     # Backward propagation
     cost    = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y, logits=yhat))
-    updates = tf.train.GradientDescentOptimizer(0.01).minimize(cost)
+    updates = tf.train.GradientDescentOptimizer(0.001).minimize(cost)
 
     # Run SGD
     sess = tf.Session()
-    init = tf.global_variables_initializer()
-    # sess.run(init)
+    init = tf.global_variables_initializer()    
+    sess.run(init)
 
-    # for epoch in range(60):
-    #     # Train with each example
-    #     for i in range(len(train_X)):
-    #         sess.run(updates, feed_dict={X: train_X[i: i + 1], y: train_y[i: i + 1]})
+    for epoch in range(50):
 
-    #     train_accuracy = np.mean(np.argmax(train_y, axis=1) ==
-    #                              sess.run(predict, feed_dict={X: train_X, y: train_y}))
-    #     test_accuracy  = np.mean(np.argmax(test_y, axis=1) ==
-    #                              sess.run(predict, feed_dict={X: test_X, y: test_y}))
+        # Train with each example
+        for i in range(len(train_X)):
+            sess.run(updates, feed_dict={X: train_X[i: i + 1], y: train_y[i: i + 1]})
 
-    #     print("Epoch = %d, train accuracy = %.2f%%, test accuracy = %.2f%%"
-    #           % (epoch + 1, 100. * train_accuracy, 100. * test_accuracy))
+        train_accuracy = np.mean(np.argmax(train_y, axis=1) ==
+                                 sess.run(predict, feed_dict={X: train_X, y: train_y}))
+        test_accuracy  = np.mean(np.argmax(test_y, axis=1) ==
+                                 sess.run(predict, feed_dict={X: test_X, y: test_y}))
 
-    # sess.close()
+        print("Epoch = %d, train accuracy = %.2f%%, test accuracy = %.2f%%"
+              % (epoch + 1, 100. * train_accuracy, 100. * test_accuracy))
+
+    sess.run(predict, feed_dict={x: tst_x})
+
+
+    sess.close()
 
 if __name__ == '__main__':
     main()
