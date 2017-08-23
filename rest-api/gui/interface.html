@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>Test page</title>
+
+  <h1><center><color='#55BF3B'>EMCS Green House</center></h1>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+</head>
+
+<body>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    
+    <div style="width: 800px">
+        <div id="container-temp" style="width: 300px; height: 200px; float: left"></div>
+        <div id="container-humidity" style="width: 300px; height: 200px; float: left"></div>
+        <div id="container-soil" style="width: 300px; height: 200px; float: left"></div>
+        <div id="container-light" style="width: 300px; height: 200px; float: left"></div>
+        
+    
+        <div id="container-fan" style= "float: right"></div>
+        <div id="container-water" style= "float: right"></div>
+        <div id="container-heater" style= "float: right"></div>
+        <div id="container-light" style= "float: right"></div>
+
+    </div>
+
+
+  <div id="container-fan" data-role="main" class="ui-content">
+    <form method="post" action="/action_page_post.php">
+      <label for="points">Fan</label>
+      <input type="range" name="points" id="points" value="50" min="0" max="100">
+    </form>
+  </div>
+
+
+  <div id="container-water" data-role="main" class="ui-content">
+    <form method="post" action="/action_page_post.php">
+      <label for="points">Water</label>
+      <input type="range" name="points" id="points" value="50" min="0" max="100">
+    </form>
+  </div>
+
+
+   <div id="container-heater" data-role="main" class="ui-content">
+    <form method="post" action="/action_page_post.php">
+      <label for="points">Heater</label>
+      <input type="range" name="points" id="points" value="50" min="0" max="100">
+    </form>
+  </div>
+
+   <div id="container-light" data-role="main" class="ui-content">
+    <form method="post" action="/action_page_post.php">
+      <label for="points">Light</label>
+      <input type="range" name="points" id="points" value="50" min="0" max="100">
+    </form>
+  </div>
+
+
+
+<script type='text/javascript'>//<![CDATA[
+
+
+var gaugeOptions = {
+
+    chart: {
+        type: 'solidgauge'
+    },
+
+    title: null,
+
+    pane: {
+        center: ['50%', '85%'],
+        size: '140%',
+        startAngle: -90,
+        endAngle: 90,
+        background: {
+            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+            innerRadius: '60%',
+            outerRadius: '100%',
+            shape: 'arc'
+        }
+    },
+
+    tooltip: {
+        enabled: false
+    },
+
+    // the value axis
+    yAxis: {
+        stops: [
+            [0.1, '#55BF3B'], // green
+            [0.5, '#DDDF0D'], // yellow
+            [0.9, '#DF5353'] // red
+        ],
+        lineWidth: 0,
+        minorTickInterval: null,
+        tickAmount: 2,
+        title: {
+            y: -70
+        },
+        labels: {
+            y: 16
+        }
+    },
+
+    plotOptions: {
+        solidgauge: {
+            dataLabels: {
+                y: 5,
+                borderWidth: 0,
+                useHTML: true
+            }
+        }
+    }
+};
+
+// The Temperature gauge
+var chartTemp = Highcharts.chart('container-temp', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 100,
+        title: {
+            text: 'Temperature'
+        }
+    },
+
+    credits: {
+        enabled: false
+    },
+
+    series: [{
+        name: 'Temperature',
+        data: [80],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">Celcius</span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' Celcius'
+        }
+    }]
+
+}));
+
+// The Humidity gauge
+var chartHumidity = Highcharts.chart('container-humidity', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 100,
+        title: {
+            text: 'Humidity'
+        }
+    },
+
+    credits: {
+        enabled: false
+    },
+
+    series: [{
+        name: 'Humidity',
+        data: [10],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                   '<span style="font-size:12px;color:silver"> %100</span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' %100'
+        }
+    }]
+
+}));
+
+
+//The soil gauge
+
+var chartSoil = Highcharts.chart('container-soil', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 100,
+        title: {
+            text: 'Soil'
+        }
+    },
+
+    credits: {
+        enabled: false
+    },
+
+    series: [{
+        name: 'Soil',
+        data: [80],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">ml</span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' ml'
+        }
+    }]
+
+}));
+
+//The Light Gauge
+var chartLight = Highcharts.chart('container-light', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 100,
+        title: {
+            text: 'Light'
+        }
+    },
+
+    credits: {
+        enabled: false
+    },
+
+    series: [{
+        name: 'Light',
+        data: [80],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">%100</span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' Intensity'
+        }
+    }]
+
+}));
+
+
+
+
+// Bring life to the dials
+setInterval(function () {
+    // Temperature
+    var point,
+        newVal,
+        inc;
+
+    if (chartTemp) {
+        point = chartTemp.series[0].points[0];
+        inc = Math.round((Math.random() - 0.5) * 100);
+        newVal = point.y + inc;
+
+        if (newVal < 0 || newVal > 100) {
+            newVal = point.y - inc;
+        }
+
+        point.update(newVal);
+    }
+
+    // Humidity
+    if (chartHumidity) {
+        point = chartHumidity.series[0].points[0];
+        inc = 0;
+        newVal = point.y + inc;
+
+        if (newVal < 0 || newVal > 100) {
+            newVal = point.y - inc;
+        }
+
+        point.update(newVal);
+    }
+
+    if (chartSoil) {
+        point = chartSoil.series[0].points[0];
+        inc = Math.round((Math.random() - 0.5) * 100);
+        newVal = point.y + inc;
+
+        if (newVal < 0 || newVal > 100) {
+            newVal = point.y - inc;
+        }
+
+        point.update(newVal);
+    }
+
+    if (chartLight) {
+        point = chartLight.series[0].points[0];
+        inc = Math.round((Math.random() - 0.5) * 100);
+        newVal = point.y + inc;
+
+        if (newVal < 0 || newVal > 100) {
+            newVal = point.y - inc;
+        }
+
+        point.update(newVal);
+    }
+
+}, 2000);
+
+
+//]]> 
+
+</script>
+
+</body>
+
+</html>
