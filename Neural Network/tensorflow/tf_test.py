@@ -86,7 +86,7 @@ def main():
 
     # Layer's sizes
     x_size = train_X.shape[1]   # Number of input nodes: 4 features and 1 bias
-    h_size = 5             # Number of hidden nodes
+    h_size = 1            # Number of hidden nodes
     y_size = train_y.shape[1]   # Number of outcomes (3 iris flowers)
 
     # Symbols

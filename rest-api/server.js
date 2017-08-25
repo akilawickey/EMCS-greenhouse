@@ -288,7 +288,7 @@ client.on('message', function (topic, message) {
          // console.log(message)
 
   if(topic.toString() == 'temp'){
-       console.log(topic.toString() + ' ' +  message.toString());
+       // console.log(topic.toString() + ' ' +  message.toString());
        t = message.toString();
        var anewrow = new PUser3 ({
             time: date,
@@ -304,7 +304,7 @@ client.on('message', function (topic, message) {
        t_p = t;
   }
   if(topic.toString() == 'hum'){
-      console.log(topic.toString() + ' ' +  message.toString());
+      // console.log(topic.toString() + ' ' +  message.toString());
       h = message.toString();
         var bnewrow = new PUser4 ({
             time: date,
@@ -319,7 +319,7 @@ client.on('message', function (topic, message) {
   }
 
   if(topic.toString() == 'soil'){
-      console.log(topic.toString() + ' ' +  message.toString());
+      // console.log(topic.toString() + ' ' +  message.toString());
       s = message.toString();
         var cnewrow = new PUser5 ({
             time: date,
@@ -334,7 +334,7 @@ client.on('message', function (topic, message) {
   }
 
   if(topic.toString() == 'light'){
-      console.log(topic.toString() + ' ' +  message.toString());
+      // console.log(topic.toString() + ' ' +  message.toString());
       l = message.toString();
              // console.log(l);
 
@@ -380,6 +380,7 @@ setInterval(function () {
               if( hum_[i] == "nan' "){
 
                  hum_[i] = "0.0";
+                 hum_.splice(i, 1);
               }
               
               // console.log(hum_[i]);
