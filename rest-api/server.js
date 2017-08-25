@@ -24,6 +24,9 @@ var l = '';
 var count = 0;
 
 var hum_ = [];
+var light_ = [];
+var temp_ = [];
+var soil_ = [];
 
 
 mongoose.Promise = global.Promise;
@@ -376,7 +379,26 @@ setInterval(function () {
             state_temp_time = data.toString().split(',');
             // console.log(data);
             for(var i = 0;i<=data.length-1;i++){
-              hum_[i] = state_temp_time[2*i+1].substring(7,12);
+              temp_[i] = state_temp_time[2*i+1].substring(7,12);
+              if( temp_[i] == "nan' "){
+
+                 temp_[i] = "0.0";
+                 temp_.splice(i, 1);
+              }
+              
+              // console.log(hum_[i]);
+
+            }
+              // console.log(hum_.length);
+              io.emit('mqtt_data','temp ' + temp_);
+
+        });
+        PUser4.find({},'val', function(err, data){
+
+            state_hum_time = data.toString().split(',');
+            // console.log(data);
+            for(var i = 0;i<=data.length-1;i++){
+              hum_[i] = state_hum_time[2*i+1].substring(7,12);
               if( hum_[i] == "nan' "){
 
                  hum_[i] = "0.0";
@@ -387,11 +409,51 @@ setInterval(function () {
 
             }
               // console.log(hum_.length);
-              io.emit('mqtt_data',hum_);
+              io.emit('mqtt_data','hum ' + hum_);
+
+        });
+        PUser5.find({},'val', function(err, data){
+
+            state_soil_time = data.toString().split(',');
+            // console.log(data);
+            for(var i = 0;i<=data.length-1;i++){
+              soil_[i] = state_soil_time[2*i+1].substring(7,10);
+              if( soil_[i] == "nan' "){
+
+                 soil_[i] = "0.0";
+                 soil_.splice(i, 1);
+              }
+              
+              // console.log(hum_[i]);
+
+            }
+              // console.log(hum_.length);
+              io.emit('mqtt_data','soil ' + soil_);
+              // console.log(soil_);
+
+        });
+        PUser6.find({},'val', function(err, data){
+
+            state_light_time = data.toString().split(',');
+            // console.log(data);
+            for(var i = 0;i<=data.length-1;i++){
+              light_[i] = state_light_time[2*i+1].substring(7,12);
+              if( light_[i] == "nan' "){
+
+                 light_[i] = "0.0";
+                 light_.splice(i, 1);
+              }
+              
+              // console.log(hum_[i]);
+
+            }
+              // console.log(hum_.length);
+              io.emit('mqtt_data','light ' + light_);
 
         });
 
-}, 1000);
+
+}, 5000);
 
 // setInterval(function () {
 // io.emit('mqtt', 'hello'); 
