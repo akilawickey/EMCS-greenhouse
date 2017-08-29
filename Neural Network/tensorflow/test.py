@@ -30,9 +30,11 @@ import pandas as pd
 # print soil
 # Data sets
 # Data sets
-IRIS_TRAINING = "iris_training.csv"
-IRIS_TEST = "iris_test.csv"
+# IRIS_TRAINING = "iris_training.csv"
+# IRIS_TEST = "iris_test.csv"
 
+IRIS_TRAINING = "greenhouse_training.csv"
+IRIS_TEST = "greenhouse_testing.csv"
 # Load datasets.
 training_set = tf.contrib.learn.datasets.base.load_csv_with_header(
     filename=IRIS_TRAINING,
@@ -64,6 +66,9 @@ print('Accuracy: {0:f}'.format(accuracy_score))
 
 # Classify two new flower samples.
 new_samples = np.array(
-    [[6.4, 3.2, 4.5, 1.5], [5.8, 3.1, 5.0, 1.7]], dtype=float)
+    [[26.6,998,86.5,16], [25,941,99,45]], dtype=float)
 y = list(classifier.predict(new_samples, as_iterable=True))
 print('Predictions: {}'.format(str(y)))
+
+# 26.6,998,86.5,16,1
+# 25.6,1008,90.6,11,0
