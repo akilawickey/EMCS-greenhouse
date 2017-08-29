@@ -124,8 +124,9 @@ def main():
         print("Epoch = %d, train accuracy = %.2f%%, test accuracy = %.2f%%"
               % (epoch + 1, 100. * train_accuracy, 100. * test_accuracy))
 
+    tst_x = 25    
     sess.run(predict, feed_dict={x: tst_x})
-
+    print predict
 
     sess.close()
 

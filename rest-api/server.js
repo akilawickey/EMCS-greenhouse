@@ -1,10 +1,10 @@
 /**
  * Module dependencies.
  */
-var express = require('express'),
-api = require('./routes/api');
-var methodOverride = require('method-override')
-var bodyParser = require('body-parser')
+var express = require('express');
+// api = require('./routes/api');
+var methodOverride = require('method-override');
+var bodyParser = require('body-parser');
 var app = express();
 var http = require('http').Server(app);
 var router = express.Router();  
@@ -27,7 +27,6 @@ var hum_ = [];
 var light_ = [];
 var temp_ = [];
 var soil_ = [];
-
 
 mongoose.Promise = global.Promise;
 
@@ -82,9 +81,6 @@ mongoose.Promise = global.Promise;
       val: { type: String}
 
     });
-
-
-
     // Compiles the schema into a model, opening (or creating, if
     // nonexistent) the 'PowerUsers' collection in the MongoDB database
     var PUser = mongoose.model('data_store', userSchema);
@@ -93,8 +89,6 @@ mongoose.Promise = global.Promise;
     var PUser4 = mongoose.model('hum_data', h_data);
     var PUser5 = mongoose.model('soil_data', s_data);
     var PUser6  = mongoose.model('light_data', l_data);
-
-
 
 // // create a socket object that listens on port 5000
 var io = require('socket.io')(http);
@@ -113,14 +107,9 @@ var client = mqtt.connect('mqtt://localhost');
       console.log('----------------------------------------------------------------------------');
 });
     
-
-
-
-
 router.use("/public",function(req,res){
 
       res.sendFile(path + "index.html");
-
 });
 
 app.use("/public",router);
@@ -190,39 +179,43 @@ var allowCrossDomain = function(req, res, next) {
     }
 };
 
-app.use(methodOverride('X-HTTP-Method-Override'))
-app.use(allowCrossDomain)
+app.use(methodOverride('X-HTTP-Method-Override'));
+app.use(allowCrossDomain);
 // parse various different custom JSON types as JSON
-app.use(bodyParser.json({ type: 'application/*+json' }))
+app.use(bodyParser.json({ type: 'application/*+json' }));
 
 // parse some custom thing into a Buffer
-app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }))
+app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }));
 
 // parse an HTML body into a string
-app.use(bodyParser.text({ type: 'text/html' }))
+app.use(bodyParser.text({ type: 'text/html' }));
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
+app.get('/sensor_data', function(req, res) {
+  res.json({notes: "Temp :23 Humidity :88 Light :10023 Soil :899"})
+});
 // JSON API
-app.get('/switches', api.switches);
-app.get('/switches/:id', api.switch);
-app.post('/switches', api.addSwitch);
-app.put('/switches/:id', api.editSwitch);
-app.put('/switches', api.editAllSwitches);
-app.delete('/switches/:id', api.deleteSwitch);
-
-
+// app.get('/switches', api.switches);
+// app.get('/switches/:id', api.switch);
+// app.post('/switches', api.addSwitch);
+// app.put('/switches/:id', api.editSwitch);
+// app.put('/switches', api.editAllSwitches);
+// app.delete('/switches/:id', api.deleteSwitch);
+// app.get("/api/contacts", function(req, res) {
+//   db.collection(CONTACTS_COLLECTION).find({}).toArray(function(err, docs) {
+//     if (err) {
+//       handleError(res, err.message, "Failed to get contacts.");
+//     } else {
+//       res.status(200).json(docs);
+//     }
+//   });
+// });
 
 
 io.sockets.on('connection', function (socket) {
-    // socket connection indicates what mqtt topic to subscribe to in data.topic
-    // socket.on('subscribe', function (data) {
-    //     console.log('Subscribing to '+data.topic);
-    //     socket.join(data.topic);
-    //     // client.subscribe(data.topic);
-    // });
     // when socket connection publishes a message, forward that message
     // the the mqtt broker
     socket.on('publish', function (data) {
@@ -239,7 +232,6 @@ io.sockets.on('connection', function (socket) {
     
         // PUser2.update({'mqtt_topic':'fan'},{$set:{'status':'1'}},{multi:true})
         // PUser2.update({ mqtt_topic: 'fan' }, { $set: { status: '1' }});
-
 
     });
     
@@ -269,14 +261,8 @@ client.on('connect', function () {
     client.subscribe('soil');
 
 
-})
- 
-
-    // client.on('message', function (topic, payload, packet) {
-       
-
-  
-
+});
+        
 client.on('message', function (topic, message) {
   // message is Buffer 
   // console.log(topic.toString())
