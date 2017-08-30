@@ -269,7 +269,29 @@ function config_page()
                         </div>
 
                     </div>
+                      <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    Settings
+                                </div>
+                                <div class="panel-body">
+                                    <!-- <div id="myDiv">Plotly chart will be drawn inside this DIV</div> -->
+                                   <button type="button" class="btn btn-primary" onclick="config_page()">Add a New Rule</button>
+                                   <button type="button" class="btn btn-success">Edit Rules</button>
+
+
+                                </div>
+                                <div class="panel-footer">
+                                    Panel Footer
+                                </div>
+                            </div>
+                        </div>
+              
+                <!-- /.col-lg-4 -->
+                     </div>
                 </div>
+
                 <!-- /.col-lg-4 -->
            
                 <div class="col-lg-8">
@@ -299,27 +321,7 @@ function config_page()
                 <!-- /.col-lg-4 -->
             </div>
             <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            Settings
-                        </div>
-                        <div class="panel-body">
-                            <!-- <div id="myDiv">Plotly chart will be drawn inside this DIV</div> -->
-                           <button type="button" class="btn btn-primary" onclick="config_page()">Add a New Rule</button>
-                           <button type="button" class="btn btn-success">Edit Rules</button>
-
-
-                        </div>
-                        <div class="panel-footer">
-                            Panel Footer
-                        </div>
-                    </div>
-                </div>
-      
-                <!-- /.col-lg-4 -->
-            </div>
+          
             <!-- /.row -->
            
             <!-- /.row -->
@@ -344,18 +346,19 @@ function config_page()
             zoomType: 'x'
         },
         title: {
-            text: 'USD to EUR exchange rate over time'
+            text: 'Temperature vs Time'
         },
         subtitle: {
             text: document.ontouchstart === undefined ?
                     'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
         },
         xAxis: {
-            type: 'datetime'
+            type: 'datetime',
+            tickInterval: 300 * 1000
         },
         yAxis: {
             title: {
-                text: 'Exchange rate'
+                text: 'Temperature ( ͦc)'
             }
         },
         legend: {
@@ -390,8 +393,9 @@ function config_page()
 
         series: [{
             type: 'area',
-            name: 'USD to EUR',
-            data: temp_data
+            name: 'Temperature',
+            data: temp_data,
+            pointInterval:  300 * 1000,
         }]
     });
 var main_plot1 =  Highcharts.chart('container1', {
@@ -399,18 +403,19 @@ var main_plot1 =  Highcharts.chart('container1', {
             zoomType: 'x'
         },
         title: {
-            text: 'USD to EUR exchange rate over time'
+            text: 'Humidity Percentage vs Time'
         },
         subtitle: {
             text: document.ontouchstart === undefined ?
                     'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
         },
         xAxis: {
-            type: 'datetime'
+            type: 'datetime',
+            tickInterval: 300 * 1000
         },
         yAxis: {
             title: {
-                text: 'Exchange rate'
+                text: 'Humidity %'
             }
         },
         legend: {
@@ -445,8 +450,9 @@ var main_plot1 =  Highcharts.chart('container1', {
 
         series: [{
             type: 'area',
-            name: 'USD to EUR',
-            data: temp_data
+            name: 'Humidity',
+            data: temp_data,
+            pointInterval:  300 * 1000,
         }]
     });
 var main_plot2 =  Highcharts.chart('container2', {
@@ -454,18 +460,19 @@ var main_plot2 =  Highcharts.chart('container2', {
             zoomType: 'x'
         },
         title: {
-            text: 'USD to EUR exchange rate over time'
+            text: 'Soil Moisture vs Time'
         },
         subtitle: {
             text: document.ontouchstart === undefined ?
                     'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
         },
         xAxis: {
-            type: 'datetime'
+            type: 'datetime',
+            tickInterval: 300 * 1000
         },
         yAxis: {
             title: {
-                text: 'Exchange rate'
+                text: 'Soil Moisture'
             }
         },
         legend: {
@@ -500,8 +507,9 @@ var main_plot2 =  Highcharts.chart('container2', {
 
         series: [{
             type: 'area',
-            name: 'USD to EUR',
-            data: temp_data
+            name: 'Moisture',
+            data: temp_data,
+            pointInterval:  300 * 1000,
         }]
     });
 var main_plot3 =  Highcharts.chart('container3', {
@@ -509,18 +517,19 @@ var main_plot3 =  Highcharts.chart('container3', {
             zoomType: 'x'
         },
         title: {
-            text: 'USD to EUR exchange rate over time'
+            text: 'Light Intensity vs Time'
         },
         subtitle: {
             text: document.ontouchstart === undefined ?
                     'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
         },
         xAxis: {
-            type: 'datetime'
+            type: 'datetime',
+            tickInterval: 300 * 1000
         },
         yAxis: {
             title: {
-                text: 'Exchange rate'
+                text: 'Light Intensity'
             }
         },
         legend: {
@@ -555,8 +564,9 @@ var main_plot3 =  Highcharts.chart('container3', {
 
         series: [{
             type: 'area',
-            name: 'USD to EUR',
-            data: temp_data
+            name: 'Light',
+            data: temp_data,
+            pointInterval:  300 * 1000,
         }]
     });
 </script>
