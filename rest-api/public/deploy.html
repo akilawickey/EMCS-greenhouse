@@ -111,7 +111,7 @@
         
     });  
 
- console.log(temp_data);
+    // console.log(temp_data);
     function pump_on() {
          socket.emit('publish', {topic:"testTopic",payload:"1"});
     }
@@ -125,18 +125,28 @@
          socket.emit('publish', {topic:"fan",payload:"0"});
     }
 
-
-
-    function rule1_apply() {
-         socket.emit('rules', {topic:"fan",payload:"0"});
+    function rule1() {
+        //  socket.emit('rules', {topic:"fan",payload:"0"});
+        console.log('Rule 1 applied');
+        socket.emit('rules', {topic:"rule1",payload:"1"});
+    }
+    function rule2() {
+        //  socket.emit('rules', {topic:"fan",payload:"0"});
+        console.log('Rule 2 applied');
+    }
+    function rule3() {
+        //  socket.emit('rules', {topic:"fan",payload:"0"});
+        console.log('Rule 3 applied');
+    }
+    function rule4() {
+        //  socket.emit('rules', {topic:"fan",payload:"0"});
+        console.log('Rule 4 applied');
     }
 
-
-
-function config_page()
-{
-     location.href = "deploy_config.html";
-} 
+    function config_page()
+    {
+        location.href = "deploy_config.html";
+    } 
 
 </script>
 
@@ -225,8 +235,8 @@ function config_page()
     
                             <!-- <button type="button" class="btn btn-success"  onclick="fan_on()">FAN 1</button><br><br> -->
                             <div class="switch1">
-                            <span>Rule 1 Carrot</span>
-                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan_on()" id="switch1">
+                            <span>Tomato Rule</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="rule1()" id="switch1">
                                     <label class="switch-label" for="switch1">
                                         <span class="switch-inner"></span> 
                                         <!-- <span class="switch-switch"></span> -->
@@ -235,8 +245,8 @@ function config_page()
                             
                             <!-- <button type="button" class="btn btn-success" onclick="fan_off()">FAN 2</button><br><br> -->
                             <div class="switch2">
-                                <span>Rule 2 Chillie</span>
-                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan_off()" id="switch2" >
+                                <span>Bell pepper Rule</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="rule2()" id="switch2" >
                                     <label class="switch-label" for="switch2">
                                         <span class="switch-inner"></span> 
                                         <!-- <span class="switch-switch"></span> -->
@@ -245,8 +255,8 @@ function config_page()
                             </div>
                             <!-- <button type="button" class="btn btn-success">FAN 3</button><br><br> -->
                             <div class="switch3">
-                                <span>Rule 3 Dragon Fruit</span>
-                                <input type="checkbox" name="switch" class="switch-checkbox" id="switch3" >
+                                <span>Pumpking Rule</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="rule3()" id="switch3" >
                                     <label class="switch-label" for="switch3">
                                         <span class="switch-inner"></span> 
                                         <!-- <span class="switch-switch"></span> -->
@@ -254,8 +264,8 @@ function config_page()
                             </div>
                             <!-- <button type="button" class="btn btn-success">FAN 4</button><br><br> -->
                             <div class="switch4">
-                            <span>Rule 4</span>
-                                <input type="checkbox" name="switch" class="switch-checkbox" id="switch4" >
+                            <span>Salade Rule</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="rule4()" id="switch4" >
                                     <label class="switch-label" for="switch4">
                                         <span class="switch-inner"></span> 
                                         <!-- <span class="switch-switch"></span> -->

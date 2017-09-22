@@ -1,5 +1,6 @@
 /**
  * Module dependencies.
+ * Greenhouse IoT server by leafylanka 
  */
 var express = require('express');
 // api = require('./routes/api');
@@ -15,6 +16,7 @@ var net = require('net');
 var mongoose = require('mongoose');
 var date;
 var schedule = require('node-schedule');
+var data = 'none'
 
 var t_p,h_p,s_p,l_p;
 var t = '';
@@ -97,6 +99,7 @@ var io = require('socket.io')(http);
 var client = mqtt.connect('mqtt://localhost');
  
      http.listen((process.env.PORT || 80), function(){
+    //  http.listen((3000), function(){
       // console.log(process.env.PORT);
       console.log('----------------------------------------------------------------------------');
       console.log('----------------------------------------------------------------------------');
@@ -110,6 +113,7 @@ var client = mqtt.connect('mqtt://localhost');
 router.use("/public",function(req,res){
 
       res.sendFile(path + "index.html");
+
 });
 
 app.use("/public",router);
@@ -122,6 +126,7 @@ app.get('/public', function(req, res){
     res.sendFile(__dirname + '/index.html');
 
 });
+
 // app.get('/sensor/:temp/:hmdt/:soil/:light', function(req, res) {
 //      var t = req.params.temp;
 //      var h = req.params.hmdt;
@@ -157,8 +162,7 @@ app.get('/public', function(req, res){
 //         dnewrow.save(function (err) {if (err) console.log ('Error on save!')});
 
 //   });
-
-
+// 
 // Configuration  
 
 // ## CORS middleware
@@ -227,7 +231,7 @@ io.sockets.on('connection', function (socket) {
             status: data.payload,
          
         });
-        newrow1.save(function (err) {if (err) console.log ('Error on save!')});
+        newrow1.save(function (err) {if (err) console.log ('Error on save! actuator controlling error ')});
         // io.emit('mqtt',{'topic':String(data.topic),'payload':String(data.payload)});
     
         // PUser2.update({'mqtt_topic':'fan'},{$set:{'status':'1'}},{multi:true})
@@ -252,7 +256,6 @@ io.sockets.on('connection', function (socket) {
 
 // listen to messages coming from the mqtt broker
 
-
 client.on('connect', function () {
 
     client.subscribe('temp');
@@ -260,9 +263,10 @@ client.on('connect', function () {
     client.subscribe('light');
     client.subscribe('soil');
 
-
 });
         
+//Sensor node data
+
 client.on('message', function (topic, message) {
   // message is Buffer 
   // console.log(topic.toString())
@@ -277,7 +281,7 @@ client.on('message', function (topic, message) {
          // console.log(message)
 
   if(topic.toString() == 'temp'){
-       // console.log(topic.toString() + ' ' +  message.toString());
+       console.log(topic.toString() + ' ' +  message.toString());
        t = message.toString();
        var anewrow = new PUser3 ({
             time: date,
@@ -286,14 +290,13 @@ client.on('message', function (topic, message) {
        // console.log(t + '\n');
        // console.log(t_p);
        if(t_p != t){
-         io.emit('mqtt','temp ' + t);
          anewrow.save(function (err) {if (err) console.log ('Error on save!')});
          // console.log("Temperature changed");
        }
        t_p = t;
   }
   if(topic.toString() == 'hum'){
-      // console.log(topic.toString() + ' ' +  message.toString());
+      console.log(topic.toString() + ' ' +  message.toString());
       h = message.toString();
         var bnewrow = new PUser4 ({
             time: date,
@@ -301,14 +304,13 @@ client.on('message', function (topic, message) {
         });
 
         if(h_p != h){
-        io.emit('mqtt','hum ' + h);
         bnewrow.save(function (err) {if (err) console.log ('Error on save!')});     
         }
         h_p = h;
   }
 
   if(topic.toString() == 'soil'){
-      // console.log(topic.toString() + ' ' +  message.toString());
+      console.log(topic.toString() + ' ' +  message.toString());
       s = message.toString();
         var cnewrow = new PUser5 ({
             time: date,
@@ -316,14 +318,13 @@ client.on('message', function (topic, message) {
         });
 
         if(s_p != s){
-        io.emit('mqtt','soil ' + s);
         cnewrow.save(function (err) {if (err) console.log ('Error on save!')});
         }
         s_p = s;
   }
 
   if(topic.toString() == 'light'){
-      // console.log(topic.toString() + ' ' +  message.toString());
+      console.log(topic.toString() + ' ' +  message.toString());
       l = message.toString();
              // console.log(l);
 
@@ -334,7 +335,6 @@ client.on('message', function (topic, message) {
      });
 
         if(l_p != l){
-        io.emit('mqtt','light ' + l);
         dnewrow.save(function (err) {if (err) console.log ('Error on save!')});
         }
         l_p = l;
@@ -343,103 +343,114 @@ client.on('message', function (topic, message) {
        
 });
 
-  
-// console.log(date);
-    // setTimeout(1000);
-
-
-
-// var j = schedule.scheduleJob('1 * * * * ', function(){
-//   console.log('The answer to life, the universe, and everything!');
-// });
- 
-// client.on('message', function(topic, message) {
-//   console.log(message);
-// });
-
+//updating the gauges of the chart
 setInterval(function () {
 
+      PUser3.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
+        // console.log( post.val );
+        io.emit('mqtt','temp ' + post.val);
+      });
 
-        PUser3.find({},'val', function(err, data){
+      PUser4.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
+        // console.log( post.val );
+        io.emit('mqtt','hum ' + post.val);
+      });
 
-            state_temp_time = data.toString().split(',');
-            // console.log(data);
-            for(var i = 0;i<=data.length-1;i++){
-              temp_[i] = state_temp_time[2*i+1].substring(7,12);
-              if( temp_[i] == "nan' "){
+      PUser5.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
+        // console.log( post.val );
+        io.emit('mqtt','soil ' + post.val);
+      });
 
-                 temp_[i] = "0.0";
-                 temp_.splice(i, 1);
-              }
+      PUser6.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
+        // console.log( post.val );
+        io.emit('mqtt','light ' + post.val);        
+      });
+
+}, 1000);
+// setInterval(function () {
+ 
+//         PUser3.find({},'val', function(err, data){
+
+//             state_temp_time = data.toString().split(',');
+//             // console.log(data);
+//             for(var i = 0;i<=data.length-1;i++){
+//               temp_[i] = state_temp_time[2*i+1].substring(7,12);
+//               // console.log(state_temp_time);
+//               if( temp_[i] == "nan' "){
+
+//                  temp_[i] = "0.0";
+//                  temp_.splice(i, 1);
+//               }
+//               // if (typeof(jsVar) == 'undefined') {
+                
+//               // console.log(temp_[i]);
               
-              // console.log(hum_[i]);
+//             }
+//               // console.log(hum_.length);
+//               io.emit('mqtt_data','temp ' + temp_);
 
-            }
-              // console.log(hum_.length);
-              io.emit('mqtt_data','temp ' + temp_);
+//         });
+//         PUser4.find({},'val', function(err, data){
 
-        });
-        PUser4.find({},'val', function(err, data){
+//             state_hum_time = data.toString().split(',');
+//             // console.log(data);
+//             for(var i = 0;i<=data.length-1;i++){
+//               hum_[i] = state_hum_time[2*i+1].substring(7,12);
+//               if( hum_[i] == "nan' "){
 
-            state_hum_time = data.toString().split(',');
-            // console.log(data);
-            for(var i = 0;i<=data.length-1;i++){
-              hum_[i] = state_hum_time[2*i+1].substring(7,12);
-              if( hum_[i] == "nan' "){
-
-                 hum_[i] = "0.0";
-                 hum_.splice(i, 1);
-              }
+//                  hum_[i] = "0.0";
+//                  hum_.splice(i, 1);
+//               }
               
-              // console.log(hum_[i]);
+//               // console.log(hum_[i]);
 
-            }
-              // console.log(hum_.length);
-              io.emit('mqtt_data','hum ' + hum_);
+//             }
+//               // console.log(hum_.length);
+//               io.emit('mqtt_data','hum ' + hum_);
 
-        });
-        PUser5.find({},'val', function(err, data){
+//         });
+//         PUser5.find({},'val', function(err, data){
 
-            state_soil_time = data.toString().split(',');
-            // console.log(data);
-            for(var i = 0;i<=data.length-1;i++){
-              soil_[i] = state_soil_time[2*i+1].substring(7,10);
-              if( soil_[i] == "nan' "){
+//             state_soil_time = data.toString().split(',');
+//             // console.log(data);
+//             for(var i = 0;i<=data.length-1;i++){
+//               soil_[i] = state_soil_time[2*i+1].substring(7,10);
+//               if( soil_[i] == "nan' "){
 
-                 soil_[i] = "0.0";
-                 soil_.splice(i, 1);
-              }
+//                  soil_[i] = "0.0";
+//                  soil_.splice(i, 1);
+//               }
               
-              // console.log(hum_[i]);
+//               // console.log(soil_[i]);
 
-            }
-              // console.log(hum_.length);
-              io.emit('mqtt_data','soil ' + soil_);
-              // console.log(soil_);
+//             }
+//               // console.log(hum_.length);
+//               io.emit('mqtt_data','soil ' + soil_);
+//               // console.log(soil_);
 
-        });
-        PUser6.find({},'val', function(err, data){
+//         });
+//         PUser6.find({},'val', function(err, data){
+            
+//             state_light_time = data.toString().split(',');
+//             // console.log(data);
+//             for(var i = 0;i<=data.length-1;i++){
+//               light_[i] = state_light_time[2*i+1].substring(7,12);
+//               if( light_[i] == "nan' "){
 
-            state_light_time = data.toString().split(',');
-            // console.log(data);
-            for(var i = 0;i<=data.length-1;i++){
-              light_[i] = state_light_time[2*i+1].substring(7,12);
-              if( light_[i] == "nan' "){
-
-                 light_[i] = "0.0";
-                 light_.splice(i, 1);
-              }
+//                  light_[i] = "0.0";
+//                  light_.splice(i, 1);
+//               }
               
-              // console.log(hum_[i]);
+//               // console.log(light_[i]);
 
-            }
-              // console.log(hum_.length);
-              io.emit('mqtt_data','light ' + light_);
+//             }
+//               // console.log(hum_.length);
+//               io.emit('mqtt_data','light ' + light_);
 
-        });
+//         });
 
 
-}, 5000);
+// }, 10000);
 
 // setInterval(function () {
 // io.emit('mqtt', 'hello'); 
