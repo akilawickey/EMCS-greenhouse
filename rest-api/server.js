@@ -14,6 +14,7 @@ var path = require('path');
 var sys = require('util');
 var net = require('net');
 var mongoose = require('mongoose');
+var ObjectId = require('mongodb').ObjectID;
 var date;
 var schedule = require('node-schedule');
 var data = 'none'
@@ -367,90 +368,113 @@ setInterval(function () {
       });
 
 }, 1000);
+
+//Get the daily sensore node data
 // setInterval(function () {
+  
+//       PUser3.find({
+//         _id: {
+//             $gt: ObjectId.createFromTime(Date.now() / 1000 - 24 * 60 * 60)
+//         }      
+//       },
+//       function(err, post) {
+//         state_temp_time = post.toString().split(',');
+//         console.log(state_temp_time.substring(7,12));
+//       }
+    
+//       );
+  
+// }, 5000);
+_id: { $gt: ObjectId.createFromTime(Date.now() / 1000 - 24 * 60 * 60)
+     }   
+setInterval(function () {
  
-//         PUser3.find({},'val', function(err, data){
+        PUser3.find({_id: { $gt: ObjectId.createFromTime(Date.now() / 1000 - 24 * 60 * 60)
+        }},'val', function(err, data){
 
-//             state_temp_time = data.toString().split(',');
-//             // console.log(data);
-//             for(var i = 0;i<=data.length-1;i++){
-//               temp_[i] = state_temp_time[2*i+1].substring(7,12);
-//               // console.log(state_temp_time);
-//               if( temp_[i] == "nan' "){
+            state_temp_time = data.toString().split(',');
+            // console.log(data);
+            for(var i = 0;i<=data.length-1;i++){
+              temp_[i] = state_temp_time[2*i+1].substring(7,12);
+              // console.log(state_temp_time);
+              if( temp_[i] == "nan' "){
 
-//                  temp_[i] = "0.0";
-//                  temp_.splice(i, 1);
-//               }
-//               // if (typeof(jsVar) == 'undefined') {
+                 temp_[i] = "0.0";
+                 temp_.splice(i, 1);
+              }
+              // if (typeof(jsVar) == 'undefined') {
                 
-//               // console.log(temp_[i]);
+              // console.log(temp_[i]);
               
-//             }
-//               // console.log(hum_.length);
-//               io.emit('mqtt_data','temp ' + temp_);
+            }
+              // console.log(hum_.length);
+              io.emit('mqtt_data','temp ' + temp_);
 
-//         });
-//         PUser4.find({},'val', function(err, data){
+        });
+        PUser4.find({_id: { $gt: ObjectId.createFromTime(Date.now() / 1000 - 24 * 60 * 60)
+        }},'val', function(err, data){
 
-//             state_hum_time = data.toString().split(',');
-//             // console.log(data);
-//             for(var i = 0;i<=data.length-1;i++){
-//               hum_[i] = state_hum_time[2*i+1].substring(7,12);
-//               if( hum_[i] == "nan' "){
+            state_hum_time = data.toString().split(',');
+            // console.log(data);
+            for(var i = 0;i<=data.length-1;i++){
+              hum_[i] = state_hum_time[2*i+1].substring(7,12);
+              if( hum_[i] == "nan' "){
 
-//                  hum_[i] = "0.0";
-//                  hum_.splice(i, 1);
-//               }
+                 hum_[i] = "0.0";
+                 hum_.splice(i, 1);
+              }
               
-//               // console.log(hum_[i]);
+              // console.log(hum_[i]);
 
-//             }
-//               // console.log(hum_.length);
-//               io.emit('mqtt_data','hum ' + hum_);
+            }
+              // console.log(hum_.length);
+              io.emit('mqtt_data','hum ' + hum_);
 
-//         });
-//         PUser5.find({},'val', function(err, data){
+        });
+        PUser5.find({_id: { $gt: ObjectId.createFromTime(Date.now() / 1000 - 24 * 60 * 60)
+        }},'val', function(err, data){
 
-//             state_soil_time = data.toString().split(',');
-//             // console.log(data);
-//             for(var i = 0;i<=data.length-1;i++){
-//               soil_[i] = state_soil_time[2*i+1].substring(7,10);
-//               if( soil_[i] == "nan' "){
+            state_soil_time = data.toString().split(',');
+            // console.log(data);
+            for(var i = 0;i<=data.length-1;i++){
+              soil_[i] = state_soil_time[2*i+1].substring(7,10);
+              if( soil_[i] == "nan' "){
 
-//                  soil_[i] = "0.0";
-//                  soil_.splice(i, 1);
-//               }
+                 soil_[i] = "0.0";
+                 soil_.splice(i, 1);
+              }
               
-//               // console.log(soil_[i]);
+              // console.log(soil_[i]);
 
-//             }
-//               // console.log(hum_.length);
-//               io.emit('mqtt_data','soil ' + soil_);
-//               // console.log(soil_);
+            }
+              // console.log(hum_.length);
+              io.emit('mqtt_data','soil ' + soil_);
+              // console.log(soil_);
 
-//         });
-//         PUser6.find({},'val', function(err, data){
+        });
+        PUser6.find({_id: { $gt: ObjectId.createFromTime(Date.now() / 1000 - 24 * 60 * 60)
+        }},'val', function(err, data){
             
-//             state_light_time = data.toString().split(',');
-//             // console.log(data);
-//             for(var i = 0;i<=data.length-1;i++){
-//               light_[i] = state_light_time[2*i+1].substring(7,12);
-//               if( light_[i] == "nan' "){
+            state_light_time = data.toString().split(',');
+            // console.log(data);
+            for(var i = 0;i<=data.length-1;i++){
+              light_[i] = state_light_time[2*i+1].substring(7,12);
+              if( light_[i] == "nan' "){
 
-//                  light_[i] = "0.0";
-//                  light_.splice(i, 1);
-//               }
+                 light_[i] = "0.0";
+                 light_.splice(i, 1);
+              }
               
-//               // console.log(light_[i]);
+              // console.log(light_[i]);
 
-//             }
-//               // console.log(hum_.length);
-//               io.emit('mqtt_data','light ' + light_);
+            }
+              // console.log(hum_.length);
+              io.emit('mqtt_data','light ' + light_);
 
-//         });
+        });
 
 
-// }, 10000);
+}, 10000);
 
 // setInterval(function () {
 // io.emit('mqtt', 'hello'); 
