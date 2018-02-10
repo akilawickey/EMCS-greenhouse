@@ -1,7 +1,7 @@
 var part_one,part_two,graph_temp,graph_hum,graph_soil,graph_light;
 var count = 0;
 var socket = io();
-socket.on('mqtt_data', function(msg){
+socket.on('mqtt', function(msg){
    var res = msg.split(" ");
    console.log(res);
    part_one = res[0];
