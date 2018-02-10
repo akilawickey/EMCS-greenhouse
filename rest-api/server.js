@@ -1,6 +1,6 @@
 /**
  * Module dependencies.
- * Greenhouse IoT server by leafylanka 
+ * Greenhouse IoT server by leafylanka
  */
 var express = require('express');
 // api = require('./routes/api');
@@ -8,7 +8,7 @@ var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 var app = express();
 var http = require('http').Server(app);
-var router = express.Router();  
+var router = express.Router();
 var mqtt = require('mqtt');
 var path = require('path');
 var sys = require('util');
@@ -36,13 +36,13 @@ mongoose.Promise = global.Promise;
     var uristring = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/greenhouse';
 
       mongoose.connect(uristring, function (err, res) {
-      if (err) { 
+      if (err) {
         console.log ('ERROR connecting to: ' + uristring + '. ' + err);
       } else {
         console.log ('Succeeded connected to: ' + uristring);
       }
     });
-    // This is the schema.  Note the types, validation and trim 
+    // This is the schema.  Note the types, validation and trim
     // statements.  They enforce useful constraints on the data.
     var userSchema = new mongoose.Schema({
 
@@ -95,10 +95,10 @@ mongoose.Promise = global.Promise;
 
 // // create a socket object that listens on port 5000
 var io = require('socket.io')(http);
- 
+
 // create an mqtt client object and connect to the mqtt broker
 var client = mqtt.connect('mqtt://localhost');
- 
+
      http.listen((process.env.PORT || 8080), function(){
     //  http.listen((3000), function(){
       // console.log(process.env.PORT);
@@ -110,7 +110,7 @@ var client = mqtt.connect('mqtt://localhost');
       console.log('----------------------------------------------------------------------------');
       console.log('----------------------------------------------------------------------------');
 });
-    
+
 router.use("/public",function(req,res){
 
       res.sendFile(path + "home.html");
@@ -139,7 +139,7 @@ app.get('/public', function(req, res){
 //      console.log(h);
 //      console.log(s);
 //      console.log(l);
-     
+
 //      var anewrow = new PUser3 ({
 //             time: date,
 //             val: t
@@ -158,22 +158,22 @@ app.get('/public', function(req, res){
 //      });
 
 //         anewrow.save(function (err) {if (err) console.log ('Error on save!')});
-//         bnewrow.save(function (err) {if (err) console.log ('Error on save!')});     
+//         bnewrow.save(function (err) {if (err) console.log ('Error on save!')});
 //         cnewrow.save(function (err) {if (err) console.log ('Error on save!')});
 //         dnewrow.save(function (err) {if (err) console.log ('Error on save!')});
 
 //   });
-// 
-// Configuration  
+//
+// Configuration
 
 // ## CORS middleware
-// 
+//
 // see: http://stackoverflow.com/questions/7067966/how-to-allow-cors-in-express-nodejs
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-      
+
     // intercept OPTIONS method
     //console.log(req.method);
     if ('OPTIONS' == req.method) {
@@ -230,16 +230,16 @@ io.sockets.on('connection', function (socket) {
          var newrow1 = new PUser2 ({
             mqtt_topic: data.topic,
             status: data.payload,
-         
+
         });
         newrow1.save(function (err) {if (err) console.log ('Error on save! actuator controlling error ')});
         // io.emit('mqtt',{'topic':String(data.topic),'payload':String(data.payload)});
-    
+
         // PUser2.update({'mqtt_topic':'fan'},{$set:{'status':'1'}},{multi:true})
         // PUser2.update({ mqtt_topic: 'fan' }, { $set: { status: '1' }});
 
     });
-    
+
     socket.on('rule_config_data', function (data) {
         // console.log(data.rulename,data.actuator,data.from,data.to);
         // client.publish(data.topic,data.payload);
@@ -265,11 +265,11 @@ client.on('connect', function () {
     client.subscribe('soil');
 
 });
-        
+
 //Sensor node data
 
 client.on('message', function (topic, message) {
-  // message is Buffer 
+  // message is Buffer
   // console.log(topic.toString())
   // console.log(message.toString())
 
@@ -284,6 +284,8 @@ client.on('message', function (topic, message) {
   if(topic.toString() == 'temp'){
        console.log(topic.toString() + ' ' +  message.toString());
        t = message.toString();
+       io.emit('mqtt','temp ' + t);
+
        var anewrow = new PUser3 ({
             time: date,
             val: t
@@ -299,13 +301,15 @@ client.on('message', function (topic, message) {
   if(topic.toString() == 'hum'){
       console.log(topic.toString() + ' ' +  message.toString());
       h = message.toString();
+      io.emit('mqtt','hum ' + h);
+
         var bnewrow = new PUser4 ({
             time: date,
             val: h
         });
 
         if(h_p != h){
-        bnewrow.save(function (err) {if (err) console.log ('Error on save!')});     
+        bnewrow.save(function (err) {if (err) console.log ('Error on save!')});
         }
         h_p = h;
   }
@@ -313,6 +317,8 @@ client.on('message', function (topic, message) {
   if(topic.toString() == 'soil'){
       console.log(topic.toString() + ' ' +  message.toString());
       s = message.toString();
+      io.emit('mqtt','soil ' + s);
+
         var cnewrow = new PUser5 ({
             time: date,
             val: s
@@ -327,6 +333,8 @@ client.on('message', function (topic, message) {
   if(topic.toString() == 'light'){
       console.log(topic.toString() + ' ' +  message.toString());
       l = message.toString();
+      io.emit('mqtt','light ' + l);        
+
              // console.log(l);
 
      var dnewrow = new PUser6 ({
@@ -341,7 +349,7 @@ client.on('message', function (topic, message) {
         l_p = l;
   }
   // client.end()
-       
+
 });
 
 //updating the gauges of the chart
@@ -349,46 +357,46 @@ setInterval(function () {
 
       PUser3.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
         // console.log( post.val );
-        io.emit('mqtt','temp ' + post.val);
+        // io.emit('mqtt','temp ' + post.val);
       });
 
       PUser4.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
         // console.log( post.val );
-        io.emit('mqtt','hum ' + post.val);
+        // io.emit('mqtt','hum ' + post.val);
       });
 
       PUser5.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
         // console.log( post.val );
-        io.emit('mqtt','soil ' + post.val);
+        // io.emit('mqtt','soil ' + post.val);
       });
 
       PUser6.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
         // console.log( post.val );
-        io.emit('mqtt','light ' + post.val);        
+        io.emit('mqtt','light ' + post.val);
       });
 
 }, 1000);
 
 //Get the daily sensore node data
 // setInterval(function () {
-  
+
 //       PUser3.find({
 //         _id: {
 //             $gt: ObjectId.createFromTime(Date.now() / 1000 - 24 * 60 * 60)
-//         }      
+//         }
 //       },
 //       function(err, post) {
 //         state_temp_time = post.toString().split(',');
 //         console.log(state_temp_time.substring(7,12));
 //       }
-    
+
 //       );
-  
+
 // }, 5000);
 _id: { $gt: ObjectId.createFromTime(Date.now() / 1000 - 24 * 60 * 60)
-     }   
+     }
 setInterval(function () {
- 
+
         PUser3.find({_id: { $gt: ObjectId.createFromTime(Date.now() / 1000 - 24 * 60 * 60)
         }},'val', function(err, data){
 
@@ -403,9 +411,9 @@ setInterval(function () {
                  temp_.splice(i, 1);
               }
               // if (typeof(jsVar) == 'undefined') {
-                
+
               // console.log(temp_[i]);
-              
+
             }
               // console.log(hum_.length);
               io.emit('mqtt_data','temp ' + temp_);
@@ -423,7 +431,7 @@ setInterval(function () {
                  hum_[i] = "0.0";
                  hum_.splice(i, 1);
               }
-              
+
               // console.log(hum_[i]);
 
             }
@@ -443,7 +451,7 @@ setInterval(function () {
                  soil_[i] = "0.0";
                  soil_.splice(i, 1);
               }
-              
+
               // console.log(soil_[i]);
 
             }
@@ -454,7 +462,7 @@ setInterval(function () {
         });
         PUser6.find({_id: { $gt: ObjectId.createFromTime(Date.now() / 1000 - 24 * 60 * 60)
         }},'val', function(err, data){
-            
+
             state_light_time = data.toString().split(',');
             // console.log(data);
             for(var i = 0;i<=data.length-1;i++){
@@ -464,7 +472,7 @@ setInterval(function () {
                  light_[i] = "0.0";
                  light_.splice(i, 1);
               }
-              
+
               // console.log(light_[i]);
 
             }
@@ -477,6 +485,6 @@ setInterval(function () {
 }, 10000);
 
 // setInterval(function () {
-// io.emit('mqtt', 'hello'); 
+// io.emit('mqtt', 'hello');
 
 // }, 1000);
