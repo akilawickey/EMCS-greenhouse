@@ -45,7 +45,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
   <div class="navbar-header">
-    <a class="navbar-brand" href="index.html">Company Logo</a>
+    <a class="navbar-brand" href="index.html">Company Name</a>
   </div>
   <ul class="nav navbar-top-links navbar-right">
   </ul>
@@ -100,6 +100,26 @@
     <h1 class="page-header">Dashboard</h1>
   </div>
   </div>
+
+  <!-- /.row -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          Plant Details
+        </div>
+      <div class="panel-body">
+        <ul class="nav nav-pills" role="tablist">
+
+          <li role="presentation"><a href="#">Plant ID - 123423423</a></li>
+          <li role="presentation" class="active"><a href="#">MQTT Data count <span id = "count" class="badge"></span></a></li>
+          <!-- <li role="presentation"><a href="#">Messages <span class="badge">3</span></a></li> -->
+
+        </ul>
+      </div>
+      </div>
+    </div>
+  </div>
   <!-- /.row -->
   <div class="row">
   <div class="col-sm-2">
@@ -149,6 +169,14 @@
         <h4 class="list-group-item-heading">/green/light </h4>
         <p id = "real_light" class="list-group-item-text">graph_light</p>
       </a>
+      <a href="#" class="list-group-item active">
+        <h4 class="list-group-item-heading">/green/fan </h4>
+        <p id = "real_light" class="list-group-item-text">OFF</p>
+      </a>
+      <a href="#" class="list-group-item active">
+        <h4 class="list-group-item-heading">/green/motor </h4>
+        <p id = "real_light" class="list-group-item-text">OFF</p>
+      </a>
     </div>
   </div>
   </div>
@@ -172,19 +200,6 @@
   </div>
   </div>
 
-  <!-- /.row -->
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-info">
-        <div class="panel-heading">
-          Actuator Status Of the Greenhouse
-        </div>
-      <div class="panel-body"></div>
-      <div class="panel-footer">
-      </div>
-      </div>
-    </div>
-  </div>
 </div>
 </div>
 </body>

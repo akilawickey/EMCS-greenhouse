@@ -1,4 +1,5 @@
 var part_one,part_two,graph_temp,graph_hum,graph_soil,graph_light;
+var count = 0;
 var socket = io();
 socket.on('mqtt', function(msg){
    var res = msg.split(" ");
@@ -7,7 +8,8 @@ socket.on('mqtt', function(msg){
    part_two = res[1];
    if(part_one == "temp"){
      graph_temp = part_two;
-     console.log(graph_temp);
+     count = count + 1;
+     // console.log(graph_temp);
    }else if(part_one == "hum"){
      graph_hum = part_two;
    }else if(part_one == "soil"){

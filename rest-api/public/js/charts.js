@@ -173,5 +173,7 @@ setInterval(function () {
  document.getElementById("real_hum").innerHTML = graph_hum;
  document.getElementById("real_soil").innerHTML = graph_soil;
  document.getElementById("real_light").innerHTML = graph_light;
+ document.getElementById("count").innerHTML = count;
+
 
 }, 100);

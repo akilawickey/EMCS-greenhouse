@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    
+
     <title>EMCS</title>
 
     <!-- Toggle -->
@@ -36,7 +36,7 @@
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
 
     <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
-        <!-- jQuery --> 
+        <!-- jQuery -->
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
@@ -44,7 +44,7 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="js/metisMenu.min.js"></script>
 
-   
+
     <!-- Morris Charts JavaScript -->
     <script src="js/raphael.min.js"></script>
     <script src="js/morris.min.js"></script>
@@ -77,9 +77,9 @@
               }else if(part_one == "soil"){
                 graph_soil = part_two;
               }else if(part_one == "light"){
-                graph_light = part_two;   
+                graph_light = part_two;
               }
-    });  
+    });
 
 
     function pump1_control() {
@@ -101,7 +101,7 @@
         }else{
             socket.emit('publish', {topic:"fan",payload:"0"});
         }
-         
+
     }
     function fan2_control() {
          socket.emit('publish', {topic:"fan",payload:"0"});
@@ -131,13 +131,13 @@
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-            
-                <a class="navbar-brand" href="index.html">EMCS Greenhouse</a>
-          
+
+                <a class="navbar-brand" href="index.html">Company Name</a>
+
             </div>
             <!-- /.navbar-header -->
 
-            <ul class="nav navbar-top-links navbar-right">  
+            <ul class="nav navbar-top-links navbar-right">
             </ul>
             <!-- /.navbar-top-links -->
 
@@ -148,7 +148,7 @@
                             <div class="input-group custom-search-form">
                                 <input type="text" class="form-control" placeholder="Search...">
                                 <span class="input-group-btn">
-                                
+
                             </span>
                             </div>
                             <!-- /input-group -->
@@ -180,9 +180,9 @@
                         <li>
                             <a href="forms.html">About Us</a>
                         </li>
-                
+
                         <li>
-                         
+
                         </li>
                     </ul>
                 </div>
@@ -209,34 +209,34 @@
                             FAN
                         </div>
                          <div class="panel-body">
-    
+
                             <!-- <button type="button" class="btn btn-success"  onclick="fan_on()">FAN 1</button><br><br> -->
                             <div class="switch1">
 
                             <span>Fan 1</span>
                                   <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan1_control(this)" id="switch1" >
                                     <label class="switch-label" for="switch1">
-                                        <span class="switch-inner"></span> 
+                                        <span class="switch-inner"></span>
                                         <!-- <span class="switch-switch"></span> -->
                                     </label>
                             </div>
-                            
+
                             <!-- <button type="button" class="btn btn-success" onclick="fan_off()">FAN 2</button><br><br> -->
                             <div class="switch2">
                                 <span>Fan 2</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan2_control()" id="switch2" >
                                     <label class="switch-label" for="switch2">
-                                        <span class="switch-inner"></span> 
+                                        <span class="switch-inner"></span>
                                         <!-- <span class="switch-switch"></span> -->
                                     </label>
-                                
+
                             </div>
                             <!-- <button type="button" class="btn btn-success">FAN 3</button><br><br> -->
                             <div class="switch3">
                                 <span>Fan 3</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" id="switch3" >
                                     <label class="switch-label" for="switch3">
-                                        <span class="switch-inner"></span> 
+                                        <span class="switch-inner"></span>
                                         <!-- <span class="switch-switch"></span> -->
                                     </label>
                             </div>
@@ -245,7 +245,7 @@
                             <span>Fan 4</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" id="switch4" >
                                     <label class="switch-label" for="switch4">
-                                        <span class="switch-inner"></span> 
+                                        <span class="switch-inner"></span>
                                         <!-- <span class="switch-switch"></span> -->
                                     </label>
                             </div>
@@ -253,7 +253,7 @@
                             <span>Fan 5</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" id="switch5" >
                                     <label class="switch-label" for="switch5">
-                                        <span class="switch-inner"></span> 
+                                        <span class="switch-inner"></span>
                                         <!-- <span class="switch-switch"></span> -->
                                     </label>
                             </div>
@@ -261,7 +261,7 @@
                             <span>Fan 6</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" id="switch6" >
                                     <label class="switch-label" for="switch6">
-                                        <span class="switch-inner"></span> 
+                                        <span class="switch-inner"></span>
                                         <!-- <span class="switch-switch"></span> -->
                                     </label>
                             </div>
@@ -285,17 +285,17 @@
 
                                     <label class="switch-label" for="switch7">
 
-                                        <span class="switch-inner"></span> 
+                                        <span class="switch-inner"></span>
                                         <!-- <span class="switch-switch"></span> -->
                                     </label>
-                               
+
                             </div>
                             <!-- button type="button" class="btn btn-danger" onclick="pump_off()">PUMP 2</button><br><br>-->
                             <div class="switch8">
                             <span>Pump 2</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" onclick="pump2_control()" id="switch8" >
                                     <label class="switch-label" for="switch8">
-                                        <span class="switch-inner"></span> 
+                                        <span class="switch-inner"></span>
                                         <!-- <span class="switch-switch"></span> -->
                                     </label>
                             </div>
@@ -304,7 +304,7 @@
                             <span>Pump 3</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" id="switch9" >
                                     <label class="switch-label" for="switch9">
-                                        <span class="switch-inner"></span> 
+                                        <span class="switch-inner"></span>
                                         <!-- <span class="switch-switch"></span> -->
                                     </label>
                             </div>
@@ -313,7 +313,7 @@
                             <span>Pump 4</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" id="switch10" >
                                     <label class="switch-label" for="switch10">
-                                        <span class="switch-inner"></span> 
+                                        <span class="switch-inner"></span>
                                         <!-- <span class="switch-switch"></span> -->
                                     </label>
                             </div>
@@ -321,7 +321,7 @@
                             <span>Pump 5</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" id="switch11" >
                                     <label class="switch-label" for="switch11">
-                                        <span class="switch-inner"></span> 
+                                        <span class="switch-inner"></span>
                                         <!-- <span class="switch-switch"></span> -->
                                     </label>
                             </div>
@@ -329,7 +329,7 @@
                             <span>Pump 6</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" id="switch12" >
                                     <label class="switch-label" for="switch12">
-                                        <span class="switch-inner"></span> 
+                                        <span class="switch-inner"></span>
                                         <!-- <span class="switch-switch"></span> -->
                                     </label>
                             </div>
@@ -358,9 +358,9 @@
                         </div>
                     </div>
                 </div>
-      
+
                 <!-- /.col-lg-4 -->
-         
+
                 <!-- /.col-lg-4 -->
             </div>
             <!-- /.row -->
@@ -378,7 +378,7 @@
                         </div>
                     </div>
                 </div>
-      
+
                 <!-- /.col-lg-4 -->
             </div>
             <!-- /.row -->
@@ -393,7 +393,7 @@
                             <span>Pump 4</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" onclick="rule1_apply()" id="switch9" checked>
                                     <label class="switch-label" for="switch9">
-                                        <span class="switch-inner"></span> 
+                                        <span class="switch-inner"></span>
                                         <span class="switch-switch"></span>
                                     </label>
                             </div>
@@ -418,13 +418,13 @@
                     </div> -->
                     <!-- /.col-lg-4 -->
          <!--        </div>
-              
+
             </div> -->
             <!-- /.row -->
-    
+
             <!-- /.row -->
-       
-          
+
+
         </div>
         <!-- /#page-wrapper -->
 

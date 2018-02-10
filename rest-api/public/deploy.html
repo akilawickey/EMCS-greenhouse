@@ -17,7 +17,7 @@
     width       : 100%;
     height      : 300px;
     font-size   : 11px;
-    }       
+    }
     </style>
     <script src="https://cdn.socket.io/socket.io-1.4.4.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -59,31 +59,31 @@
      var socket = io();
 
      socket.on('mqtt_data', function(msg){
-        
+
               var res = msg.split(" ");
                 console.log(res);
                 part_one = res[0];
                 part_two = res[1];
                   if(part_one == "temp"){
-                   
+
                     var res = part_two.toString().split(",");
 
 
                     temp_data = res;
                     for(var i = 0; i < res.length; i++){
-                        temp_data[i] = parseInt(res[i]);    
+                        temp_data[i] = parseInt(res[i]);
                     }
                     sice = temp_data.slice(res.length-100, res.length);
                     main_plot.series[0].setData(sice);
 
-           
+
               }else if(part_one == "hum"){
-                    
+
                     var res = part_two.toString().split(",");
 
                     hum_data = res;
                     for(var i = 0; i < res.length; i++){
-                        hum_data[i] = parseInt(res[i]);    
+                        hum_data[i] = parseInt(res[i]);
                     }
                     sice1 = hum_data.slice(res.length-100, res.length);
                     main_plot1.series[0].setData(sice1);
@@ -93,7 +93,7 @@
 
                     soil_data = res;
                     for(var i = 0; i < res.length; i++){
-                        soil_data[i] = parseInt(res[i]);    
+                        soil_data[i] = parseInt(res[i]);
                     }
                     sice2 = soil_data.slice(res.length-100, res.length);
                     main_plot2.series[0].setData(sice2);
@@ -103,13 +103,13 @@
 
                     light_data = res;
                     for(var i = 0; i < res.length; i++){
-                        light_data[i] = parseInt(res[i]);    
+                        light_data[i] = parseInt(res[i]);
                     }
                     sice3 = light_data.slice(res.length-100, res.length);
                     main_plot3.series[0].setData(sice3);
               }
-        
-    });  
+
+    });
 
     // console.log(temp_data);
     function pump_on() {
@@ -146,7 +146,7 @@
     function config_page()
     {
         location.href = "deploy_config.html";
-    } 
+    }
 
 </script>
 
@@ -158,12 +158,12 @@
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-            
-                <a class="navbar-brand" href="index.html">EMCS Greenhouse</a>
+
+                <a class="navbar-brand" href="index.html">Company Name</a>
             </div>
             <!-- /.navbar-header -->
 
-            <ul class="nav navbar-top-links navbar-right">  
+            <ul class="nav navbar-top-links navbar-right">
             </ul>
             <!-- /.navbar-top-links -->
 
@@ -174,7 +174,7 @@
                             <div class="input-group custom-search-form">
                                 <input type="text" class="form-control" placeholder="Search...">
                                 <span class="input-group-btn">
-                                
+
                             </span>
                             </div>
                             <!-- /input-group -->
@@ -206,9 +206,9 @@
                         <li>
                             <a href="forms.html">About Us</a>
                         </li>
-                
+
                         <li>
-                         
+
                         </li>
                     </ul>
                 </div>
@@ -232,33 +232,33 @@
                             Select Rules to apply
                         </div>
                          <div class="panel-body">
-    
+
                             <!-- <button type="button" class="btn btn-success"  onclick="fan_on()">FAN 1</button><br><br> -->
                             <div class="switch1">
                             <span>Tomato Rule</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" onclick="rule1()" id="switch1">
                                     <label class="switch-label" for="switch1">
-                                        <span class="switch-inner"></span> 
+                                        <span class="switch-inner"></span>
                                         <!-- <span class="switch-switch"></span> -->
                                     </label>
                             </div>
-                            
+
                             <!-- <button type="button" class="btn btn-success" onclick="fan_off()">FAN 2</button><br><br> -->
                             <div class="switch2">
                                 <span>Bell pepper Rule</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" onclick="rule2()" id="switch2" >
                                     <label class="switch-label" for="switch2">
-                                        <span class="switch-inner"></span> 
+                                        <span class="switch-inner"></span>
                                         <!-- <span class="switch-switch"></span> -->
                                     </label>
-                                
+
                             </div>
                             <!-- <button type="button" class="btn btn-success">FAN 3</button><br><br> -->
                             <div class="switch3">
                                 <span>Pumpking Rule</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" onclick="rule3()" id="switch3" >
                                     <label class="switch-label" for="switch3">
-                                        <span class="switch-inner"></span> 
+                                        <span class="switch-inner"></span>
                                         <!-- <span class="switch-switch"></span> -->
                                     </label>
                             </div>
@@ -267,12 +267,12 @@
                             <span>Salade Rule</span>
                                 <input type="checkbox" name="switch" class="switch-checkbox" onclick="rule4()" id="switch4" >
                                     <label class="switch-label" for="switch4">
-                                        <span class="switch-inner"></span> 
+                                        <span class="switch-inner"></span>
                                         <!-- <span class="switch-switch"></span> -->
                                     </label>
                             </div>
-                     
-                   
+
+
                         </div>
                         <div class="panel-footer">
                             Status
@@ -297,13 +297,13 @@
                                 </div>
                             </div>
                         </div>
-              
+
                 <!-- /.col-lg-4 -->
                      </div>
                 </div>
 
                 <!-- /.col-lg-4 -->
-           
+
                 <div class="col-lg-8">
                     <div class="panel panel-info">
                         <div class="panel-heading">
@@ -312,7 +312,7 @@
                         <div class="panel-body">
                             <!-- <div id="myDiv">Plotly chart will be drawn inside this DIV</div> -->
                             <!-- <div id="chartdiv"></div>    -->
-                            
+
                         <!-- <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div> -->
                             <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                             <div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -325,20 +325,20 @@
                         </div>
                     </div>
                 </div>
-      
+
                 <!-- /.col-lg-4 -->
-         
+
                 <!-- /.col-lg-4 -->
             </div>
             <!-- /.row -->
-          
+
             <!-- /.row -->
-           
+
             <!-- /.row -->
-    
+
             <!-- /.row -->
-       
-          
+
+
         </div>
         <!-- /#page-wrapper -->
 
@@ -350,7 +350,7 @@
 
 
 <script type="text/javascript">
- 
+
  var main_plot =  Highcharts.chart('container', {
         chart: {
             zoomType: 'x'
