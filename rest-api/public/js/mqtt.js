@@ -1,7 +1,7 @@
 var part_one,part_two,graph_temp,graph_hum,graph_soil,graph_light;
 var count = 0;
 var socket = io();
-socket.on('mqtt', function(msg){
+socket.on('mqtt_data', function(msg){
    var res = msg.split(" ");
    console.log(res);
    part_one = res[0];
@@ -18,6 +18,7 @@ socket.on('mqtt', function(msg){
      graph_light = part_two;
    }
 });
+
 function pump1_control() {
    if (document.querySelectorAll("input[id='switch7']:checked").length >= 1) {
        socket.emit('publish', {topic:"testTopic",payload:"1"});
