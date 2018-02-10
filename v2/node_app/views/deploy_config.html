@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>EMCS</title>
+
+    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+    <style type="text/css">
+    #chartdiv {
+    width       : 100%;
+    height      : 300px;
+    font-size   : 11px;
+    }       
+    </style>
+
+    <!-- Toggle -->
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <link rel="stylesheet" href="css/toggle.css">
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="css/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="css/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <!-- jQuery -->
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="js/metisMenu.min.js"></script>
+
+
+    <!-- Morris Charts JavaScript -->
+    <script src="js/raphael.min.js"></script>
+    <script src="js/morris.min.js"></script>
+    <script src="js/morris-data.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/sb-admin-2.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<script type="text/javascript">
+    var socket = io();
+    socket.on('chat message', function(msg){
+              var res = msg.toString().split(",");
+                             console.log(res);
+             });  
+    function pump_on() {
+         socket.emit('publish', {topic:"testTopic",payload:"1"});
+    }
+    function pump_off() {
+         socket.emit('publish', {topic:"testTopic",payload:"0"});
+    }
+    function fan_on() {
+         socket.emit('publish', {topic:"fan",payload:"1"});
+    }
+    function fan_off() {
+         socket.emit('publish', {topic:"fan",payload:"0"});
+    }
+
+    function makeSearch() {
+      console.log($('#rulename').val());
+      console.log($('#act').val());
+
+      socket.emit('rule_config_data', {rulename:$('#rulename').val(),actuator:$('#act').val(),from:$('#from').val(),to:$('#to').val()});
+      return false;
+    }
+
+
+    function rule1_apply() {
+         socket.emit('rules', {topic:"fan",payload:"0"});
+    }
+
+
+    // Rule based heat map configurations
+
+    var chart = AmCharts.makeChart("chartdiv", {
+    "theme": "light",
+    "type": "serial",
+    "dataProvider": [{
+        "continent": "North America",
+        "trucks": 170000,
+        "SUVs": 170000,
+        "cars": 90000,
+        "total": 310000
+    }, {
+        "continent": "Asia",
+        "trucks": 90000,
+        "SUVs": 40000,
+        "cars": 110000,
+        "total": 240000
+    }, {
+        "continent": "Europe",
+        "trucks": 30000,
+        "SUVs": 50000,
+        "cars": 110000,
+        "total": 190000
+    }],
+
+
+    "categoryField": "continent",
+
+    "categoryAxis": {
+        "gridAlpha": 0.1,
+        "axisAlpha": 0,
+        "widthField": "total",
+        "gridPosition": "start"
+    },
+
+    "valueAxes": [{
+        "stackType": "100% stacked",
+        "gridAlpha": 0.1,
+        "unit": "%",
+        "axisAlpha": 0
+    }],
+
+    "graphs": [
+        {
+            "title": "Carrot",
+            "labelText": "[[value]]",
+            "valueField": "trucks",
+            "type": "column",
+            "fillAlphas": 1
+        }, {
+            "title": "Chillie",
+            "labelText": "[[value]]",
+            "valueField": "SUVs",
+            "type": "column",
+            "fillAlphas": 1
+        },
+
+        {
+            "title": "Dragon Fruit",
+            "labelText": "[[value]]",
+            "valueField": "cars",
+            "type": "column",
+            "fillAlphas": 1
+        }
+    ],
+
+    "legend": {},
+    "export":
+     {
+     "enabled":true
+     }
+});
+function edit_row(no)
+{
+ document.getElementById("edit_button"+no).style.display="none";
+ document.getElementById("save_button"+no).style.display="block";
+    
+ var name=document.getElementById("name_row"+no);
+ var country=document.getElementById("country_row"+no);
+ var age=document.getElementById("age_row"+no);
+    
+ var name_data=name.innerHTML;
+ var country_data=country.innerHTML;
+ var age_data=age.innerHTML;
+    
+ name.innerHTML="<input type='text' id='name_text"+no+"' value='"+name_data+"'>";
+ country.innerHTML="<input type='text' id='country_text"+no+"' value='"+country_data+"'>";
+ age.innerHTML="<input type='text' id='age_text"+no+"' value='"+age_data+"'>";
+}
+
+function save_row(no)
+{
+ var name_val=document.getElementById("name_text"+no).value;
+ var country_val=document.getElementById("country_text"+no).value;
+ var age_val=document.getElementById("age_text"+no).value;
+
+ document.getElementById("name_row"+no).innerHTML=name_val;
+ document.getElementById("country_row"+no).innerHTML=country_val;
+ document.getElementById("age_row"+no).innerHTML=age_val;
+
+ document.getElementById("edit_button"+no).style.display="block";
+ document.getElementById("save_button"+no).style.display="none";
+}
+
+function delete_row(no)
+{
+ document.getElementById("row"+no+"").outerHTML="";
+}
+
+function add_row()
+{
+ var new_name=document.getElementById("new_name").value;
+ var new_country=document.getElementById("new_country").value;
+ var new_age=document.getElementById("new_age").value;
+    
+ var table=document.getElementById("data_table");
+ var table_len=(table.rows.length)-1;
+ var row = table.insertRow(table_len).outerHTML="<tr id='row"+table_len+"'><td id='name_row"+table_len+"'>"+new_name+"</td><td id='country_row"+table_len+"'>"+new_country+"</td><td id='age_row"+table_len+"'>"+new_age+"</td><td><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")'> <input type='button' class='btn btn-primary' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td></tr>";
+
+
+
+ document.getElementById("new_name").value="";
+ document.getElementById("new_country").value="";
+ document.getElementById("new_age").value="";
+}
+
+</script>
+
+<body>
+
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+            
+                <a class="navbar-brand" href="index.html">EMCS Greenhouse</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">  
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="index.html">Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="deploy.html">Deploy Rules</a>
+                        </li>
+                        <li>
+                            <a href="#"> Settings</a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="config.html">Actuator Settings</a>
+                                </li>
+                                <li>
+                                    <a href="morris.html">Update</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="training.html">Training Details</a>
+                        </li>
+                        <li>
+                            <a href="tables.html"></i>Help</a>
+                        </li>
+                        <li>
+                            <a href="forms.html">About Us</a>
+                        </li>
+                
+                        <li>
+                         
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Create a new Rule</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+           
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            Please setup the follwing configurations
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <form role="form" id = "form" onsubmit="return makeSearch()">
+                                       
+                                            <div class="form-group">
+                                                <label>Rule name</label>
+                                                <input class="form-control" id = "rulename">
+                                                <p class="help-block">Please define the rule name</p>
+                                            </div>
+                                            <div class="table-responsive">
+                                            <table align='center' cellspacing=2 cellpadding=5 id="data_table" border=1 class = "table">
+                                                <tr  class="success">
+                                                <th>Actuator</th>
+                                                <th>Start Time</th>
+                                                <th>End Time</th>
+                                                </tr>
+
+                                                <tr id="row1" class="info">
+                                                <td id="name_row1">
+                                                   <div class="form-group">
+                                                        <select class="form-control" id='act'>
+                                                            <option>Fan1</option>
+                                                            <option>Water Pump1</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td id="country_row1">
+                                                    <div class="form-group">
+                                                        <select class="form-control" id='from'>
+                                                            <option>8.00 am</option>
+                                                            <option>9.00 am</option>
+                                                            <option>10.00 am</option>
+                                                            <option>11.00 am</option>
+                                                            <option>12.00 am</option>
+                                                            <option>1.00 am</option>
+                                                            <option>2.00 am</option>
+                                                            <option>3.00 am</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td id="age_row1">
+                                                    <div class="form-group">
+                                                        <select class="form-control" id ='to'>
+                                                            <option>8.00 am</option>
+                                                            <option>9.00 am</option>
+                                                            <option>10.00 am</option>
+                                                            <option>11.00 am</option>
+                                                            <option>12.00 am</option>
+                                                            <option>1.00 am</option>
+                                                            <option>2.00 am</option>
+                                                            <option>3.00 am</option>
+                                                        </select>
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                <input type="button" class="btn btn-primary" id="edit_button1" value="Edit" class="edit" onclick="edit_row('1')">
+                                                <input type="button" class="btn btn-primary" id="save_button1" value="Save" class="save" onclick="save_row('1')">
+                                                <input type="button" class="btn btn-primary" value="Delete" class="delete" onclick="delete_row('1')">
+                                                </td>
+                                                </tr>
+                                                                 <tr id="row1" class="info">
+                                                <td id="name_row1">
+                                                   <div class="form-group">
+                                                        <select class="form-control" id='act1'>
+                                                            <option>Fan 1</option>
+                                                            <option>Water Pump 1</option>
+                                                            <option>Fan 2</option>
+                                                            <option>Water Pump 2</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td id="country_row1">
+                                                    <div class="form-group">
+                                                        <select class="form-control" id='from1'>
+                                                            <option>8.00 am</option>
+                                                            <option>9.00 am</option>
+                                                            <option>10.00 am</option>
+                                                            <option>11.00 am</option>
+                                                            <option>12.00 am</option>
+                                                            <option>1.00 am</option>
+                                                            <option>2.00 am</option>
+                                                            <option>3.00 am</option>
+
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td id="age_row1">
+                                                    <div class="form-group">
+                                                        <select class="form-control" id ='to1'>
+                                                        <option>8.00 am</option>
+                                                            <option>9.00 am</option>
+                                                            <option>10.00 am</option>
+                                                            <option>11.00 am</option>
+                                                            <option>12.00 am</option>
+                                                            <option>1.00 am</option>
+                                                            <option>2.00 am</option>
+                                                            <option>3.00 am</option>
+                                                        </select>
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                <input type="button" class="btn btn-primary" id="edit_button1" value="Edit" class="edit" onclick="edit_row('1')">
+                                                <input type="button" class="btn btn-primary" id="save_button1" value="Save" class="save" onclick="save_row('1')">
+                                                <input type="button" class="btn btn-primary" value="Delete" class="delete" onclick="delete_row('1')">
+                                                </td>
+                                                </tr>
+                                                                 <tr id="row1" class="info">
+                                                <td id="name_row1">
+                                                   <div class="form-group">
+                                                        <select class="form-control" id='act2'>
+                                                            <option>Fan1</option>
+                                                            <option>Water Pump1</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td id="country_row1">
+                                                    <div class="form-group">
+                                                        <select class="form-control" id='from2'>
+                                                            <option>8.00 am</option>
+                                                            <option>9.00 am</option>
+                                                            <option>10.00 am</option>
+                                                            <option>11.00 am</option>
+                                                            <option>12.00 am</option>
+                                                            <option>1.00 am</option>
+                                                            <option>2.00 am</option>
+                                                            <option>3.00 am</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td id="age_row1">
+                                                    <div class="form-group">
+                                                        <select class="form-control" id ='to2'>
+                                                            <option>8.00 am</option>
+                                                            <option>9.00 am</option>
+                                                            <option>10.00 am</option>
+                                                            <option>11.00 am</option>
+                                                            <option>12.00 am</option>
+                                                            <option>1.00 am</option>
+                                                            <option>2.00 am</option>
+                                                            <option>3.00 am</option>
+                                                        </select>
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                <input type="button" class="btn btn-primary" id="edit_button1" value="Edit" class="edit" onclick="edit_row('1')">
+                                                <input type="button" class="btn btn-primary" id="save_button1" value="Save" class="save" onclick="save_row('1')">
+                                                <input type="button" class="btn btn-primary" value="Delete" class="delete" onclick="delete_row('1')">
+                                                </td>
+                                                </tr>
+     
+                                          
+
+                                                <tr class="danger">
+                                                <td><input type="hidden" id="new_name"></td>
+                                                <td><input type="hidden" id="new_country"></td>
+                                                <td><input type="hidden" id="new_age"></td>
+                                                <td><input type="button" class="btn btn-primary" onclick="add_row();" value="Add Row"></td>
+                                                </tr>
+
+                                                </table>
+                                                </div>
+
+
+                                       <!--  <button type="submit" class="btn btn-default">Save</button>
+                                        <button type="reset" class="btn btn-default">Reset</button> -->
+                                              <input type="submit" value="Submit">
+
+                                    </form-controlm>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            Panel Footer
+                        </div>
+                    </div>
+                </div>
+      
+                <!-- /.col-lg-4 -->
+            </div>
+            <!-- /.row -->
+           
+            <!-- /.row -->
+    
+            <!-- /.row -->
+       
+          
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+
+</body>
+<script type="text/javascript">
+var xValues = ['A', 'B', 'C', 'D', 'E'];
+var yValues = ['W', 'X', 'Y', 'Z'];
+var zValues = [
+  [0, 1, 0, 1, 0],
+  [0, 1, 0, 1, 0],
+  [0, 1, 1, 1, 0],
+  [1, 1, 0, 1, 0]
+];
+var colorscaleValue = [
+  [0, '#3D9970'],
+  [1, '#461c99']
+];
+var data = [{
+  x: xValues,
+  y: yValues,
+  z: zValues,
+  type: 'heatmap',
+  colorscale: colorscaleValue,
+  showscale: false
+}];
+var layout = {
+  title: 'Actuator Status',
+  annotations: [],
+  xaxis: {
+    ticks: '',
+    side: 'top'
+  },
+  yaxis: {
+    ticks: '',
+    ticksuffix: ' ',
+    width: 700,
+    height: 700,
+    autosize: false
+  }
+};
+for ( var i = 0; i < yValues.length; i++ ) {
+  for ( var j = 0; j < xValues.length; j++ ) {
+    var currentValue = zValues[i][j];
+    if (currentValue != 0.0) {
+      var textColor = 'white';
+    }else{
+      var textColor = 'black';
+    }
+    var result = {
+      xref: 'x1',
+      yref: 'y1',
+      x: xValues[j],
+      y: yValues[i],
+      text: zValues[i][j],
+      font: {
+        family: 'Arial',
+        size: 12,
+        color: 'rgb(50, 171, 96)'
+      },
+      showarrow: false,
+      font: {
+        color: textColor
+      }
+    };
+    layout.annotations.push(result);
+  }
+}
+Plotly.newPlot('myDiv', data, layout);
+</script>
+
+</html>
