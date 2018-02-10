@@ -333,7 +333,7 @@ client.on('message', function (topic, message) {
   if(topic.toString() == 'light'){
       console.log(topic.toString() + ' ' +  message.toString());
       l = message.toString();
-      io.emit('mqtt','light ' + l);        
+      io.emit('mqtt','light ' + l);
 
              // console.log(l);
 
@@ -353,29 +353,29 @@ client.on('message', function (topic, message) {
 });
 
 //updating the gauges of the chart
-setInterval(function () {
-
-      PUser3.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
-        // console.log( post.val );
-        // io.emit('mqtt','temp ' + post.val);
-      });
-
-      PUser4.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
-        // console.log( post.val );
-        // io.emit('mqtt','hum ' + post.val);
-      });
-
-      PUser5.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
-        // console.log( post.val );
-        // io.emit('mqtt','soil ' + post.val);
-      });
-
-      PUser6.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
-        // console.log( post.val );
-        io.emit('mqtt','light ' + post.val);
-      });
-
-}, 1000);
+// setInterval(function () {
+//
+//       PUser3.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
+//         // console.log( post.val );
+//         // io.emit('mqtt','temp ' + post.val);
+//       });
+//
+//       PUser4.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
+//         // console.log( post.val );
+//         // io.emit('mqtt','hum ' + post.val);
+//       });
+//
+//       PUser5.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
+//         // console.log( post.val );
+//         // io.emit('mqtt','soil ' + post.val);
+//       });
+//
+//       PUser6.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
+//         // console.log( post.val );
+//         io.emit('mqtt','light ' + post.val);
+//       });
+//
+// }, 1000);
 
 //Get the daily sensore node data
 // setInterval(function () {
