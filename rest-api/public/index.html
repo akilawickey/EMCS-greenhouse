@@ -22,12 +22,12 @@
 <link href="css/sb-admin-2.css" rel="stylesheet">
 <!-- Morris Charts CSS -->
 <link href="css/morris.css" rel="stylesheet">
+<link href="css/notify.css" rel="stylesheet">
 <!-- Custom Fonts -->
 <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/highcharts-more.js"></script>
 <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
-<!-- jQuery -->
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
 <!-- Metis Menu Plugin JavaScript -->
@@ -141,7 +141,7 @@
   <div class="col-lg-8">
     <div class="panel panel-info">
       <div class="panel-heading">
-        Greenhouse Status
+        Building Status
       </div>
       <div class="panel-body">
         <div style="width: 600px; height: 400px; margin: 0 auto">
@@ -171,8 +171,21 @@
     </div>
   </div>
 </div>
-
+<button onclick="myfunc()"></button>
 </div>
 </body>
 <script src="js/charts.js"></script>
+<script type="text/javascript">
+fuction myfunc(){
+
+  $.notify({
+	// options
+	message: 'Hello World'
+},{
+	// settings
+	type: 'danger'
+});
+}
+</script>
+
 </html>
