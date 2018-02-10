@@ -169,6 +169,6 @@ setInterval(function () {
      point = chartRpm1.series[0].points[0];
      point.update(Math.round(graph_light));
  }
-}, 100);
+ document.getElementById("real_temp").innerHTML = graph_temp;
 
-document.getElementById("real_temp").innerHTML = graph_temp;
+}, 100);
