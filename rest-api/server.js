@@ -2,22 +2,24 @@
  * Module dependencies.
  * Greenhouse IoT server by leafylanka
  */
-var express = require('express');
-// api = require('./routes/api');
-var methodOverride = require('method-override');
-var bodyParser = require('body-parser');
-var app = express();
-var http = require('http').Server(app);
-var router = express.Router();
-var mqtt = require('mqtt');
-var path = require('path');
-var sys = require('util');
-var net = require('net');
-var mongoose = require('mongoose');
-var ObjectId = require('mongodb').ObjectID;
+'use strict';
+
+var express = require('express'),
+    methodOverride = require('method-override'),
+    bodyParser = require('body-parser'),
+    app = express(),
+    http = require('http').Server(app),
+    router = express.Router(),
+    mqtt = require('mqtt'),
+    path = require('path'),
+    sys = require('util'),
+    net = require('net'),
+    mongoose = require('mongoose'),
+    ObjectId = require('mongodb').ObjectID;
+
 var date;
-var schedule = require('node-schedule');
 var data = 'none'
+// api = require('./routes/api');
 
 var t_p,h_p,s_p,l_p;
 var t = '';
