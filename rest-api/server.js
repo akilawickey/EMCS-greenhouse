@@ -99,7 +99,7 @@ var io = require('socket.io')(http);
 // create an mqtt client object and connect to the mqtt broker
 var client = mqtt.connect('mqtt://localhost');
  
-     http.listen((process.env.PORT || 80), function(){
+     http.listen((process.env.PORT || 8080), function(){
     //  http.listen((3000), function(){
       // console.log(process.env.PORT);
       console.log('----------------------------------------------------------------------------');
