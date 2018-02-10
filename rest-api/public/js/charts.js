@@ -170,3 +170,5 @@ setInterval(function () {
      point.update(Math.round(graph_light));
  }
 }, 100);
+
+document.getElementById("real_temp").innerHTML = graph_temp;
