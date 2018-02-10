@@ -113,7 +113,7 @@ var client = mqtt.connect('mqtt://localhost');
     
 router.use("/public",function(req,res){
 
-      res.sendFile(path + "index.html");
+      res.sendFile(path + "home.html");
 
 });
 
@@ -124,7 +124,7 @@ app.use(express.static(__dirname + '/public'));
     /*Create http server*/
 app.get('/public', function(req, res){
 
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/home.html');
 
 });
 
