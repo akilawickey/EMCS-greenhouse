@@ -7,7 +7,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Company Logo</title>
+<title>leafylanka</title>
 
 <!-- Toggle -->
 <link rel="stylesheet" href="css/toggle.css">
@@ -92,170 +92,135 @@ function rule1_apply() {
 </script>
 <body>
 <div id="wrapper">
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-
-            <a class="navbar-brand" href="index.html">EMCS Greenhouse</a>
-
-        </div>
-        <!-- /.navbar-header -->
-
-        <ul class="nav navbar-top-links navbar-right">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+  <div class="navbar-header">
+    <a class="navbar-brand" href="index.html">Company Logo</a>
+  </div>
+  <ul class="nav navbar-top-links navbar-right">
+  </ul>
+  <!-- /.navbar-top-links -->
+  <div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+      <ul class="nav" id="side-menu">
+        <li class="sidebar-search">
+          <div class="input-group custom-search-form">
+            <input type="text" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+            </span>
+          </div>
+        <!-- /input-group -->
+        </li>
+        <li>
+          <a href="index.html">Dashboard</a>
+        </li>
+        <li>
+          <a href="deploy.html">Deploy Rules</a>
+        </li>
+        <li>
+          <a href="#"> Settings</a>
+        <ul class="nav nav-second-level">
+        <li>
+          <a href="config.html">Actuator Settings</a>
+        </li>
+        <li>
+          <a href="morris.html">Update</a>
+        </li>
         </ul>
-        <!-- /.navbar-top-links -->
-
-        <div class="navbar-default sidebar" role="navigation">
-            <div class="sidebar-nav navbar-collapse">
-                <ul class="nav" id="side-menu">
-                    <li class="sidebar-search">
-                        <div class="input-group custom-search-form">
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <span class="input-group-btn">
-
-                        </span>
-                        </div>
-                        <!-- /input-group -->
-                    </li>
-                    <li>
-                        <a href="index.html">Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="deploy.html">Deploy Rules</a>
-                    </li>
-                    <li>
-                        <a href="#"> Settings</a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="config.html">Actuator Settings</a>
-                            </li>
-                            <li>
-                                <a href="morris.html">Update</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-                    <li>
-                        <a href="training.html">Training Details</a>
-                    </li>
-                    <li>
-                        <a href="tables.html"></i>Help</a>
-                    </li>
-                    <li>
-                        <a href="forms.html">About Us</a>
-                    </li>
-
-                    <li>
-
-                    </li>
-                </ul>
-            </div>
-            <!-- /.sidebar-collapse -->
-        </div>
-        <!-- /.navbar-static-side -->
-    </nav>
-
-    <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Controlling System</h1>
-
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-
-
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-lg-2">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        FAN
-                    </div>
-                     <div class="panel-body">
-
-                        <!-- <button type="button" class="btn btn-success"  onclick="fan_on()">FAN 1</button><br><br> -->
-                        <div class="switch1">
-
-                        <span>Fan 1</span>
-                              <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan1_control(this)" id="switch1" >
-                                <label class="switch-label" for="switch1">
-                                    <span class="switch-inner"></span>
-                                    <!-- <span class="switch-switch"></span> -->
-                                </label>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        Status
-                    </div>
-                </div>
-            </div>
-            <!-- /.col-lg-4 -->
-            <div class="col-lg-2">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        WATER PUMP
-                    </div>
-                    <div class="panel-body">
-                        <!-- button type="button" class="btn btn-danger" onclick="pump_on()">PUMP 1</button><br><br>-->
-                        <div class="switch7">
-                            <span>Pump 1</span>
-                            <input type="checkbox" name="switch" class="switch-checkbox" onclick="pump1_control()" id="switch7" >
-
-                                <label class="switch-label" for="switch7">
-
-                                    <span class="switch-inner"></span>
-                                    <!-- <span class="switch-switch"></span> -->
-                                </label>
-
-                        </div>
-                        </div>
-                    <div class="panel-footer">
-                        Status
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-8">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        Greenhouse Status
-                    </div>
-                    <div class="panel-body">
-                        <!-- <div id="myDiv">Plotly chart will be drawn inside this DIV</div> -->
-                        <div style="width: 600px; height: 400px; margin: 0 auto">
-                            <div id="container-speed" style="width: 300px; height: 200px; float: left"></div>
-                            <div id="container-rpm" style="width: 300px; height: 200px; float: left"></div>
-                            <div id="container-speed1" style="width: 300px; height: 200px; float: left"></div>
-                            <div id="container-rpm1" style="width: 300px; height: 200px; float: left"></div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        Panel Footer
-                    </div>
-                </div>
-            </div>
-
-            <!-- /.col-lg-4 -->
-
-            <!-- /.col-lg-4 -->
-        </div>
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        Actuator Status Of the Greenhouse
-                    </div>
-                    <div class="panel-body">
-                    </div>
-                    <div class="panel-footer">
-                        Panel Footer
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- /.nav-second-level -->
+        </li>
+        <li>
+          <a href="training.html">Training Details</a>
+        </li>
+        <li>
+          <a href="tables.html"></i>Help</a>
+        </li>
+        <li>
+          <a href="forms.html">About Us</a>
+        </li>
+      </ul>
     </div>
+  <!-- /.sidebar-collapse -->
+  </div>
+  <!-- /.navbar-static-side -->
+</nav>
+<div id="page-wrapper">
+  <div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Controlling System</h1>
+  </div>
+  </div>
+  <!-- /.row -->
+  <div class="row">
+  <div class="col-lg-2">
+  <div class="panel panel-primary">
+    <div class="panel-heading">FAN</div>
+    <div class="panel-body">
+    <!-- <button type="button" class="btn btn-success"  onclick="fan_on()">FAN 1</button><br><br> -->
+    <div class="switch1">
+
+    <span>Fan 1</span>
+          <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan1_control(this)" id="switch1" >
+            <label class="switch-label" for="switch1">
+                <span class="switch-inner"></span>
+                <!-- <span class="switch-switch"></span> -->
+            </label>
+    </div>
+    </div>
+    <div class="panel-footer">
+        Status
+    </div>
+  </div>
+  </div>
+  <!-- /.col-lg-4 -->
+  <div class="col-lg-2">
+    <div class="panel panel-primary">
+      <div class="panel-heading">WATER PUMP</div>
+      <div class="panel-body">
+        <div class="switch7">
+          <span>Pump 1</span>
+        <input type="checkbox" name="switch" class="switch-checkbox" onclick="pump1_control()" id="switch7" >
+        <label class="switch-label" for="switch7">
+          <span class="switch-inner"></span>
+        </label>
+        </div>
+      </div>
+      <div class="panel-footer">Status</div>
+    </div>
+  </div>
+  <div class="col-lg-8">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        Greenhouse Status
+      </div>
+      <div class="panel-body">
+        <div style="width: 600px; height: 400px; margin: 0 auto">
+          <div id="container-speed" style="width: 300px; height: 200px; float: left"></div>
+          <div id="container-rpm" style="width: 300px; height: 200px; float: left"></div>
+          <div id="container-speed1" style="width: 300px; height: 200px; float: left"></div>
+          <div id="container-rpm1" style="width: 300px; height: 200px; float: left"></div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        Panel Footer
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- /.row -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          Actuator Status Of the Greenhouse
+        </div>
+      <div class="panel-body"></div>
+      <div class="panel-footer">
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 </div>
 </body>
@@ -265,9 +230,7 @@ function rule1_apply() {
     chart: {
         type: 'solidgauge'
     },
-
     title: null,
-
     pane: {
         center: ['50%', '85%'],
         size: '140%',
@@ -280,7 +243,6 @@ function rule1_apply() {
             shape: 'arc'
         }
     },
-
     tooltip: {
         enabled: false
     },
@@ -369,112 +331,74 @@ var chartRpm = Highcharts.chart('container-rpm', Highcharts.merge(gaugeOptions, 
 }));
 
 var chartSpeed1 = Highcharts.chart('container-speed1', Highcharts.merge(gaugeOptions, {
-    yAxis: {
-        min: 0,
-        max: 1500,
-        title: {
-            text: 'Soil Moisture'
-        }
-    },
+yAxis: {
+  min: 0,
+  max: 1500,
+  title: {
+      text: 'Soil Moisture'
+  }
+},
 
-    series: [{
-        name: 'RPM',
-        data: [1],
-        dataLabels: {
-            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
-                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span><br/>' +
-                   '<span style="font-size:12px;color:silver"></span></div>'
-        },
-        tooltip: {
-            valueSuffix: ' %'
-        }
-    }]
-
+series: [{
+  name: 'RPM',
+  data: [1],
+  dataLabels: {
+      format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+          ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span><br/>' +
+             '<span style="font-size:12px;color:silver"></span></div>'
+  },
+  tooltip: {
+      valueSuffix: ' %'
+  }
+}]
 }));
 
 var chartRpm1 = Highcharts.chart('container-rpm1', Highcharts.merge(gaugeOptions, {
-    yAxis: {
-        min: 0,
-        max: 70000,
-        title: {
-            text: 'Light intensity'
-        }
-    },
+yAxis: {
+  min: 0,
+  max: 70000,
+  title: {
+      text: 'Light intensity'
+  }
+},
 
-    series: [{
-        name: 'RPM',
-        data: [1],
-        dataLabels: {
-            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
-                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span><br/>' +
-                   '<span style="font-size:12px;color:silver">lux</span></div>'
-        },
-        tooltip: {
-            valueSuffix: ' %'
-        }
-    }]
+series: [{
+  name: 'RPM',
+  data: [1],
+  dataLabels: {
+  format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+      ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span><br/>' +
+         '<span style="font-size:12px;color:silver">lux</span></div>'
+  },
+  tooltip: {
+      valueSuffix: ' %'
+  }
+}]
 
 }));
-
-// Bring life to the dials
-// setInterval(function () {
-//     // Speed
-//     var point,
-//         newVal,
-//         inc;
-
-//     // if (chartSpeed) {
-//     //     point = chartSpeed.series[0].points[0];
-//     //     inc = Math.round((Math.random() - 0.5) * 100);
-//     //     newVal = point.y + inc;
-
-//     //     if (newVal < 0 || newVal > 200) {
-//     //         newVal = point.y - inc;
-//     //     }
-
-//     //     point.update(newVal);
-//     // }
-
-//     // RPM
-//     if (chartRpm) {
-//         point = chartRpm.series[0].points[0];
-//         inc = Math.random() - 0.5;
-//         newVal = point.y + inc;
-
-//         if (newVal < 0 || newVal > 5) {
-//             newVal = point.y - inc;
-//         }
-
-//         point.update(newVal);
-//     }
-// }, 2000);
-
- setInterval(function () {
-        // Speed
-        var point,
-            newVal,
-            inc;
-                                          // console.log(graph_hum);
-
-        // RPM
-        if (chartSpeed) {
-            point = chartSpeed.series[0].points[0];
-            point.update(Math.round(graph_temp));
-        }
-        if (chartRpm) {
-            point = chartRpm.series[0].points[0];
-            point.update(Math.round(graph_hum));
-        }
-        if (chartSpeed1) {
-            point = chartSpeed1.series[0].points[0];
-            point.update(Math.round(graph_soil));
-        }
-        if (chartRpm1) {
-            point = chartRpm1.series[0].points[0];
-            point.update(Math.round(graph_light));
-        }
-    }, 1000);
+setInterval(function () {
+  // Speed
+  var point,
+      newVal,
+      inc;
+  // RPM
+  if (chartSpeed) {
+      point = chartSpeed.series[0].points[0];
+      point.update(Math.round(graph_temp));
+  }
+  if (chartRpm) {
+      point = chartRpm.series[0].points[0];
+      point.update(Math.round(graph_hum));
+  }
+  if (chartSpeed1) {
+      point = chartSpeed1.series[0].points[0];
+      point.update(Math.round(graph_soil));
+  }
+  if (chartRpm1) {
+      point = chartRpm1.series[0].points[0];
+      point.update(Math.round(graph_light));
+  }
+}, 1000);
 
 </script>
-
 </html>
