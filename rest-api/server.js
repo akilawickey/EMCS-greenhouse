@@ -111,60 +111,8 @@ var client = mqtt.connect('mqtt://localhost');
       console.log('----------------------------------------------------------------------------');
 });
 
-router.use("/public",function(req,res){
-
-      res.sendFile(path + "home.html");
-
-});
-
 app.use("/public",router);
-
 app.use(express.static(__dirname + '/public'));
-
-    /*Create http server*/
-app.get('/public', function(req, res){
-
-    res.sendFile(__dirname + '/home.html');
-
-});
-
-// app.get('/sensor/:temp/:hmdt/:soil/:light', function(req, res) {
-//      var t = req.params.temp;
-//      var h = req.params.hmdt;
-//      var s = req.params.soil;
-//      var l = req.params.light;
-//      // location = res.headers.location;
-//      res.send("ok");
-//      console.log(t);
-//      console.log(h);
-//      console.log(s);
-//      console.log(l);
-
-//      var anewrow = new PUser3 ({
-//             time: date,
-//             val: t
-//      });
-//      var bnewrow = new PUser4 ({
-//             time: date,
-//             val: h
-//      });
-//      var cnewrow = new PUser5 ({
-//             time: date,
-//             val: s
-//      });
-//      var dnewrow = new PUser6 ({
-//             time: date,
-//             val: l
-//      });
-
-//         anewrow.save(function (err) {if (err) console.log ('Error on save!')});
-//         bnewrow.save(function (err) {if (err) console.log ('Error on save!')});
-//         cnewrow.save(function (err) {if (err) console.log ('Error on save!')});
-//         dnewrow.save(function (err) {if (err) console.log ('Error on save!')});
-
-//   });
-//
-// Configuration
 
 // ## CORS middleware
 //
@@ -196,29 +144,12 @@ app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }));
 app.use(bodyParser.text({ type: 'text/html' }));
 
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/home.html'));
+    res.sendFile(path.join(__dirname + '/index.html'));
 });
 
 app.get('/sensor_data', function(req, res) {
   res.json({notes: "Temp :23 Humidity :88 Light :10023 Soil :899"})
 });
-// JSON API
-// app.get('/switches', api.switches);
-// app.get('/switches/:id', api.switch);
-// app.post('/switches', api.addSwitch);
-// app.put('/switches/:id', api.editSwitch);
-// app.put('/switches', api.editAllSwitches);
-// app.delete('/switches/:id', api.deleteSwitch);
-// app.get("/api/contacts", function(req, res) {
-//   db.collection(CONTACTS_COLLECTION).find({}).toArray(function(err, docs) {
-//     if (err) {
-//       handleError(res, err.message, "Failed to get contacts.");
-//     } else {
-//       res.status(200).json(docs);
-//     }
-//   });
-// });
-
 
 io.sockets.on('connection', function (socket) {
     // when socket connection publishes a message, forward that message
@@ -237,8 +168,7 @@ io.sockets.on('connection', function (socket) {
 
         // PUser2.update({'mqtt_topic':'fan'},{$set:{'status':'1'}},{multi:true})
         // PUser2.update({ mqtt_topic: 'fan' }, { $set: { status: '1' }});
-
-    });
+});
 
     socket.on('rule_config_data', function (data) {
         // console.log(data.rulename,data.actuator,data.from,data.to);
