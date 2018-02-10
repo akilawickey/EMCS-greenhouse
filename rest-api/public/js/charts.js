@@ -155,18 +155,18 @@ setInterval(function () {
  // RPM
  if (chartSpeed) {
      point = chartSpeed.series[0].points[0];
-     point.update(Math.round(graph_temp));
+     point.update(Math.precisionRound(graph_temp, 1));
  }
  if (chartRpm) {
      point = chartRpm.series[0].points[0];
-     point.update(Math.round(graph_hum));
+     point.update(Math.precisionRound(graph_hum, 1));
  }
  if (chartSpeed1) {
      point = chartSpeed1.series[0].points[0];
-     point.update(Math.round(graph_soil));
+     point.update(Math.precisionRound(graph_soil, 1));
  }
  if (chartRpm1) {
      point = chartRpm1.series[0].points[0];
-     point.update(Math.round(graph_light));
+     point.update(Math.precisionRound(graph_light, 1));
  }
-}, 1000);
+}, 100);
