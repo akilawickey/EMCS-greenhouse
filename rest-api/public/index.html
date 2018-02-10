@@ -248,132 +248,18 @@ function rule1_apply() {
                         Actuator Status Of the Greenhouse
                     </div>
                     <div class="panel-body">
-                        <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
                     </div>
                     <div class="panel-footer">
                         Panel Footer
                     </div>
                 </div>
             </div>
-
-            <!-- /.col-lg-4 -->
         </div>
-        <!-- /.row -->
-<!--             <div class="row">
-            <div class="col-lg-6">
-                <div class="panel panel-green">
-                    <div class="panel-heading">
-                        Green Panel
-                    </div>
-                    <div class="panel-body">
-                        <div class="switch8">
-                        <span>Pump 4</span>
-                            <input type="checkbox" name="switch" class="switch-checkbox" onclick="rule1_apply()" id="switch9" checked>
-                                <label class="switch-label" for="switch9">
-                                    <span class="switch-inner"></span>
-                                    <span class="switch-switch"></span>
-                                </label>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        Panel Footer
-                    </div>
-                </div> -->
-                <!-- /.col-lg-4 -->
-<!--                </div>
-            <div class="col-lg-6">
-                <div class="panel panel-yellow">
-                    <div class="panel-heading">
-                        Yellow Panel
-                    </div>
-                    <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
-                    </div>
-                    <div class="panel-footer">
-                        Panel Footer
-                    </div>
-                </div> -->
-                <!-- /.col-lg-4 -->
-     <!--        </div>
-
-        </div> -->
-        <!-- /.row -->
-
-        <!-- /.row -->
-
-
     </div>
-    <!-- /#page-wrapper -->
 
 </div>
 </body>
 <script type="text/javascript">
-var xValues = ['A', 'B', 'C'];
-var yValues = ['W', 'X', 'Y', 'Z'];
-var zValues = [
-  [0, 1, 0, 1],
-  [0, 1, 0, 1],
-  [0, 1, 1, 1],
-  [1, 1, 0, 1]
-];
-var colorscaleValue = [
-  [0, '#3D9970'],
-  [1, '#461c99']
-];
-var data = [{
-  x: xValues,
-  y: yValues,
-  z: zValues,
-  type: 'heatmap',
-  colorscale: colorscaleValue,
-  showscale: false
-}];
-var layout = {
-  title: 'Actuator Status',
-  annotations: [],
-  xaxis: {
-    ticks: '',
-    side: 'top'
-  },
-  yaxis: {
-    ticks: '',
-    ticksuffix: ' ',
-    width: 700,
-    height: 700,
-    autosize: false
-  }
-};
-for ( var i = 0; i < yValues.length; i++ ) {
-  for ( var j = 0; j < xValues.length; j++ ) {
-    var currentValue = zValues[i][j];
-    if (currentValue != 0.0) {
-      var textColor = 'white';
-    }else{
-      var textColor = 'black';
-    }
-    var result = {
-      xref: 'x1',
-      yref: 'y1',
-      x: xValues[j],
-      y: yValues[i],
-      text: zValues[i][j],
-      font: {
-        family: 'Arial',
-        size: 12,
-        color: 'rgb(50, 171, 96)'
-      },
-      showarrow: false,
-      font: {
-        color: textColor
-      }
-    };
-    layout.annotations.push(result);
-  }
-}
-Plotly.newPlot('myDiv', data, layout);
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-
  var gaugeOptions = {
 
     chart: {
@@ -589,7 +475,6 @@ var chartRpm1 = Highcharts.chart('container-rpm1', Highcharts.merge(gaugeOptions
         }
     }, 1000);
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 </script>
 
 </html>
