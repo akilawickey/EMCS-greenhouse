@@ -8,4 +8,4 @@ var l_data = new Schema({
 
 });
 
-model.exports = mongoose.model('light_data', l_data);
+module.exports = mongoose.model('light_data', l_data);

@@ -8,4 +8,4 @@ var h_data = new Schema({
 
 });
 
-model.exports = mongoose.model('hum_data', h_data);
+module.exports = mongoose.model('hum_data', h_data);

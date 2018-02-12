@@ -11,4 +11,4 @@ var userSchema = new Schema({
 
 });
 
-model.exports = mongoose.model('data_store', userSchema);
+module.exports = mongoose.model('data_store', userSchema);

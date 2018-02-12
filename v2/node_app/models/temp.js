@@ -8,4 +8,4 @@ var t_data = new Schema({
 
 });
 
-model.exports = mongoose.model('temp_data', t_data);
+module.exports = mongoose.model('temp_data', t_data);

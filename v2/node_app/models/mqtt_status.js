@@ -9,4 +9,4 @@ var mqtt_status = new Schema({
 
 });
 
-model.exports = mongoose.model('mqtt_store', mqtt_status);
+module.exports = mongoose.model('mqtt_store', mqtt_status);

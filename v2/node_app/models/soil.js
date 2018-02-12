@@ -8,4 +8,4 @@ var s_data = new Schema({
 
 });
 
-model.exports = mongoose.model('soil_data', s_data);
+module.exports = mongoose.model('soil_data', s_data);
