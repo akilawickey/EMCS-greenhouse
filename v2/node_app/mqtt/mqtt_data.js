@@ -29,12 +29,13 @@ client.on('connect', function () {
 
 //Sensor node data
 client.on('message', function (topic, message) {
+
   date = new Date();
   date.setHours(date.getHours() + 5);
   date.setMinutes(date.getMinutes() + 30);
 
   if(topic.toString() == 'temp'){
-       console.log(topic.toString() + ' ' +  message.toString());
+      //  console.log(topic.toString() + ' ' +  message.toString());
        t = message.toString();
 
        var anewrow = new temp ({
@@ -48,8 +49,9 @@ client.on('message', function (topic, message) {
        t_p = t;
   }
   if(topic.toString() == 'hum'){
-      console.log(topic.toString() + ' ' +  message.toString());
+      // console.log(topic.toString() + ' ' +  message.toString());
       h = message.toString();
+
         var bnewrow = new hum ({
             time: date,
             val: h
@@ -62,8 +64,9 @@ client.on('message', function (topic, message) {
   }
 
   if(topic.toString() == 'soil'){
-      console.log(topic.toString() + ' ' +  message.toString());
+      // console.log(topic.toString() + ' ' +  message.toString());
       s = message.toString();
+
         var cnewrow = new soil ({
             time: date,
             val: s
@@ -76,8 +79,9 @@ client.on('message', function (topic, message) {
   }
 
   if(topic.toString() == 'light'){
-      console.log(topic.toString() + ' ' +  message.toString());
+      // console.log(topic.toString() + ' ' +  message.toString());
       l = message.toString();
+
      var dnewrow = new light ({
             time: date,
             val: l

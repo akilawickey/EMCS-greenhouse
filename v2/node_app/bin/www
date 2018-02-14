@@ -7,7 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('playing-node:server');
 var http = require('http');
-var mq = require('../mqtt/mqtt_data');
+var client = require('../mqtt/mqtt_data');
+
 /**
  * Get port from environment and store in Express.
  */
@@ -15,11 +16,13 @@ var mq = require('../mqtt/mqtt_data');
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+
 /**
  * Create HTTP server.
  */
 
 var server = http.createServer(app);
+var io = require('socket.io')(server);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -88,3 +91,36 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+
+//Sensor node data via mqtt to the websocket
+client.on('message', function (topic, message) {
+    console.log('data sending...');
+    date = new Date();
+    date.setHours(date.getHours() + 5);
+    date.setMinutes(date.getMinutes() + 30);
+    var gate = 'mqtt';
+    if(topic.toString() == 'temp'){
+        // console.log(topic.toString() + ' ' +  message.toString());
+        io.emit(gate, topic.toString() + ' ' +message.toString());
+
+    }
+    if(topic.toString() == 'hum'){
+        // console.log(topic.toString() + ' ' +  message.toString());
+        io.emit(gate, topic.toString() + ' ' +message.toString());
+
+    }
+
+    if(topic.toString() == 'soil'){
+        // console.log(topic.toString() + ' ' +  message.toString());
+        io.emit(gate, topic.toString() + ' ' +message.toString());
+
+    }
+
+    if(topic.toString() == 'light'){
+        // console.log(topic.toString() + ' ' +  message.toString());
+        io.emit(gate, topic.toString() + ' ' +message.toString());
+
+    }
+
+});
