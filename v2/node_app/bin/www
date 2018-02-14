@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('playing-node:server');
 var http = require('http');
-
+var mq = require('../mqtt/mqtt_data');
 /**
  * Get port from environment and store in Express.
  */

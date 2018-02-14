@@ -16,12 +16,14 @@ var express = require('express'),
     net = require('net'),
     mongoose = require('mongoose'),
     ObjectId = require('mongodb').ObjectID;
+// // create a socket object that listens on port 5000
+var io = require('socket.io')(http);
 
 var date;
 var data = 'none'
 // api = require('./routes/api');
 
-var t_p,h_p,s_p,l_p;
+var t_p,h_p,s_p,l_p,state_temp_time,state_hum_time,state_soil_time,state_light_time;
 var t = '';
 var h = '';
 var s = '';
@@ -95,13 +97,12 @@ mongoose.Promise = global.Promise;
     var PUser5 = mongoose.model('soil_data', s_data);
     var PUser6  = mongoose.model('light_data', l_data);
 
-// // create a socket object that listens on port 5000
-var io = require('socket.io')(http);
+
 
 // create an mqtt client object and connect to the mqtt broker
-var client = mqtt.connect('mqtt://localhost');
+var client = mqtt.connect('mqtt://139.59.23.178');
 
-     http.listen((process.env.PORT || 8080), function(){
+http.listen((process.env.PORT || 8080), function(){
     //  http.listen((3000), function(){
       // console.log(process.env.PORT);
       console.log('----------------------------------------------------------------------------');

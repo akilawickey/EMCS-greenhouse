@@ -1,14 +1,22 @@
 var mqtt = require('mqtt');
-var http = require('http');
-var io = require('socket.io')(http);
 var Rules = require('../models/rules_data');
 var hum = require('../models/hum');
 var light = require('../models/light');
 var soil = require('../models/soil');
 var temp = require('../models/temp');
+var mongoose = require('mongoose');
 
-var client = mqtt.connect('mqtt://localhost');
+var client = mqtt.connect('mqtt://139.59.23.178');
 var t_p,h_p,s_p,l_p;
+
+var uristring = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/greenhouse';
+  mongoose.connect(uristring, function (err, res) {
+  if (err) {
+    console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+  } else {
+    console.log ('Succeeded connected to: ' + uristring);
+  }
+});
 
 client.on('connect', function () {
 
@@ -21,7 +29,6 @@ client.on('connect', function () {
 
 //Sensor node data
 client.on('message', function (topic, message) {
-
   date = new Date();
   date.setHours(date.getHours() + 5);
   date.setMinutes(date.getMinutes() + 30);
@@ -29,7 +36,6 @@ client.on('message', function (topic, message) {
   if(topic.toString() == 'temp'){
        console.log(topic.toString() + ' ' +  message.toString());
        t = message.toString();
-       io.emit('mqtt','temp ' + t);
 
        var anewrow = new temp ({
             time: date,
@@ -44,8 +50,6 @@ client.on('message', function (topic, message) {
   if(topic.toString() == 'hum'){
       console.log(topic.toString() + ' ' +  message.toString());
       h = message.toString();
-      io.emit('mqtt','hum ' + h);
-
         var bnewrow = new hum ({
             time: date,
             val: h
@@ -60,8 +64,6 @@ client.on('message', function (topic, message) {
   if(topic.toString() == 'soil'){
       console.log(topic.toString() + ' ' +  message.toString());
       s = message.toString();
-      io.emit('mqtt','soil ' + s);
-
         var cnewrow = new soil ({
             time: date,
             val: s
@@ -76,8 +78,6 @@ client.on('message', function (topic, message) {
   if(topic.toString() == 'light'){
       console.log(topic.toString() + ' ' +  message.toString());
       l = message.toString();
-      io.emit('mqtt','light ' + l);
-
      var dnewrow = new light ({
             time: date,
             val: l

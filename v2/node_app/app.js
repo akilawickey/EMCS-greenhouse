@@ -4,30 +4,34 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var mq = require('./mqtt/mqtt_data');
+var exphbs  = require('express-handlebars');
 var router = express.Router();
 
-var uristring = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/greenhouse';
-  mongoose.connect(uristring, function (err, res) {
-  if (err) {
-    console.log ('ERROR connecting to: ' + uristring + '. ' + err);
-  } else {
-    console.log ('Succeeded connected to: ' + uristring);
-  }
-});
-
-// var index = require('./routes/index');
-// var users = require('./routes/users');
+var index = require('./routes/index');
+var users = require('./routes/users');
 
 var app = express();
 
-// view engine setup
 app.use("/views",router);
 app.use(express.static(__dirname + '/views'));
 
-// app.use('/', index);
-// app.use('/users', users);
+// Set 'views' directory for any views 
+// being rendered res.render()
+app.set('views', path.join(__dirname, 'views'));
+
+// Set view engine as EJS
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+app.use('/', index);
+app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -35,19 +39,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
-app.use(bodyParser.json({ type: 'application/*+json' }));
-
-// parse some custom thing into a Buffer
-app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }));
-
-// parse an HTML body into a string
-app.use(bodyParser.text({ type: 'text/html' }));
-
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
-});
-
 
 // error handler
 app.use(function(err, req, res, next) {

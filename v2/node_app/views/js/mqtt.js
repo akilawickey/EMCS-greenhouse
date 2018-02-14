@@ -1,23 +1,30 @@
 var part_one,part_two,graph_temp,graph_hum,graph_soil,graph_light;
 var count = 0;
 var socket = io();
-socket.on('mqtt', function(msg){
-   var res = msg.split(" ");
-   console.log(res);
-   part_one = res[0];
-   part_two = res[1];
-   if(part_one == "temp"){
-     graph_temp = part_two;
-     count = count + 1;
-     // console.log(graph_temp);
-   }else if(part_one == "hum"){
-     graph_hum = part_two;
-   }else if(part_one == "soil"){
-     graph_soil = part_two;
-   }else if(part_one == "light"){
-     graph_light = part_two;
-   }
-});
+
+// socket.on('mqtt', function(msg){
+//    var res = msg.split(" ");
+//    console.log(res);
+//    part_one = res[0];
+//    part_two = res[1];
+//    if(part_one == "temp"){
+//      graph_temp = part_two;
+//      count = count + 1;
+//      // console.log(graph_temp);
+//    }else if(part_one == "hum"){
+//      graph_hum = part_two;
+//    }else if(part_one == "soil"){
+//      graph_soil = part_two;
+//    }else if(part_one == "light"){
+//      graph_light = part_two;
+//    }
+// });
+
+// socket.on('test', function(msg){
+//     var res = msg.split(" ");
+//     console.log(res);
+// });
+
 function pump1_control() {
    if (document.querySelectorAll("input[id='switch7']:checked").length >= 1) {
        socket.emit('publish', {topic:"testTopic",payload:"1"});
