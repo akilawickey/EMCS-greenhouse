@@ -174,7 +174,8 @@ setInterval(function () {
  document.getElementById("real_soil").innerHTML = graph_soil;
  document.getElementById("real_light").innerHTML = graph_light;
  document.getElementById("count").innerHTML = count;
- var res = graph_temp+' '+graph_humg+' '+raph_soil+' '+graph_light;
+// var res = graph_temp+' '+graph_hum+' '+raph_soil+' '+graph_light;
+var res = "test";
  $("#test").text(res);
 
 }, 100);
