@@ -122,81 +122,16 @@
   </div>
   <!-- /.row -->
   <div class="row">
-  <div class="col-sm-2">
-  <div class="panel panel-primary">
-    <div class="panel-heading">Actuators</div>
-    <div class="panel-body">
-    <!-- <button type="button" class="btn btn-success"  onclick="fan_on()">FAN 1</button><br><br> -->
-    <div class="switch1">
 
-    <span>Fan 1</span>
-          <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan1_control(this)" id="switch1" >
-            <label class="switch-label" for="switch1">
-                <span class="switch-inner"></span>
-                <!-- <span class="switch-switch"></span> -->
-            </label>
-    <div class="switch7">
-      <span>Pump 1</span>
-    <input type="checkbox" name="switch" class="switch-checkbox" onclick="pump1_control()" id="switch7" >
-    <label class="switch-label" for="switch7">
-      <span class="switch-inner"></span>
-    </label>
-    </div>
-    </div>
-    </div>
-    <div class="panel-footer">
-        Status
-    </div>
-  </div>
-  </div>
-  <div class="col-sm-2">
-  <div class="panel panel-primary">
-    <div class="panel-heading">MQTT Topics</div>
-    <div class="list-group">
-      <a href="#" class="list-group-item">
-        <h4 class="list-group-item-heading">/green/temp </h4>
-        <p id = "real_temp" class="list-group-item-text">graph_temp</p>
-      </a>
-      <a href="#" class="list-group-item">
-        <h4 class="list-group-item-heading">/green/hum </h4>
-        <p id = "real_hum" class="list-group-item-text">graph_hum</p>
-      </a>
-      <a href="#" class="list-group-item">
-        <h4 class="list-group-item-heading">/green/soil </h4>
-        <p id = "real_soil" class="list-group-item-text">graph_soil</p>
-      </a>
-      <a href="#" class="list-group-item">
-        <h4 class="list-group-item-heading">/green/light </h4>
-        <p id = "real_light" class="list-group-item-text">graph_light</p>
-      </a>
-      <a href="#" class="list-group-item active">
-        <h4 class="list-group-item-heading">/green/fan </h4>
-        <p id = "real_light" class="list-group-item-text">OFF</p>
-      </a>
-      <a href="#" class="list-group-item active">
-        <h4 class="list-group-item-heading">/green/motor </h4>
-        <p id = "real_light" class="list-group-item-text">OFF</p>
-      </a>
-    </div>
-  </div>
-  </div>
-  <div class="col-lg-8">
-    <div class="panel panel-success">
-      <div class="panel-heading">
-        Building Status
-      </div>
-      <div class="panel-body">
-        <div style="width: 600px; height: 400px; margin: 0 auto">
-          <div id="container-speed" style="width: 300px; height: 200px; float: left"></div>
-          <div id="container-rpm" style="width: 300px; height: 200px; float: left"></div>
-          <div id="container-speed1" style="width: 300px; height: 200px; float: left"></div>
-          <div id="container-rpm1" style="width: 300px; height: 200px; float: left"></div>
-        </div>
-      </div>
-      <div class="panel-footer">
-        Panel Footer
-      </div>
-    </div>
+    <div id="test" style="margin-left: 80px; 
+          border: 2px solid black;
+          border-radius: 10px; 
+          width:1150px;
+          height: 200px;
+          overflow: scroll;
+          font-size: 18px;
+          padding-left: 10px;
+          border-width: 1px;">
   </div>
   </div>
 
@@ -204,5 +139,7 @@
 </div>
 </body>
 <script src="js/charts.js"></script>
+<div class="panel panel-primary">
 
+</div>
 </html>
