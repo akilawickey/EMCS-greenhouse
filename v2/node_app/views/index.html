@@ -9,36 +9,15 @@
 
 <title>leafylanka</title>
 
-<!-- Toggle -->
-<link rel="stylesheet" href="css/toggle.css">
-<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <!-- Bootstrap Core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
-<!-- MetisMenu CSS -->
-<link href="css/metisMenu.min.css" rel="stylesheet">
 <!-- Custom CSS -->
 <link href="css/sb-admin-2.css" rel="stylesheet">
-<!-- Morris Charts CSS -->
-<link href="css/morris.css" rel="stylesheet">
-<link href="css/notify.css" rel="stylesheet">
 <!-- Custom Fonts -->
 <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/highcharts-more.js"></script>
-<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
-<!-- Metis Menu Plugin JavaScript -->
-<script src="js/metisMenu.min.js"></script>
-<!-- Morris Charts JavaScript -->
-<script src="js/raphael.min.js"></script>
-<script src="js/morris.min.js"></script>
-<script src="js/morris-data.js"></script>
-<!-- Custom Theme JavaScript -->
-<script src="js/sb-admin-2.js"></script>
-<script src="js/mqtt.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114327578-1"></script>
 <script>
@@ -79,31 +58,101 @@
                   <input type="text" class="form-control" placeholder="Search">
                 </div>
                 <button type="submit" class="btn btn-default">Go</button>
-            </form>          <!-- <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#">Separated link</a></li>
-            </ul>
-          </li> -->
-        </ul>
-      </div><!-- /.navbar-collapse -->
+            </form>         
     </div><!-- /.container-fluid -->
   </nav>
 <body>
     <div class = "jumbotron">
-   
-        <div class = "container">
-           <h2>Welcome to the Live Monitoring Platform</h2>
-           <p>Take a view at our live greenhouse</p>  
-              <a class = "btn btn-primary btn-lg" href="http://www.leafylanka.com/dashboard.html" role = "button">Live Demo</a>
-           </p>
+        <div class="row">
+            <div id = "welcome" class="col-sm-6 col-md-6">
+                <h2>Opensource Greenhouse Platform</h2>
+                <p>Take a view at our live greenhouse</p>  
+                <a class = "btn btn-primary btn-lg" href="http://www.leafylanka.com/dashboard.html" role = "button">Live Demo</a>
+                </p>
+             </div>
+            <div class="col-sm-6 col-md-6">
+            </div>
+       
+          </div>
+     </div>
+ 
+     <div class="container">
+        <div class="row">
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <img src="https://images.pexels.com/photos/669623/pexels-photo-669623.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb" alt="...">
+              <div class="caption">
+                <h3>Real Time Monitoring</h3>
+                <p>You can monitor your plants from anywhere</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <img src="https://images.unsplash.com/photo-1503847526538-824483d02f15?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b41932690ed1828f7e698bdb13cd13f8&auto=format&fit=crop&w=500&q=60" alt="...">
+              <div class="caption">
+                <h3>Controlling</h3>
+                <p>You can remotely control your Actuators.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <img src="https://images.unsplash.com/photo-1495592528496-a143a67931d6?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=efc953f0cf4fae51608618a71078c7df&auto=format&fit=crop&w=500&q=60" alt="...">
+              <div class="caption">
+                <h3>Future Predictions</h3>
+                <p>You can make future predictions about your plants.</p>
+              </div>
+            </div>
+          </div>
         </div>
         
-     </div>
-</body>
+        
+        
+        </div>
 
+
+        
+</body>
+<div class="container text-center">
+    <hr />
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="col-md-3">
+        <ul class="nav nav-pills nav-stacked">
+          <li><a href="#">About us</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <ul class="nav nav-pills nav-stacked">
+          <li><a href="#">Product for Mac</a></li>
+          <li><a href="#">Product for Windows</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <ul class="nav nav-pills nav-stacked">
+          <li><a href="#">Web analytics</a></li>
+          <li><a href="#">Presentations</a></li>          
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <ul class="nav nav-pills nav-stacked">
+          <li><a href="#">Product Help</a></li>
+          <li><a href="#">Developer API</a></li>
+        </ul>
+      </div>  
+    </div>
+  </div>
+  <hr>
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="nav nav-pills nav-justified">
+                <li><a href="/">© 2018 Leafylanka.</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Privacy</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 </html>

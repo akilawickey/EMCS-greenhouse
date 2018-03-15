@@ -9,6 +9,12 @@ body {
   padding-left: 20px;
   padding-right: 20px;
 }
+.jumbotron {
+  background-color:rgb(183, 183, 184) !important; 
+}
+#welcome {
+  padding-left: 10%;
+}
 #wrapper {
   width: 100%;
 }
