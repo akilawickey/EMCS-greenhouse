@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>leafylanka</title>
+
+<!-- Toggle -->
+<link rel="stylesheet" href="css/toggle.css">
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<!-- Bootstrap Core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<!-- MetisMenu CSS -->
+<link href="css/metisMenu.min.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="css/sb-admin-2.css" rel="stylesheet">
+<!-- Morris Charts CSS -->
+<link href="css/morris.css" rel="stylesheet">
+<link href="css/notify.css" rel="stylesheet">
+<!-- Custom Fonts -->
+<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script src="js/metisMenu.min.js"></script>
+<!-- Morris Charts JavaScript -->
+<script src="js/raphael.min.js"></script>
+<script src="js/morris.min.js"></script>
+<script src="js/morris-data.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="js/sb-admin-2.js"></script>
+<script src="js/mqtt.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114327578-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-114327578-1');
+</script>
+</head>
+<body>
+<div id="wrapper">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+  <div class="navbar-header">
+    <a class="navbar-brand" href="index.html">Demo Leafy App</a>
+  </div>
+  <ul class="nav navbar-top-links navbar-right">
+  </ul>
+  <!-- /.navbar-top-links -->
+  <div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+      <ul class="nav" id="side-menu">
+        <li class="sidebar-search">
+          <div class="input-group custom-search-form">
+            <input type="text" class="form-control" placeholder="Search...">
+              <span class="input-group-btn">
+            </span>
+          </div>
+        <!-- /input-group -->
+        </li>
+        <li>
+          <a href="index.html">Dashboard</a>
+        </li>
+        <li>
+          <a href="deploy.html">Past Data & Rules</a>
+        </li>
+        <li>
+          <a href="#"> Settings</a>
+        <ul class="nav nav-second-level">
+        <li>
+          <a href="config.html">Actuator Settings</a>
+        </li>
+        <li>
+          <a href="morris.html">Update</a>
+        </li>
+        </ul>
+        <!-- /.nav-second-level -->
+        </li>
+        <li>
+          <a href="training.html">Training Details</a>
+        </li>
+        <li>
+          <a href="tables.html"></i>Help</a>
+        </li>
+        <li>
+          <a href="forms.html">About Us</a>
+        </li>
+      </ul>
+    </div>
+  <!-- /.sidebar-collapse -->
+  </div>
+  <!-- /.navbar-static-side -->
+</nav>
+<div id="page-wrapper">
+  <div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">Dashboard</h1>
+  </div>
+  </div>
+
+  <!-- /.row -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+        Details
+        </div>
+      <div class="panel-body">
+        <ul class="nav nav-pills" role="tablist">
+
+          <li role="presentation"><a href="#">Plant ID - 123423423</a></li>
+          <li role="presentation" class="active"><a href="#">MQTT Data count <span id = "count" class="badge"></span></a></li>
+          <!-- <li role="presentation"><a href="#">Messages <span class="badge">3</span></a></li> -->
+
+        </ul>
+      </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.row -->
+  <div class="row">
+  <div class="col-sm-2">
+  <div class="panel panel-primary">
+    <div class="panel-heading">Actuators</div>
+    <div class="panel-body">
+    <!-- <button type="button" class="btn btn-success"  onclick="fan_on()">FAN 1</button><br><br> -->
+    <div class="switch1">
+
+    <span>Fan 1</span>
+          <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan1_control(this)" id="switch1" >
+            <label class="switch-label" for="switch1">
+                <span class="switch-inner"></span>
+                <!-- <span class="switch-switch"></span> -->
+            </label>
+    <div class="switch7">
+      <span>Pump 1</span>
+    <input type="checkbox" name="switch" class="switch-checkbox" onclick="pump1_control()" id="switch7" >
+    <label class="switch-label" for="switch7">
+      <span class="switch-inner"></span>
+    </label>
+    </div>
+    </div>
+    </div>
+    <div class="panel-footer">
+        Status
+    </div>
+  </div>
+  </div>
+  <div class="col-sm-2">
+  <div class="panel panel-primary">
+    <div class="panel-heading">MQTT Topics</div>
+    <div class="list-group">
+      <a href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">/green/temp </h4>
+        <p id = "real_temp" class="list-group-item-text">graph_temp</p>
+      </a>
+      <a href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">/green/hum </h4>
+        <p id = "real_hum" class="list-group-item-text">graph_hum</p>
+      </a>
+      <a href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">/green/soil </h4>
+        <p id = "real_soil" class="list-group-item-text">graph_soil</p>
+      </a>
+      <a href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">/green/light </h4>
+        <p id = "real_light" class="list-group-item-text">graph_light</p>
+      </a>
+      <a href="#" class="list-group-item active">
+        <h4 class="list-group-item-heading">/green/fan </h4>
+        <p id = "real_light" class="list-group-item-text">OFF</p>
+      </a>
+      <a href="#" class="list-group-item active">
+        <h4 class="list-group-item-heading">/green/motor </h4>
+        <p id = "real_light" class="list-group-item-text">OFF</p>
+      </a>
+    </div>
+  </div>
+  </div>
+  <div class="col-lg-8">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        Building Status
+      </div>
+      <div class="panel-body">
+        <div style="width: 600px; height: 400px; margin: 0 auto">
+          <div id="container-speed" style="width: 300px; height: 200px; float: left"></div>
+          <div id="container-rpm" style="width: 300px; height: 200px; float: left"></div>
+          <div id="container-speed1" style="width: 300px; height: 200px; float: left"></div>
+          <div id="container-rpm1" style="width: 300px; height: 200px; float: left"></div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        Panel Footer
+      </div>
+    </div>
+  </div>
+  </div>
+
+</div>
+</div>
+</body>
+<script src="js/charts.js"></script>
+
+</html>
