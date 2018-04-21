@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <title>EMCS</title>
+
+    <!-- Toggle -->
+    <link rel="stylesheet" href="css/toggle.css">
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="css/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="css/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+        <!-- jQuery -->
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="js/metisMenu.min.js"></script>
+
+
+    <!-- Morris Charts JavaScript -->
+    <script src="js/raphael.min.js"></script>
+    <script src="js/morris.min.js"></script>
+    <script src="js/morris-data.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/sb-admin-2.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<script type="text/javascript">
+     var part_one,part_two,graph_temp,graph_hum,graph_soil,graph_light;
+     var socket = io();
+     socket.on('mqtt', function(msg){
+              var res = msg.split(" ");
+              console.log(res);
+              part_one = res[0];
+              part_two = res[1];
+              if(part_one == "temp"){
+                graph_temp = part_two;
+                console.log(graph_temp);
+              }else if(part_one == "hum"){
+                graph_hum = part_two;
+              }else if(part_one == "soil"){
+                graph_soil = part_two;
+              }else if(part_one == "light"){
+                graph_light = part_two;
+              }
+    });
+
+
+    function pump1_control() {
+        if (document.querySelectorAll("input[id='switch7']:checked").length >= 1) {
+            socket.emit('publish', {topic:"testTopic",payload:"1"});
+        }else{
+            socket.emit('publish', {topic:"testTopic",payload:"0"});
+        }
+    }
+    function pump2_control() {
+        if (document.querySelectorAll("input[id='switch8']:checked").length >= 1) {
+            socket.emit('publish', {topic:"pump2",payload:"1"});
+        }else{
+            socket.emit('publish', {topic:"pump2",payload:"0"});
+        }    }
+    function fan1_control(elem) {
+        if (document.querySelectorAll("input[id='switch1']:checked").length >= 1) {
+            socket.emit('publish', {topic:"fan",payload:"1"});
+        }else{
+            socket.emit('publish', {topic:"fan",payload:"0"});
+        }
+
+    }
+    function fan2_control() {
+         socket.emit('publish', {topic:"fan",payload:"0"});
+          if (document.querySelectorAll("input[id='switch2']:checked").length >= 1) {
+            socket.emit('publish', {topic:"fa2",payload:"1"});
+        }else{
+            socket.emit('publish', {topic:"fa2",payload:"0"});
+        }
+    }
+
+
+
+    function rule1_apply() {
+         socket.emit('rules', {topic:"fan",payload:"0"});
+    }
+
+
+
+
+</script>
+
+<body>
+
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+
+                <a class="navbar-brand" href="index.html">Company Name</a>
+
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="index.html">Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="deploy.html">Deploy Rules</a>
+                        </li>
+                        <li>
+                            <a href="#"> Settings</a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="config.html">Actuator Settings</a>
+                                </li>
+                                <li>
+                                    <a href="morris.html">Update</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="training.html">Training Details</a>
+                        </li>
+                        <li>
+                            <a href="tables.html"></i>Help</a>
+                        </li>
+                        <li>
+                            <a href="forms.html">About Us</a>
+                        </li>
+
+                        <li>
+
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Controlling System</h1>
+
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+
+
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            FAN
+                        </div>
+                         <div class="panel-body">
+
+                            <!-- <button type="button" class="btn btn-success"  onclick="fan_on()">FAN 1</button><br><br> -->
+                            <div class="switch1">
+
+                            <span>Fan 1</span>
+                                  <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan1_control(this)" id="switch1" >
+                                    <label class="switch-label" for="switch1">
+                                        <span class="switch-inner"></span>
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                            </div>
+
+                            <!-- <button type="button" class="btn btn-success" onclick="fan_off()">FAN 2</button><br><br> -->
+                            <div class="switch2">
+                                <span>Fan 2</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="fan2_control()" id="switch2" >
+                                    <label class="switch-label" for="switch2">
+                                        <span class="switch-inner"></span>
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+
+                            </div>
+                            <!-- <button type="button" class="btn btn-success">FAN 3</button><br><br> -->
+                            <div class="switch3">
+                                <span>Fan 3</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" id="switch3" >
+                                    <label class="switch-label" for="switch3">
+                                        <span class="switch-inner"></span>
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                            </div>
+                            <!-- <button type="button" class="btn btn-success">FAN 4</button><br><br> -->
+                            <div class="switch4">
+                            <span>Fan 4</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" id="switch4" >
+                                    <label class="switch-label" for="switch4">
+                                        <span class="switch-inner"></span>
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                            </div>
+                            <div class="switch5">
+                            <span>Fan 5</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" id="switch5" >
+                                    <label class="switch-label" for="switch5">
+                                        <span class="switch-inner"></span>
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                            </div>
+                                                        <div class="switch4">
+                            <span>Fan 6</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" id="switch6" >
+                                    <label class="switch-label" for="switch6">
+                                        <span class="switch-inner"></span>
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            Status
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-4 -->
+                <div class="col-lg-2">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            WATER PUMP
+                        </div>
+                        <div class="panel-body">
+                            <!-- button type="button" class="btn btn-danger" onclick="pump_on()">PUMP 1</button><br><br>-->
+                            <div class="switch7">
+                                <span>Pump 1</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="pump1_control()" id="switch7" >
+
+                                    <label class="switch-label" for="switch7">
+
+                                        <span class="switch-inner"></span>
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+
+                            </div>
+                            <!-- button type="button" class="btn btn-danger" onclick="pump_off()">PUMP 2</button><br><br>-->
+                            <div class="switch8">
+                            <span>Pump 2</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="pump2_control()" id="switch8" >
+                                    <label class="switch-label" for="switch8">
+                                        <span class="switch-inner"></span>
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                            </div>
+                            <!--<button type="button" class="btn btn-danger">PUMP 3</button><br><br>-->
+                            <div class="switch9">
+                            <span>Pump 3</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" id="switch9" >
+                                    <label class="switch-label" for="switch9">
+                                        <span class="switch-inner"></span>
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                            </div>
+                            <!--button type="button" class="btn btn-danger">PUMP 4</button><br><br>-->
+                            <div class="switch10">
+                            <span>Pump 4</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" id="switch10" >
+                                    <label class="switch-label" for="switch10">
+                                        <span class="switch-inner"></span>
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                            </div>
+                            <div class="switch11">
+                            <span>Pump 5</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" id="switch11" >
+                                    <label class="switch-label" for="switch11">
+                                        <span class="switch-inner"></span>
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                            </div>
+                            <div class="switch12">
+                            <span>Pump 6</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" id="switch12" >
+                                    <label class="switch-label" for="switch12">
+                                        <span class="switch-inner"></span>
+                                        <!-- <span class="switch-switch"></span> -->
+                                    </label>
+                            </div>
+                            </div>
+                        <div class="panel-footer">
+                            Status
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            Greenhouse Status
+                        </div>
+                        <div class="panel-body">
+                            <!-- <div id="myDiv">Plotly chart will be drawn inside this DIV</div> -->
+                            <div style="width: 600px; height: 400px; margin: 0 auto">
+                                <div id="container-speed" style="width: 300px; height: 200px; float: left"></div>
+                                <div id="container-rpm" style="width: 300px; height: 200px; float: left"></div>
+                                <div id="container-speed1" style="width: 300px; height: 200px; float: left"></div>
+                                <div id="container-rpm1" style="width: 300px; height: 200px; float: left"></div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            Panel Footer
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /.col-lg-4 -->
+
+                <!-- /.col-lg-4 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            Actuator Status Of the Greenhouse
+                        </div>
+                        <div class="panel-body">
+                            <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+                        </div>
+                        <div class="panel-footer">
+                            Panel Footer
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /.col-lg-4 -->
+            </div>
+            <!-- /.row -->
+<!--             <div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            Green Panel
+                        </div>
+                        <div class="panel-body">
+                            <div class="switch8">
+                            <span>Pump 4</span>
+                                <input type="checkbox" name="switch" class="switch-checkbox" onclick="rule1_apply()" id="switch9" checked>
+                                    <label class="switch-label" for="switch9">
+                                        <span class="switch-inner"></span>
+                                        <span class="switch-switch"></span>
+                                    </label>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            Panel Footer
+                        </div>
+                    </div> -->
+                    <!-- /.col-lg-4 -->
+ <!--                </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            Yellow Panel
+                        </div>
+                        <div class="panel-body">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+                        </div>
+                        <div class="panel-footer">
+                            Panel Footer
+                        </div>
+                    </div> -->
+                    <!-- /.col-lg-4 -->
+         <!--        </div>
+
+            </div> -->
+            <!-- /.row -->
+
+            <!-- /.row -->
+
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+
+</body>
+<script type="text/javascript">
+var xValues = ['A', 'B', 'C'];
+var yValues = ['W', 'X', 'Y', 'Z'];
+var zValues = [
+  [0, 1, 0, 1],
+  [0, 1, 0, 1],
+  [0, 1, 1, 1],
+  [1, 1, 0, 1]
+];
+var colorscaleValue = [
+  [0, '#3D9970'],
+  [1, '#461c99']
+];
+var data = [{
+  x: xValues,
+  y: yValues,
+  z: zValues,
+  type: 'heatmap',
+  colorscale: colorscaleValue,
+  showscale: false
+}];
+var layout = {
+  title: 'Actuator Status',
+  annotations: [],
+  xaxis: {
+    ticks: '',
+    side: 'top'
+  },
+  yaxis: {
+    ticks: '',
+    ticksuffix: ' ',
+    width: 700,
+    height: 700,
+    autosize: false
+  }
+};
+for ( var i = 0; i < yValues.length; i++ ) {
+  for ( var j = 0; j < xValues.length; j++ ) {
+    var currentValue = zValues[i][j];
+    if (currentValue != 0.0) {
+      var textColor = 'white';
+    }else{
+      var textColor = 'black';
+    }
+    var result = {
+      xref: 'x1',
+      yref: 'y1',
+      x: xValues[j],
+      y: yValues[i],
+      text: zValues[i][j],
+      font: {
+        family: 'Arial',
+        size: 12,
+        color: 'rgb(50, 171, 96)'
+      },
+      showarrow: false,
+      font: {
+        color: textColor
+      }
+    };
+    layout.annotations.push(result);
+  }
+}
+Plotly.newPlot('myDiv', data, layout);
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+ var gaugeOptions = {
+
+    chart: {
+        type: 'solidgauge'
+    },
+
+    title: null,
+
+    pane: {
+        center: ['50%', '85%'],
+        size: '140%',
+        startAngle: -90,
+        endAngle: 90,
+        background: {
+            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+            innerRadius: '60%',
+            outerRadius: '100%',
+            shape: 'arc'
+        }
+    },
+
+    tooltip: {
+        enabled: false
+    },
+
+    // the value axis
+    yAxis: {
+        stops: [
+            [0.1, '#55BF3B'], // green
+            [0.5, '#DDDF0D'], // yellow
+            [0.9, '#DF5353'] // red
+        ],
+        lineWidth: 0,
+        minorTickInterval: null,
+        tickAmount: 2,
+        title: {
+            y: -70
+        },
+        labels: {
+            y: 16
+        }
+    },
+
+    plotOptions: {
+        solidgauge: {
+            dataLabels: {
+                y: 5,
+                borderWidth: 0,
+                useHTML: true
+            }
+        }
+    }
+};
+
+// The speed gauge
+var chartSpeed = Highcharts.chart('container-speed', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 90,
+        title: {
+            text: 'Temperature'
+        }
+    },
+
+    credits: {
+        enabled: false
+    },
+
+    series: [{
+        name: 'Speed',
+        data: [1],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">C</span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' C'
+        }
+    }]
+
+}));
+
+// The RPM gauge
+var chartRpm = Highcharts.chart('container-rpm', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 120,
+        title: {
+            text: 'Humidity'
+        }
+    },
+
+    series: [{
+        name: 'RPM',
+        data: [1],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">%</span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' %'
+        }
+    }]
+
+}));
+
+var chartSpeed1 = Highcharts.chart('container-speed1', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 1500,
+        title: {
+            text: 'Soil Moisture'
+        }
+    },
+
+    series: [{
+        name: 'RPM',
+        data: [1],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span><br/>' +
+                   '<span style="font-size:12px;color:silver"></span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' %'
+        }
+    }]
+
+}));
+
+var chartRpm1 = Highcharts.chart('container-rpm1', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 70000,
+        title: {
+            text: 'Light intensity'
+        }
+    },
+
+    series: [{
+        name: 'RPM',
+        data: [1],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">lux</span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' %'
+        }
+    }]
+
+}));
+
+// Bring life to the dials
+// setInterval(function () {
+//     // Speed
+//     var point,
+//         newVal,
+//         inc;
+
+//     // if (chartSpeed) {
+//     //     point = chartSpeed.series[0].points[0];
+//     //     inc = Math.round((Math.random() - 0.5) * 100);
+//     //     newVal = point.y + inc;
+
+//     //     if (newVal < 0 || newVal > 200) {
+//     //         newVal = point.y - inc;
+//     //     }
+
+//     //     point.update(newVal);
+//     // }
+
+//     // RPM
+//     if (chartRpm) {
+//         point = chartRpm.series[0].points[0];
+//         inc = Math.random() - 0.5;
+//         newVal = point.y + inc;
+
+//         if (newVal < 0 || newVal > 5) {
+//             newVal = point.y - inc;
+//         }
+
+//         point.update(newVal);
+//     }
+// }, 2000);
+
+ setInterval(function () {
+        // Speed
+        var point,
+            newVal,
+            inc;
+                                          // console.log(graph_hum);
+
+        // RPM
+        if (chartSpeed) {
+            point = chartSpeed.series[0].points[0];
+            point.update(Math.round(graph_temp));
+        }
+        if (chartRpm) {
+            point = chartRpm.series[0].points[0];
+            point.update(Math.round(graph_hum));
+        }
+        if (chartSpeed1) {
+            point = chartSpeed1.series[0].points[0];
+            point.update(Math.round(graph_soil));
+        }
+        if (chartRpm1) {
+            point = chartRpm1.series[0].points[0];
+            point.update(Math.round(graph_light));
+        }
+    }, 1000);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+</script>
+
+</html>
