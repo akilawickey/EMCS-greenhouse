@@ -33,8 +33,8 @@ import pandas as pd
 # IRIS_TRAINING = "iris_training.csv"
 # IRIS_TEST = "iris_test.csv"
 
-IRIS_TRAINING = "/dataset/greenhouse_training.csv"
-IRIS_TEST = "/dataset/greenhouse_testing.csv"
+IRIS_TRAINING = "/datasets/greenhouse_training.csv"
+IRIS_TEST = "/datasets/greenhouse_testing.csv"
 # Load datasets.
 training_set = tf.contrib.learn.datasets.base.load_csv_with_header(
     filename=IRIS_TRAINING,
