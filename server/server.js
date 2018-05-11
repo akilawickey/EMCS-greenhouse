@@ -16,7 +16,7 @@ var express = require('express'),
     net = require('net'),
     mongoose = require('mongoose'),
     ObjectId = require('mongodb').ObjectID;
-// // create a socket object that listens on port 5000
+//create a socket object that listens on port 
 var io = require('socket.io')(http);
 
 var date;
@@ -100,9 +100,9 @@ mongoose.Promise = global.Promise;
 
 
 // create an mqtt client object and connect to the mqtt broker
-var client = mqtt.connect('mqtt://139.59.23.178');
+var client = mqtt.connect('mqtt://46.101.63.192');
 
-http.listen((process.env.PORT || 8080), function(){
+http.listen((process.env.PORT || 3000), function(){
     //  http.listen((3000), function(){
       // console.log(process.env.PORT);
       console.log('----------------------------------------------------------------------------');
